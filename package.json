@@ -5,7 +5,8 @@
   "main": "borderify.js",
   "scripts": {
     "test": "jest",
-    "watch": "npx tsc --watch",
+    "test:w": "jest --watch",
+    "test:watch": "jest --watch",
     "build": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
   },
   "keywords": [],
