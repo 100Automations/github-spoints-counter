@@ -1,52 +1,61 @@
 "use strict";
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
-var _ColumnElement_instances, _ColumnElement_resetValues, _ColumnElement_extractValue;
-Object.defineProperty(exports, "__esModule", { value: true });
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.ColumnElement = void 0;
+
 class ColumnElement {
-    constructor(element) {
-        _ColumnElement_instances.add(this);
-        this.value = 0;
-        this.missingCounter = 0;
-        this.unpackElement(element);
-    }
-    unpackElement(element) {
-        this.id = element.id;
-        this.cards = element.getElementsByClassName("project-card");
-        this.columnCounter = element.getElementsByClassName("js-column-card-count")[0];
-    }
-    calculateValue(regex) {
-        __classPrivateFieldGet(this, _ColumnElement_instances, "m", _ColumnElement_resetValues).call(this);
-        for (const card of this.cards) {
-            const labels = card.getElementsByClassName("IssueLabel");
-            const value = __classPrivateFieldGet(this, _ColumnElement_instances, "m", _ColumnElement_extractValue).call(this, labels, regex);
-            if (typeof value == "number") {
-                this.value += value;
-            }
-            else {
-                this.missingCounter++;
-            }
-        }
-    }
-    rewriteCounter(text) {
-        this.columnCounter.textContent = `${text}: ${this.value} | missing: ${this.missingCounter}`;
-    }
-}
-exports.ColumnElement = ColumnElement;
-_ColumnElement_instances = new WeakSet(), _ColumnElement_resetValues = function _ColumnElement_resetValues() {
+  constructor(element) {
     this.value = 0;
     this.missingCounter = 0;
-}, _ColumnElement_extractValue = function _ColumnElement_extractValue(labels, regex) {
-    for (const label of labels) {
-        const labelName = label.textContent;
-        const result = labelName.match(regex);
-        if (result) {
-            return parseInt(result[1]);
-        }
+    this.unpackElement(element);
+  }
+
+  unpackElement(element) {
+    this.id = element.id;
+    this.cards = element.getElementsByClassName("project-card");
+    this.columnCounter = element.getElementsByClassName("js-column-card-count")[0];
+  }
+
+  calculateValue(regex) {
+    this.#resetValues();
+
+    for (const card of this.cards) {
+      const labels = card.getElementsByClassName("IssueLabel");
+      const value = this.#extractValue(labels, regex);
+
+      if (typeof value == "number") {
+        this.value += value;
+      } else {
+        this.missingCounter++;
+      }
     }
+  }
+
+  #resetValues() {
+    this.value = 0;
+    this.missingCounter = 0;
+  }
+
+  #extractValue(labels, regex) {
+    for (const label of labels) {
+      const labelName = label.textContent;
+      const result = labelName.match(regex);
+
+      if (result) {
+        return parseInt(result[1]);
+      }
+    }
+
     return null;
-};
+  }
+
+  rewriteCounter(text) {
+    this.columnCounter.textContent = `${text}: ${this.value} | missing: ${this.missingCounter}`;
+  }
+
+}
+
+exports.ColumnElement = ColumnElement;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uL3NyYy9jb2x1bW4udHMiXSwibmFtZXMiOlsiQ29sdW1uRWxlbWVudCIsImNvbnN0cnVjdG9yIiwiZWxlbWVudCIsInZhbHVlIiwibWlzc2luZ0NvdW50ZXIiLCJ1bnBhY2tFbGVtZW50IiwiaWQiLCJjYXJkcyIsImdldEVsZW1lbnRzQnlDbGFzc05hbWUiLCJjb2x1bW5Db3VudGVyIiwiY2FsY3VsYXRlVmFsdWUiLCJyZWdleCIsInJlc2V0VmFsdWVzIiwiY2FyZCIsImxhYmVscyIsImV4dHJhY3RWYWx1ZSIsImxhYmVsIiwibGFiZWxOYW1lIiwidGV4dENvbnRlbnQiLCJyZXN1bHQiLCJtYXRjaCIsInBhcnNlSW50IiwicmV3cml0ZUNvdW50ZXIiLCJ0ZXh0Il0sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7OztBQVVBLE1BQU1BLGFBQU4sQ0FBb0I7QUFDbEJDLEVBQUFBLFdBQVcsQ0FBQ0MsT0FBRCxFQUF1QjtBQUNoQyxTQUFLQyxLQUFMLEdBQWEsQ0FBYjtBQUNBLFNBQUtDLGNBQUwsR0FBc0IsQ0FBdEI7QUFDQSxTQUFLQyxhQUFMLENBQW1CSCxPQUFuQjtBQUNEOztBQUVERyxFQUFBQSxhQUFhLENBQUNILE9BQUQsRUFBdUI7QUFDbEMsU0FBS0ksRUFBTCxHQUFVSixPQUFPLENBQUNJLEVBQWxCO0FBQ0EsU0FBS0MsS0FBTCxHQUFhTCxPQUFPLENBQUNNLHNCQUFSLENBQStCLGNBQS9CLENBQWI7QUFDQSxTQUFLQyxhQUFMLEdBQXFCUCxPQUFPLENBQUNNLHNCQUFSLENBQ25CLHNCQURtQixFQUVuQixDQUZtQixDQUFyQjtBQUdEOztBQUVERSxFQUFBQSxjQUFjLENBQUNDLEtBQUQsRUFBZ0I7QUFDNUIsU0FBSyxDQUFDQyxXQUFOOztBQUNBLFNBQUssTUFBTUMsSUFBWCxJQUFtQixLQUFLTixLQUF4QixFQUErQjtBQUM3QixZQUFNTyxNQUFNLEdBQUdELElBQUksQ0FBQ0wsc0JBQUwsQ0FBNEIsWUFBNUIsQ0FBZjtBQUNBLFlBQU1MLEtBQUssR0FBRyxLQUFLLENBQUNZLFlBQU4sQ0FBbUJELE1BQW5CLEVBQTJCSCxLQUEzQixDQUFkOztBQUNBLFVBQUksT0FBT1IsS0FBUCxJQUFnQixRQUFwQixFQUE4QjtBQUM1QixhQUFLQSxLQUFMLElBQWNBLEtBQWQ7QUFDRCxPQUZELE1BRU87QUFDTCxhQUFLQyxjQUFMO0FBQ0Q7QUFDRjtBQUNGOztBQUVELEdBQUNRLFdBQVcsR0FBRztBQUNiLFNBQUtULEtBQUwsR0FBYSxDQUFiO0FBQ0EsU0FBS0MsY0FBTCxHQUFzQixDQUF0QjtBQUNEOztBQUVELEdBQUNXLFlBQVksQ0FBQ0QsTUFBRCxFQUF5QkgsS0FBekIsRUFBd0M7QUFDbkQsU0FBSyxNQUFNSyxLQUFYLElBQW9CRixNQUFwQixFQUE0QjtBQUMxQixZQUFNRyxTQUFTLEdBQUdELEtBQUssQ0FBQ0UsV0FBeEI7QUFDQSxZQUFNQyxNQUFNLEdBQUdGLFNBQVMsQ0FBQ0csS0FBVixDQUFnQlQsS0FBaEIsQ0FBZjs7QUFDQSxVQUFJUSxNQUFKLEVBQVk7QUFDVixlQUFPRSxRQUFRLENBQUNGLE1BQU0sQ0FBQyxDQUFELENBQVAsQ0FBZjtBQUNEO0FBQ0Y7O0FBQ0QsV0FBTyxJQUFQO0FBQ0Q7O0FBRURHLEVBQUFBLGNBQWMsQ0FBQ0MsSUFBRCxFQUFlO0FBQzNCLFNBQUtkLGFBQUwsQ0FBbUJTLFdBQW5CLEdBQWtDLEdBQUVLLElBQUssS0FBSSxLQUFLcEIsS0FBTSxlQUFjLEtBQUtDLGNBQWUsRUFBMUY7QUFDRDs7QUE5Q2lCIiwic291cmNlc0NvbnRlbnQiOlsiXCJ1c2Ugc3RyaWN0XCI7XHJcblxyXG5pbnRlcmZhY2UgQ29sdW1uRWxlbWVudCB7XHJcbiAgaWQ6IFN0cmluZztcclxuICBjYXJkczogSFRNTENvbGxlY3Rpb247XHJcbiAgY29sdW1uQ291bnRlcjogRWxlbWVudDtcclxuICBtaXNzaW5nQ291bnRlcjogbnVtYmVyO1xyXG4gIHZhbHVlOiBudW1iZXI7XHJcbn1cclxuXHJcbmNsYXNzIENvbHVtbkVsZW1lbnQge1xyXG4gIGNvbnN0cnVjdG9yKGVsZW1lbnQ6IEhUTUxFbGVtZW50KSB7XHJcbiAgICB0aGlzLnZhbHVlID0gMDtcclxuICAgIHRoaXMubWlzc2luZ0NvdW50ZXIgPSAwO1xyXG4gICAgdGhpcy51bnBhY2tFbGVtZW50KGVsZW1lbnQpO1xyXG4gIH1cclxuXHJcbiAgdW5wYWNrRWxlbWVudChlbGVtZW50OiBIVE1MRWxlbWVudCkge1xyXG4gICAgdGhpcy5pZCA9IGVsZW1lbnQuaWQ7XHJcbiAgICB0aGlzLmNhcmRzID0gZWxlbWVudC5nZXRFbGVtZW50c0J5Q2xhc3NOYW1lKFwicHJvamVjdC1jYXJkXCIpO1xyXG4gICAgdGhpcy5jb2x1bW5Db3VudGVyID0gZWxlbWVudC5nZXRFbGVtZW50c0J5Q2xhc3NOYW1lKFxyXG4gICAgICBcImpzLWNvbHVtbi1jYXJkLWNvdW50XCJcclxuICAgIClbMF07XHJcbiAgfVxyXG5cclxuICBjYWxjdWxhdGVWYWx1ZShyZWdleDogUmVnRXhwKSB7XHJcbiAgICB0aGlzLiNyZXNldFZhbHVlcygpO1xyXG4gICAgZm9yIChjb25zdCBjYXJkIG9mIHRoaXMuY2FyZHMpIHtcclxuICAgICAgY29uc3QgbGFiZWxzID0gY2FyZC5nZXRFbGVtZW50c0J5Q2xhc3NOYW1lKFwiSXNzdWVMYWJlbFwiKTtcclxuICAgICAgY29uc3QgdmFsdWUgPSB0aGlzLiNleHRyYWN0VmFsdWUobGFiZWxzLCByZWdleCk7XHJcbiAgICAgIGlmICh0eXBlb2YgdmFsdWUgPT0gXCJudW1iZXJcIikge1xyXG4gICAgICAgIHRoaXMudmFsdWUgKz0gdmFsdWU7XHJcbiAgICAgIH0gZWxzZSB7XHJcbiAgICAgICAgdGhpcy5taXNzaW5nQ291bnRlcisrO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAjcmVzZXRWYWx1ZXMoKSB7XHJcbiAgICB0aGlzLnZhbHVlID0gMDtcclxuICAgIHRoaXMubWlzc2luZ0NvdW50ZXIgPSAwO1xyXG4gIH1cclxuXHJcbiAgI2V4dHJhY3RWYWx1ZShsYWJlbHM6IEhUTUxDb2xsZWN0aW9uLCByZWdleDogUmVnRXhwKSB7XHJcbiAgICBmb3IgKGNvbnN0IGxhYmVsIG9mIGxhYmVscykge1xyXG4gICAgICBjb25zdCBsYWJlbE5hbWUgPSBsYWJlbC50ZXh0Q29udGVudDtcclxuICAgICAgY29uc3QgcmVzdWx0ID0gbGFiZWxOYW1lLm1hdGNoKHJlZ2V4KTtcclxuICAgICAgaWYgKHJlc3VsdCkge1xyXG4gICAgICAgIHJldHVybiBwYXJzZUludChyZXN1bHRbMV0pO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICByZXR1cm4gbnVsbDtcclxuICB9XHJcblxyXG4gIHJld3JpdGVDb3VudGVyKHRleHQ6IHN0cmluZykge1xyXG4gICAgdGhpcy5jb2x1bW5Db3VudGVyLnRleHRDb250ZW50ID0gYCR7dGV4dH06ICR7dGhpcy52YWx1ZX0gfCBtaXNzaW5nOiAke3RoaXMubWlzc2luZ0NvdW50ZXJ9YDtcclxuICB9XHJcbn1cclxuXHJcbmV4cG9ydCB7IENvbHVtbkVsZW1lbnQgfTtcclxuIl19

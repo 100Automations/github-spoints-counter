@@ -6,12 +6,13 @@
   "scripts": {
     "test": "jest",
     "watch": "npx tsc --watch",
-    "build": "npx tsc"
+    "build": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
