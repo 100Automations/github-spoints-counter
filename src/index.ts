@@ -27,7 +27,7 @@ function rewriteColumns(columns: ColumnElement[], str: string) {
 }
 
 function composeRegex(str: string) {
-  const regex = new RegExp(`.*${str}.*?(\\d+).*`);
+  const regex = new RegExp(`.*${str}.*?(\\d+\\.?[\\d]*).*`);
   return regex;
 }
 

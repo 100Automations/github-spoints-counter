@@ -5,6 +5,7 @@
   "main": "borderify.js",
   "scripts": {
     "test": "jest",
+    "test:w": "jest --watch",
     "build": "npx webpack --mode=production",
     "build:t": "tsc",
     "build:tw": "tsc --watch"

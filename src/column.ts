@@ -46,14 +46,16 @@ class ColumnElement {
       const labelName = label.textContent;
       const result = labelName.match(regex);
       if (result) {
-        return parseInt(result[1]);
+        return parseFloat(result[1]);
       }
     }
     return null;
   }
 
   rewriteCounter(text: string) {
-    this.columnCounter.textContent = `${text}: ${this.value} | missing: ${this.missingCounter}`;
+    this.columnCounter.textContent = `${text}: ${this.value.toFixed(
+      1
+    )} | missing: ${this.missingCounter}`;
   }
 }
 
