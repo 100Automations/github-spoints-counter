@@ -31,11 +31,23 @@ function composeRegex(str: string) {
   return regex;
 }
 
+console.log("1");
 document.body.style.border = "5px solid red";
-window.addEventListener("DOMContentLoaded", (event) => {
-  console.log("DOM fully loaded and parsed");
-  main();
-});
+
+// @ts-ignore
+console.log(browser.runtime);
+
+// @ts-ignore
+browser.webRequest.onCompleted.addListener(
+  () => {
+    console.log("three");
+  },
+  { urls: ["<all_urls>"] }
+);
+
+document.body.style.border = "5px solid green";
+console.log("2");
+
 main();
 
 export { collectColumns, rewriteColumns, composeRegex };
