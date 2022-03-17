@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.github.com/*/*/projects/*"],
-      "js": ["dist/index.js"]
+      "js": ["dist/bundle.js"]
     }
   ],
 
