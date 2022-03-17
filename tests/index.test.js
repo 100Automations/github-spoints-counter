@@ -1,6 +1,6 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const { collectColumns, composeRegex } = require("../dist/index");
+const { collectColumns, composeRegex } = require("../src/index");
 
 //const dom = JSDOM.fromFile("tests/assets/test.html");
 
