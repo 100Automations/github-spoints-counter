@@ -5,6 +5,8 @@ import { ColumnElement } from "./column";
 function main() {
   const columns = collectColumns();
   rewriteColumns(columns, "size");
+  observer.disconnect();
+  observer.observe(targetNode, config);
 }
 
 function collectColumns() {
@@ -31,23 +33,17 @@ function composeRegex(str: string) {
   return regex;
 }
 
-console.log("1");
-document.body.style.border = "5px solid red";
+let timeout;
+const targetNode = document.getElementsByClassName("project-columns")[0];
+const config = { childList: true, subtree: true };
+const callback = () => {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    main();
+  }, 500);
+};
 
-// @ts-ignore
-console.log(browser.runtime);
-
-// @ts-ignore
-browser.webRequest.onCompleted.addListener(
-  () => {
-    console.log("three");
-  },
-  { urls: ["<all_urls>"] }
-);
-
-document.body.style.border = "5px solid green";
-console.log("2");
-
-main();
+const observer = new MutationObserver(callback);
+observer.observe(targetNode, config);
 
 export { collectColumns, rewriteColumns, composeRegex };
