@@ -29,11 +29,28 @@ test("Column calculateValue", (done) => {
         document.getElementsByClassName("project-column")[3];
       const column = new ColumnElement(backlogElement);
       column.calculateValue(new RegExp(".*size.*?(\\d+).*"));
-      expect(column.value).toBe(62);
+      expect(column.value).toBe(63.4);
       expect(column.missingCounter).toBe(0);
       column.calculateValue(new RegExp(".*not-here.*?(\\d+).*"));
       expect(column.value).toBe(0);
       expect(column.missingCounter).toBe(22);
+      done();
+    })
+    .catch((err) => {
+      done(err);
+    });
+});
+
+test("Column calculateValue no-issue-card-column", (done) => {
+  JSDOM.fromFile("tests/assets/test.html")
+    .then((dom) => {
+      const document = dom.window.document;
+      const backlogElement =
+        document.getElementsByClassName("project-column")[0];
+      const column = new ColumnElement(backlogElement);
+      column.calculateValue(new RegExp(".*size.*?(\\d+).*"));
+      expect(column.value).toBe(0);
+      expect(column.missingCounter).toBe(0);
       done();
     })
     .catch((err) => {
@@ -52,7 +69,7 @@ test("Column rewriteCounter", (done) => {
       expect(column.columnCounter.textContent).toBe("size: 0 | missing: 0");
       column.calculateValue(new RegExp(".*size.*?(\\d+).*"));
       column.rewriteCounter("size");
-      expect(column.columnCounter.textContent).toBe("size: 62 | missing: 0");
+      expect(column.columnCounter.textContent).toBe("size: 63.4 | missing: 0");
       column.calculateValue(new RegExp(".*not-here.*?(\\d+).*"));
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe("size: 0 | missing: 22");
