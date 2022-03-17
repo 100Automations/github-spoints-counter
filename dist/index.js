@@ -22,8 +22,14 @@ function collectColumns() {
     return columns;
 }
 exports.collectColumns = collectColumns;
+function rewriteColumns(columns, str) {
+    const regex = composeRegex(str);
+    for (const column of columns) {
+        column.calculateValue(regex);
+    }
+}
 function composeRegex(str) {
-    const regex = `/.*${str}.*(\d)/`;
+    const regex = new RegExp(`.*${str}.*(\\d+).*`);
     return regex;
 }
 exports.composeRegex = composeRegex;

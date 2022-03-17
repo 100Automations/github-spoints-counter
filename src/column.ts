@@ -22,6 +22,7 @@ class ColumnElement {
   }
 
   calculateValue(regex: RegExp) {
+    this.#resetValues();
     for (const card of this.cards) {
       const labels = card.getElementsByClassName("IssueLabel");
       const value = this.#extractValue(labels, regex);
@@ -33,21 +34,24 @@ class ColumnElement {
     }
   }
 
+  #resetValues() {
+    this.value = 0;
+    this.missingCounter = 0;
+  }
+
   #extractValue(labels: HTMLCollection, regex: RegExp) {
     for (const label of labels) {
-      if (label instanceof HTMLElement) {
-        const labelName = label.textContent;
-        if (labelName.match(regex)) {
-          // TODO, cast into int, if applicable, and then return the number
-          return 0;
-        }
+      const labelName = label.textContent;
+      const result = labelName.match(regex);
+      if (result) {
+        return parseInt(result[1]);
       }
     }
     return null;
   }
 
-  rewriteCounter() {
-    // TODO, take this.columnCounter and fix the innerText with the new value
+  rewriteCounter(text: string) {
+    this.columnCounter.textContent = `${text}: ${this.value} | missing: ${this.missingCounter}`;
   }
 }
 

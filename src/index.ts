@@ -21,8 +21,15 @@ function collectColumns() {
   return columns;
 }
 
+function rewriteColumns(columns: ColumnElement[], str: string) {
+  const regex = composeRegex(str);
+  for (const column of columns) {
+    column.calculateValue(regex);
+  }
+}
+
 function composeRegex(str: string) {
-  const regex = `/.*${str}.*(\d)/`;
+  const regex = new RegExp(`.*${str}.*(\\d+).*`);
   return regex;
 }
 
