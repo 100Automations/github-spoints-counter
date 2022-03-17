@@ -1,7 +1,6 @@
 "use strict";
 
 import { ColumnElement } from "./column";
-document.body.style.border = "5px solid green";
 
 function collectColumns() {
   const elements = document.getElementsByClassName("project-column");
@@ -26,5 +25,8 @@ function composeRegex(str: string) {
   const regex = new RegExp(`.*${str}.*(\\d+).*`);
   return regex;
 }
+
+document.body.style.border = "5px solid red";
+console.log("this works!");
 
 export { collectColumns, rewriteColumns, composeRegex };
