@@ -1,17 +1,18 @@
 "use strict";
 
 interface ColumnElement {
-  id: String;
+  id: string;
   cards: HTMLCollection;
   columnCounter: Element;
-  missingCounter: number;
+  missingValue: number;
+  resetText: string;
   value: number;
 }
 
 class ColumnElement {
   constructor(element: HTMLElement) {
     this.value = 0;
-    this.missingCounter = 0;
+    this.missingValue = 0;
     this.unpackElement(element);
   }
 
@@ -21,24 +22,27 @@ class ColumnElement {
     this.columnCounter = element.getElementsByClassName(
       "js-column-card-count"
     )[0];
+    this.resetText = this.columnCounter.textContent;
   }
 
   calculateValue(regex: RegExp) {
     this.#resetValues();
     for (const card of this.cards) {
-      const labels = card.getElementsByClassName("IssueLabel");
-      const value = this.#extractValue(labels, regex);
-      if (typeof value == "number") {
-        this.value += value;
-      } else {
-        this.missingCounter++;
+      if ((card as HTMLElement).dataset.cardType.includes("issue")) {
+        const labels = card.getElementsByClassName("IssueLabel");
+        const value = this.#extractValue(labels, regex);
+        if (typeof value == "number") {
+          this.value += value;
+        } else {
+          this.missingValue++;
+        }
       }
     }
   }
 
   #resetValues() {
     this.value = 0;
-    this.missingCounter = 0;
+    this.missingValue = 0;
   }
 
   #extractValue(labels: HTMLCollection, regex: RegExp) {
@@ -55,7 +59,11 @@ class ColumnElement {
   rewriteCounter(text: string) {
     this.columnCounter.textContent = `${text}: ${this.value.toFixed(
       1
-    )} | missing: ${this.missingCounter}`;
+    )} | missing: ${this.missingValue}`;
+  }
+
+  resetCounter() {
+    this.columnCounter.textContent = this.resetText;
   }
 }
 
