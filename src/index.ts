@@ -2,6 +2,11 @@
 
 import { ColumnElement } from "./column";
 
+function main() {
+  const columns = collectColumns();
+  rewriteColumns(columns, "size");
+}
+
 function collectColumns() {
   const elements = document.getElementsByClassName("project-column");
   let columns = [];
@@ -22,11 +27,15 @@ function rewriteColumns(columns: ColumnElement[], str: string) {
 }
 
 function composeRegex(str: string) {
-  const regex = new RegExp(`.*${str}.*(\\d+).*`);
+  const regex = new RegExp(`.*${str}.*?(\\d+).*`);
   return regex;
 }
 
 document.body.style.border = "5px solid red";
-console.log("this works!");
+window.addEventListener("DOMContentLoaded", (event) => {
+  console.log("DOM fully loaded and parsed");
+  main();
+});
+main();
 
 export { collectColumns, rewriteColumns, composeRegex };

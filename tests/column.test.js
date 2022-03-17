@@ -28,10 +28,10 @@ test("Column calculateValue", (done) => {
       const backlogElement =
         document.getElementsByClassName("project-column")[3];
       const column = new ColumnElement(backlogElement);
-      column.calculateValue(new RegExp(".*size.*(\\d+).*"));
-      expect(column.value).toBe(52);
+      column.calculateValue(new RegExp(".*size.*?(\\d+).*"));
+      expect(column.value).toBe(62);
       expect(column.missingCounter).toBe(0);
-      column.calculateValue(new RegExp(".*not-here.*(\\d+).*"));
+      column.calculateValue(new RegExp(".*not-here.*?(\\d+).*"));
       expect(column.value).toBe(0);
       expect(column.missingCounter).toBe(22);
       done();
@@ -50,10 +50,10 @@ test("Column rewriteCounter", (done) => {
       const column = new ColumnElement(backlogElement);
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe("size: 0 | missing: 0");
-      column.calculateValue(new RegExp(".*size.*(\\d+).*"));
+      column.calculateValue(new RegExp(".*size.*?(\\d+).*"));
       column.rewriteCounter("size");
-      expect(column.columnCounter.textContent).toBe("size: 52 | missing: 0");
-      column.calculateValue(new RegExp(".*not-here.*(\\d+).*"));
+      expect(column.columnCounter.textContent).toBe("size: 62 | missing: 0");
+      column.calculateValue(new RegExp(".*not-here.*?(\\d+).*"));
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe("size: 0 | missing: 22");
       done();
