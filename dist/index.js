@@ -9,6 +9,7 @@
 
 */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.composeRegex = exports.collectColumns = void 0;
 const column_1 = require("./column");
 function collectColumns() {
     const elements = document.getElementsByClassName("project-column");
@@ -20,4 +21,9 @@ function collectColumns() {
     }
     return columns;
 }
-function composeRegex(str) { }
+exports.collectColumns = collectColumns;
+function composeRegex(str) {
+    const regex = `/.*${str}.*(\d)/`;
+    return regex;
+}
+exports.composeRegex = composeRegex;

@@ -39,7 +39,7 @@ exports.ColumnElement = ColumnElement;
 _ColumnElement_instances = new WeakSet(), _ColumnElement_extractValue = function _ColumnElement_extractValue(labels, regex) {
     for (const label of labels) {
         if (label instanceof HTMLElement) {
-            const labelName = label.innerText;
+            const labelName = label.textContent;
             if (labelName.match(regex)) {
                 // TODO, cast into int, if applicable, and then return the number
                 return 0;
