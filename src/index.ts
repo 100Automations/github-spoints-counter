@@ -1,12 +1,4 @@
-/*
-
-1. complete a function that rewrites all the numbers in the columns
-
-2. complete a function that counts the number of points, check
-
-3. complete a a function that takes input from a form and configures the other functions
-
-*/
+"use strict";
 
 import { ColumnElement } from "./column";
 
@@ -25,6 +17,7 @@ function rewriteColumns(columns: ColumnElement[], str: string) {
   const regex = composeRegex(str);
   for (const column of columns) {
     column.calculateValue(regex);
+    column.rewriteCounter(str);
   }
 }
 
@@ -33,4 +26,4 @@ function composeRegex(str: string) {
   return regex;
 }
 
-export { collectColumns, composeRegex };
+export { collectColumns, rewriteColumns, composeRegex };

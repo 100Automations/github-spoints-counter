@@ -1,3 +1,5 @@
+"use strict";
+
 interface ColumnElement {
   id: String;
   cards: HTMLCollection;
