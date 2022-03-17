@@ -11,6 +11,13 @@
 
   "permissions": ["activeTab"],
 
+  "content_scripts": [
+    {
+      "matches": ["*://*.github.com/*/*/projects/*"],
+      "js": ["dist/index.js"]
+    }
+  ],
+
   "browser_action": {
     "default_icon": "icons/beasts-32.png",
     "default_title": "Beastify",

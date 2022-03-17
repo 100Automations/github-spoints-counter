@@ -1,6 +1,9 @@
 "use strict";
 
+// TODO see this for how to use babel for compiling https://github.com/microsoft/TypeScript-Babel-Starter/blob/master/package.json
+
 import { ColumnElement } from "./column";
+document.body.style.border = "5px solid green";
 
 function collectColumns() {
   const elements = document.getElementsByClassName("project-column");
