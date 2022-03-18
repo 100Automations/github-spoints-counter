@@ -1,8 +1,12 @@
 html,
 body {
-  width: 250px;
+  width: 350px;
 }
 
-.popup > * {
+#popup > * {
   margin-bottom: 8px;
+}
+
+.btn {
+  width: 100%;
 }
