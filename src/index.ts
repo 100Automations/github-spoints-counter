@@ -33,6 +33,7 @@ function composeRegex(str: string) {
   return regex;
 }
 
+// TODO, attach observer directly to each column and only call the column that is relevant
 let timeout;
 const targetNode = document.getElementsByClassName("project-columns")[0];
 const config = { childList: true, subtree: true };
