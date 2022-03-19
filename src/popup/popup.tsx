@@ -1,50 +1,105 @@
 // @ts-nocheck
 "use strict";
 
-import './popup.css';
-
-console.log(document.getElementById('app'))
+import { render } from "preact";
+import { useState } from "preact/hooks";
+import "./popup.css";
 
 const Popup = () => {
+  const [rows, setRows] = useState([Filter]);
+
   return (
     <div id="popup" class="container p-3">
-      <Series />
+      {rows.map((Row) => {
+        return <Row />;
+      })}
+      <AddFilterButton rows={rows} setRows={setRows} />
     </div>
-  )
-}
+  );
+};
 
+const Filter = () => {
+  const [isEdit, setIsEdit] = useState(true);
+  const [innerText, setInnerText] = useState("");
 
-console.log(document.getElementById('app'))
+  return isEdit ? (
+    <FilterEdit
+      innerText={innerText}
+      setIsEdit={setIsEdit}
+      setInnerText={setInnerText}
+    />
+  ) : (
+    <FilterRow innerText={innerText} toogleEdit={setIsEdit} />
+  );
+};
 
-const Series = () => {
-  <>
+const FilterEdit = ({ innerText, setIsEdit, setInnerText }) => {
+  return (
     <form class="row align-items-center">
       <div class="col-3">
-        <button class="btn btn-primary btn-sm" type="button">Edit</button>
+        <button
+          class="btn btn-primary btn-sm"
+          type="button"
+          onClick={() => {
+            setIsEdit(false);
+          }}
+        >
+          Submit
+        </button>
       </div>
       <div class="col-6">
-        <input class="form-control" type="text" value="size" disabled />
+        <input
+          class="form-control"
+          type="text"
+          value={innerText}
+          onInput={(e) => setInnerText(e.target.value)}
+        />
+      </div>
+    </form>
+  );
+};
+
+const FilterRow = ({ innerText, toogleEdit }) => {
+  return (
+    <form class="row align-items-center">
+      <div class="col-3">
+        <button
+          class="btn btn-primary btn-sm"
+          type="button"
+          onClick={() => toogleEdit(true)}
+        >
+          Edit
+        </button>
+      </div>
+      <div class="col-6">
+        <input class="form-control" type="text" value={innerText} disabled />
       </div>
       <div class="col-3 form-switch d-flex justify-content-end">
         <input class="form-check-input" type="checkbox" />
       </div>
     </form>
-    <form class="row align-items-center">
-      <div class="col-3">
-        <button class="btn btn-primary btn-sm" type="button">Submit</button>
-      </div>
-      <div class="col-6">
-        <input class="form-control" type="text" value="size" />
-      </div>
-    </form>
+  );
+};
+
+const AddFilterButton = ({ rows, setRows }) => {
+  function addRow() {
+    const newRow = [...rows];
+    newRow.push(Filter);
+    setRows(newRow);
+  }
+
+  return (
     <div>
-      <button type="button" class="btn btn-primary btn-sm">Add Filter</button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        onClick={() => addRow()}
+      >
+        Add Filter
+      </button>
     </div>
-  </>
-}
-
-
-console.log(document.getElementById('app'))
+  );
+};
 
 /**
  * When the popup loads, inject a content script into the active tab,
@@ -52,6 +107,4 @@ console.log(document.getElementById('app'))
  * If we couldn't inject the script, handle the error.
  */
 
-// document.getElementById('app').appendChild(document.createTextNode('123'))
-console.log(Popup())
-// document.getElementById('app').appendChild(<Popup />)
+render(<Popup />, document.getElementById("app"));

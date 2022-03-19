@@ -20,9 +20,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
-    alias: {
-      "react/jsx-runtime": "preact/jsx-runtime",
-    },
   },
   output: {
     filename: "[name].bundle.js",
