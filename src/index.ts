@@ -2,12 +2,13 @@
 
 import { ColumnElement } from "./column";
 
-function main() {
-  let observer: MutationObserver;
+let observer: MutationObserver;
+
+function main(filter: string) {
   const targetNode = document.getElementsByClassName("project-columns")[0];
   const config = { childList: true, subtree: true };
   const callback = debounce(() =>
-    mutationListener(() => {
+    mutationListener(filter, () => {
       observer.disconnect();
       observer.observe(targetNode, config);
     })
@@ -16,10 +17,9 @@ function main() {
   observer.observe(targetNode, config);
 }
 
-function mutationListener(callback: Function) {
+function mutationListener(filter: string, callback: Function) {
   const columns = collectColumns();
-  rewriteColumns(columns, "size");
-  console.log("check_run");
+  rewriteColumns(columns, filter);
   callback();
 }
 
@@ -58,6 +58,15 @@ function debounce(func: Function, timer = 500) {
   };
 }
 
-main();
+//main("size");
+console.log("zero?");
+//@ts-ignore
+browser.runtime.onMessage.addListener((message: { filter: string }) => {
+  if (observer) {
+    observer.disconnect();
+  }
+  mutationListener(message.filter, () => {});
+  main(message.filter);
+});
 
-export { collectColumns, rewriteColumns, composeRegex };
+export { collectColumns, rewriteColumns, composeRegex, main };

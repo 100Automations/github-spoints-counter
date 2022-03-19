@@ -22,11 +22,5 @@
     "default_icon": "icons/beverage-24.png",
     "default_title": "foxy-pangolins",
     "default_popup": "dist/popup.html"
-  },
-
-  "web_accessible_resources": [
-    "beasts/frog.jpg",
-    "beasts/turtle.jpg",
-    "beasts/snake.jpg"
-  ]
+  }
 }

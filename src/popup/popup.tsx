@@ -2,23 +2,54 @@
 "use strict";
 
 import { render } from "preact";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import "./popup.css";
 
 const Popup = () => {
   const [rows, setRows] = useState([Filter]);
+  const [currIndex, setCurrIndex] = useState(null);
+  const [currText, setCurrText] = useState(null);
+
+  useEffect(() => {
+    if (currText) {
+      function sendText(tabs) {
+        console.log("here we go?");
+        browser.tabs.sendMessage(tabs[0].id, {
+          filter: currText,
+        });
+      }
+
+      function onError(error) {
+        console.log(`Error: ${error}`);
+      }
+
+      let querying = browser.tabs.query({ currentWindow: true, active: true });
+      querying.then(sendText, onError);
+    }
+  }, currText);
+
+  function setCurr(index, text) {
+    setCurrIndex(index);
+    setCurrText(text);
+  }
 
   return (
     <div id="popup" class="container p-3">
-      {rows.map((Row) => {
-        return <Row />;
+      {rows.map((Row, index) => {
+        return (
+          <Row
+            key={index}
+            isOn={index == currIndex}
+            setCurr={(text) => setCurr(index, text)}
+          />
+        );
       })}
       <AddFilterButton rows={rows} setRows={setRows} />
     </div>
   );
 };
 
-const Filter = () => {
+const Filter = ({ isOn, setCurr }) => {
   const [isEdit, setIsEdit] = useState(true);
   const [innerText, setInnerText] = useState("");
 
@@ -27,13 +58,24 @@ const Filter = () => {
       innerText={innerText}
       setIsEdit={setIsEdit}
       setInnerText={setInnerText}
+      setCurr={setCurr}
     />
   ) : (
-    <FilterRow innerText={innerText} toogleEdit={setIsEdit} />
+    <FilterBase
+      innerText={innerText}
+      toogleEdit={setIsEdit}
+      isOn={isOn}
+      setCurr={setCurr}
+    />
   );
 };
 
-const FilterEdit = ({ innerText, setIsEdit, setInnerText }) => {
+const FilterEdit = ({ innerText, setIsEdit, setInnerText, setCurr }) => {
+  function handleClick() {
+    setIsEdit(false);
+    setCurr(innerText);
+  }
+
   return (
     <form class="row align-items-center">
       <div class="col-3">
@@ -41,7 +83,7 @@ const FilterEdit = ({ innerText, setIsEdit, setInnerText }) => {
           class="btn btn-primary btn-sm"
           type="button"
           onClick={() => {
-            setIsEdit(false);
+            handleClick();
           }}
         >
           Submit
@@ -59,7 +101,13 @@ const FilterEdit = ({ innerText, setIsEdit, setInnerText }) => {
   );
 };
 
-const FilterRow = ({ innerText, toogleEdit }) => {
+const FilterBase = ({ innerText, toogleEdit, isOn, setCurr }) => {
+  function handle(e) {
+    if (e.target.checked) {
+      setCurr(innerText);
+    }
+  }
+
   return (
     <form class="row align-items-center">
       <div class="col-3">
@@ -75,7 +123,12 @@ const FilterRow = ({ innerText, toogleEdit }) => {
         <input class="form-control" type="text" value={innerText} disabled />
       </div>
       <div class="col-3 form-switch d-flex justify-content-end">
-        <input class="form-check-input" type="checkbox" />
+        <input
+          class="form-check-input"
+          type="checkbox"
+          checked={isOn}
+          onChange={(e) => handle(e)}
+        />
       </div>
     </form>
   );
@@ -83,6 +136,7 @@ const FilterRow = ({ innerText, toogleEdit }) => {
 
 const AddFilterButton = ({ rows, setRows }) => {
   function addRow() {
+    console.log("clicked");
     const newRow = [...rows];
     newRow.push(Filter);
     setRows(newRow);
