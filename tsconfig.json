@@ -5,6 +5,7 @@
     "rootDir": "./src",
     "outDir": "./dist-ts",
     "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "jsxImportSource": "preact",
+    "types": ["preact"]
   }
 }

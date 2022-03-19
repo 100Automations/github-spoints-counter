@@ -49,7 +49,7 @@ function composeRegex(str: string) {
 
 // TODO, attach observer directly to each column and only call the column that is relevant
 function debounce(func: Function, timer = 500) {
-  let timeout: NodeJS.Timeout;
+  let timeout: number;
   return () => {
     clearTimeout(timeout);
     timeout = setTimeout(() => {

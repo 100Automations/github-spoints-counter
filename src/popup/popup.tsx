@@ -3,22 +3,21 @@
 
 import './popup.css';
 
-
 console.log(document.getElementById('app'))
 
-const App = (
-  <div className="app">
+const Popup = () => {
+  return (
     <div id="popup" class="container p-3">
       <Series />
     </div>
-  </div>
-)
+  )
+}
 
 
 console.log(document.getElementById('app'))
 
-const Series = (
-  <div>
+const Series = () => {
+  <>
     <form class="row align-items-center">
       <div class="col-3">
         <button class="btn btn-primary btn-sm" type="button">Edit</button>
@@ -41,8 +40,11 @@ const Series = (
     <div>
       <button type="button" class="btn btn-primary btn-sm">Add Filter</button>
     </div>
-  </div>
-)
+  </>
+}
+
+
+console.log(document.getElementById('app'))
 
 /**
  * When the popup loads, inject a content script into the active tab,
@@ -50,4 +52,6 @@ const Series = (
  * If we couldn't inject the script, handle the error.
  */
 
-document.getElementById('app').replaceWith(App)
+// document.getElementById('app').appendChild(document.createTextNode('123'))
+console.log(Popup())
+// document.getElementById('app').appendChild(<Popup />)
