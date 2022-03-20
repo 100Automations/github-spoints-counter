@@ -59,7 +59,6 @@ function debounce(func: Function, timer = 500) {
   };
 }
 
-//main("size");
 //@ts-ignore
 browser.runtime.onMessage.addListener(
   (message: { task: string; filter?: string }) => {

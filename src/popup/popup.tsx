@@ -1,10 +1,11 @@
-// @ts-nocheck
 "use strict";
 
 import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
+
 import "./popup.css";
-import { Button, TextInput, ToggleSwitch } from "./components";
+import { Button } from "./Components";
+import { Filter } from "./Filter";
 
 interface data {
   rows: datum[];
@@ -16,10 +17,12 @@ interface datum {
 }
 
 function getData(keys: data) {
+  //@ts-ignore
   return browser.storage.local.get(keys);
 }
 
 function setData(data: data) {
+  //@ts-ignore
   return browser.storage.local.set(data);
 }
 
@@ -59,6 +62,7 @@ const Popup = () => {
   }, [rows, currentOn]);
 
   useEffect(() => {
+    //@ts-ignore
     let querying = browser.tabs.query({ currentWindow: true, active: true });
 
     function onError(error) {
@@ -79,26 +83,40 @@ const Popup = () => {
     };
 
     querying.then((tabs) => {
+      //@ts-ignore
       browser.tabs.sendMessage(tabs[0].id, createMessage());
     }, onError);
   }, [currentOn]);
 
-  function addRow() {
-    if (rows.length < 10) {
-      const newRows = [...rows];
-      newRows.push(newDatum);
-      setRows(newRows);
-    }
+  interface options {
+    id?: number;
+    datum?: datum;
   }
 
-  function datumAPI(task: "update" | "delete", id: number, datum: datum) {
-    const newRows = [...rows];
-    if (task == "update") {
-      newRows[id] = datum;
-      setRows(newRows);
-    } else if (task == "delete") {
-      console.log(newRows.splice(id, 1));
-      setRows(newRows);
+  function datumAPI(
+    task: "post" | "get" | "patch" | "delete",
+    options: options
+  ) {
+    try {
+      const newRows = [...rows];
+      if (task == "post") {
+        if (rows.length < 10) {
+          const newRows = [...rows];
+          newRows.push(options.datum);
+          setRows(newRows);
+        }
+      } else if (task == "get") {
+        return newRows[options.id];
+      } else if (task == "patch") {
+        newRows[options.id] = options.datum;
+        setRows(newRows);
+      } else if (task == "delete") {
+        console.log(options.id);
+        console.log(newRows.splice(options.id, 1));
+        setRows(newRows);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
@@ -110,90 +128,17 @@ const Popup = () => {
             id={index}
             isOn={index == currentOn}
             setCurrentOn={setCurrentOn}
-            datum={datum}
             datumAPI={datumAPI}
           />
         );
       })}
       <div>
-        <Button onClick={addRow}>Add Filter</Button>
+        <Button onClick={() => datumAPI("post", { datum: newDatum })}>
+          Add Filter
+        </Button>
       </div>
     </div>
   );
 };
-
-const Filter = ({ id, isOn, setCurrentOn, datum, datumAPI }) => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [text, setText] = useState("");
-
-  useEffect(() => {
-    setText(datum.text);
-  }, [datum.text]);
-
-  function buttonClick() {
-    if (isEdit) {
-      setCurrentOn(id);
-      setIsEdit(false);
-      datumAPI("update", id, {
-        text: text,
-      });
-    } else {
-      setIsEdit(true);
-    }
-  }
-
-  function closeButtonClick() {
-    datumAPI("delete", id);
-    if (isOn) {
-      setCurrentOn(null);
-    }
-  }
-
-  function textInputEnter(e) {
-    setText(e.target.value);
-  }
-
-  function toggleChange(e) {
-    if (e.target.checked && text) {
-      setCurrentOn(id);
-    } else {
-      e.target.checked = false;
-      setCurrentOn(null);
-    }
-  }
-
-  return (
-    <form class="row align-items-center">
-      <div class="col-3">
-        <Button onClick={buttonClick}>{isEdit ? "Save" : "Edit"}</Button>
-      </div>
-      <div class="col-5">
-        <TextInput
-          value={text}
-          onInput={textInputEnter}
-          disabled={isEdit ? false : true}
-        />
-      </div>
-      <div class="col-2 d-flex justify-content-end">
-        {isEdit ? (
-          ""
-        ) : (
-          <Button color="danger" onClick={closeButtonClick}>
-            X
-          </Button>
-        )}
-      </div>
-      <div class="col-2 d-flex justify-content-end">
-        {isEdit ? "" : <ToggleSwitch onChange={toggleChange} isOn={isOn} />}
-      </div>
-    </form>
-  );
-};
-
-/**
- * When the popup loads, inject a content script into the active tab,
- * and add a click handler.
- * If we couldn't inject the script, handle the error.
- */
 
 render(<Popup />, document.getElementById("app"));
