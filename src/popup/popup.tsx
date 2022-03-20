@@ -7,42 +7,68 @@ import "./popup.css";
 import { Button, TextInput, ToggleSwitch } from "./components";
 
 const Popup = () => {
+  const [rows, setRows] = useState([true]);
   const [currentOn, setCurrentOn] = useState(null);
-  const [data, setData] = useState([{ text: "", editState: true }]);
+  const [currentText, setCurrentText] = useState(null);
 
-  function addData() {
-    const newData = [...data];
-    newData.push({ text: "", editState: true });
-    setData(newData);
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  useEffect(() => {
+    let querying = browser.tabs.query({ currentWindow: true, active: true });
+    console.log(currentText);
+    if (currentText) {
+      querying.then((tabs) => {
+        browser.tabs.sendMessage(tabs[0].id, {
+          task: "mutate",
+          filter: currentText,
+        });
+      }, onError);
+    } else {
+      querying.then((tabs) => {
+        browser.tabs.sendMessage(tabs[0].id, {
+          task: "reset",
+        });
+      }, onError);
+    }
+  }, [currentText]);
+
+  function addRow() {
+    if (rows.length < 10) {
+      const newRows = [...rows];
+      newRows.push(true);
+      setRows(newRows);
+    }
   }
 
   return (
     <div id="popup" class="container p-3">
-      {data.map((datum, index) => {
+      {rows.map((row, index) => {
         return (
           <Filter
             id={index}
             isOn={index == currentOn}
             setCurrentOn={setCurrentOn}
-            datum={datum}
+            setCurrentText={setCurrentText}
           />
         );
       })}
       <div>
-        <Button onClick={addData}>Add Filter</Button>
+        <Button onClick={addRow}>Add Filter</Button>
       </div>
     </div>
   );
 };
 
-const Filter = ({ id, isOn, setCurrentOn, datum }) => {
-  const [isEdit, setIsEdit] = useState(datum.editState);
-  const [text, setText] = useState(datum.text);
+const Filter = ({ id, isOn, setCurrentOn, setCurrentText }) => {
+  const [isEdit, setIsEdit] = useState(true);
+  const [text, setText] = useState("");
 
   function buttonClick() {
     if (isEdit) {
       setCurrentOn(id);
-      datum.text = text;
+      setCurrentText(text);
       setIsEdit(false);
     } else {
       setIsEdit(true);
@@ -56,8 +82,10 @@ const Filter = ({ id, isOn, setCurrentOn, datum }) => {
   function toggleChange(e) {
     if (e.target.checked) {
       setCurrentOn(id);
+      setCurrentText(text);
     } else {
       setCurrentOn(null);
+      setCurrentText(null);
     }
   }
 
