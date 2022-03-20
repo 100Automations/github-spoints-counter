@@ -1,10 +1,10 @@
 // @ts-nocheck
 "use strict";
 
-const Button = ({ onClick, ...props }) => {
+const Button = ({ color = "primary", onClick, ...props }) => {
   return (
     <button
-      class="btn btn-primary btn-sm"
+      class={`btn btn-${color} btn-sm`}
       type="button"
       onClick={(e) => {
         onClick(e);

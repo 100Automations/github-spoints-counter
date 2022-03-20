@@ -6,51 +6,112 @@ import { useEffect, useState } from "preact/hooks";
 import "./popup.css";
 import { Button, TextInput, ToggleSwitch } from "./components";
 
-const Popup = () => {
-  const [rows, setRows] = useState([true]);
-  const [currentOn, setCurrentOn] = useState(null);
-  const [currentText, setCurrentText] = useState(null);
+interface data {
+  rows: datum[];
+  currentOn: number;
+}
 
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
+interface datum {
+  text: string;
+}
+
+function getData(keys: data) {
+  return browser.storage.local.get(keys);
+}
+
+function setData(data: data) {
+  return browser.storage.local.set(data);
+}
+
+const newDatum: datum = {
+  text: "",
+};
+
+const Popup = () => {
+  const [rows, setRows] = useState([]);
+  const [currentOn, setCurrentOn] = useState(null);
+
+  useEffect(() => {
+    getData({
+      rows: [],
+      currentOn: null,
+    })
+      .then((data: data) => {
+        setRows(data.rows);
+        setCurrentOn(data.currentOn);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    setData({
+      rows: rows,
+      currentOn: currentOn,
+    })
+      .then(() => {
+        console.log("success message in popup");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [rows, currentOn]);
 
   useEffect(() => {
     let querying = browser.tabs.query({ currentWindow: true, active: true });
-    console.log(currentText);
-    if (currentText) {
-      querying.then((tabs) => {
-        browser.tabs.sendMessage(tabs[0].id, {
-          task: "mutate",
-          filter: currentText,
-        });
-      }, onError);
-    } else {
-      querying.then((tabs) => {
-        browser.tabs.sendMessage(tabs[0].id, {
-          task: "reset",
-        });
-      }, onError);
+
+    function onError(error) {
+      console.log(`Error: ${error}`);
     }
-  }, [currentText]);
+
+    const createMessage = () => {
+      if (typeof currentOn == "number" && rows[currentOn].text) {
+        return {
+          task: "mutate",
+          filter: rows[currentOn].text,
+        };
+      } else {
+        return {
+          task: "reset",
+        };
+      }
+    };
+
+    querying.then((tabs) => {
+      browser.tabs.sendMessage(tabs[0].id, createMessage());
+    }, onError);
+  }, [currentOn]);
 
   function addRow() {
     if (rows.length < 10) {
       const newRows = [...rows];
-      newRows.push(true);
+      newRows.push(newDatum);
+      setRows(newRows);
+    }
+  }
+
+  function datumAPI(task: "update" | "delete", id: number, datum: datum) {
+    const newRows = [...rows];
+    if (task == "update") {
+      newRows[id] = datum;
+      setRows(newRows);
+    } else if (task == "delete") {
+      console.log(newRows.splice(id, 1));
       setRows(newRows);
     }
   }
 
   return (
-    <div id="popup" class="container p-3">
-      {rows.map((row, index) => {
+    <div id="popup" class="container p-3 overflow-auto">
+      {rows.map((datum, index) => {
         return (
           <Filter
             id={index}
             isOn={index == currentOn}
             setCurrentOn={setCurrentOn}
-            setCurrentText={setCurrentText}
+            datum={datum}
+            datumAPI={datumAPI}
           />
         );
       })}
@@ -61,17 +122,30 @@ const Popup = () => {
   );
 };
 
-const Filter = ({ id, isOn, setCurrentOn, setCurrentText }) => {
-  const [isEdit, setIsEdit] = useState(true);
+const Filter = ({ id, isOn, setCurrentOn, datum, datumAPI }) => {
+  const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    setText(datum.text);
+  }, [datum.text]);
 
   function buttonClick() {
     if (isEdit) {
       setCurrentOn(id);
-      setCurrentText(text);
       setIsEdit(false);
+      datumAPI("update", id, {
+        text: text,
+      });
     } else {
       setIsEdit(true);
+    }
+  }
+
+  function closeButtonClick() {
+    datumAPI("delete", id);
+    if (isOn) {
+      setCurrentOn(null);
     }
   }
 
@@ -80,28 +154,36 @@ const Filter = ({ id, isOn, setCurrentOn, setCurrentText }) => {
   }
 
   function toggleChange(e) {
-    if (e.target.checked) {
+    if (e.target.checked && text) {
       setCurrentOn(id);
-      setCurrentText(text);
     } else {
+      e.target.checked = false;
       setCurrentOn(null);
-      setCurrentText(null);
     }
   }
 
   return (
     <form class="row align-items-center">
       <div class="col-3">
-        <Button onClick={buttonClick}>{isEdit ? "Submit" : "Edit"}</Button>
+        <Button onClick={buttonClick}>{isEdit ? "Save" : "Edit"}</Button>
       </div>
-      <div class="col-6">
+      <div class="col-5">
         <TextInput
           value={text}
           onInput={textInputEnter}
           disabled={isEdit ? false : true}
         />
       </div>
-      <div class="col-3 d-flex justify-content-end">
+      <div class="col-2 d-flex justify-content-end">
+        {isEdit ? (
+          ""
+        ) : (
+          <Button color="danger" onClick={closeButtonClick}>
+            X
+          </Button>
+        )}
+      </div>
+      <div class="col-2 d-flex justify-content-end">
         {isEdit ? "" : <ToggleSwitch onChange={toggleChange} isOn={isOn} />}
       </div>
     </form>

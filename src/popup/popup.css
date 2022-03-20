@@ -1,7 +1,6 @@
-html,
-body {
-  width: 350px;
-  min-height: 400px;
+#popup {
+  width: 400px;
+  height: 300px;
 }
 
 #popup > * {
