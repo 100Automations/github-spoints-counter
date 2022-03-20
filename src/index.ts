@@ -1,6 +1,6 @@
 "use strict";
 
-import { ColumnElement } from "./column";
+import { collectColumns, rewriteColumns } from "./column";
 
 let observer: MutationObserver;
 
@@ -23,30 +23,6 @@ function mutationListener(filter: string, callback: Function) {
   callback();
 }
 
-function collectColumns() {
-  const elements = document.getElementsByClassName("project-column");
-  let columns = [];
-  for (const element of elements) {
-    if (element instanceof HTMLElement) {
-      columns.push(new ColumnElement(element));
-    }
-  }
-  return columns;
-}
-
-function rewriteColumns(columns: ColumnElement[], str: string) {
-  const regex = composeRegex(str);
-  for (const column of columns) {
-    column.calculateValue(regex);
-    column.rewriteCounter(str);
-  }
-}
-
-function composeRegex(str: string) {
-  const regex = new RegExp(`.*${str}.*?(\\d+\\.?[\\d]*).*`);
-  return regex;
-}
-
 // TODO, attach observer directly to each column and only call the column that is relevant
 function debounce(func: Function, timer = 500) {
   let timeout: number;
@@ -57,7 +33,7 @@ function debounce(func: Function, timer = 500) {
     }, timer);
   };
 }
-
+/*
 //main("size");
 console.log("zero?");
 //@ts-ignore
@@ -67,6 +43,4 @@ browser.runtime.onMessage.addListener((message: { filter: string }) => {
   }
   mutationListener(message.filter, () => {});
   main(message.filter);
-});
-
-export { collectColumns, rewriteColumns, composeRegex, main };
+});*/
