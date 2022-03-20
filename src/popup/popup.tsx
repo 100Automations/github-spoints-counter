@@ -4,27 +4,9 @@ import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import "./popup.css";
-import { Button } from "./Components";
+import { Alert, Button } from "./Components";
 import { Filter } from "./Filter";
-
-interface data {
-  rows: datum[];
-  currentOn: number;
-}
-
-interface datum {
-  text: string;
-}
-
-function getData(keys: data) {
-  //@ts-ignore
-  return browser.storage.local.get(keys);
-}
-
-function setData(data: data) {
-  //@ts-ignore
-  return browser.storage.local.set(data);
-}
+import { getData, setData, datum, data } from "../dataHandler";
 
 const newDatum: datum = {
   text: "",
@@ -35,10 +17,7 @@ const Popup = () => {
   const [currentOn, setCurrentOn] = useState(null);
 
   useEffect(() => {
-    getData({
-      rows: [],
-      currentOn: null,
-    })
+    getData({ rows: [], currentOn: null })
       .then((data: data) => {
         setRows(data.rows);
         setCurrentOn(data.currentOn);
@@ -49,10 +28,7 @@ const Popup = () => {
   }, []);
 
   useEffect(() => {
-    setData({
-      rows: rows,
-      currentOn: currentOn,
-    })
+    setData({ rows: rows, currentOn: currentOn })
       .then(() => {
         console.log("success message in popup");
       })
@@ -64,36 +40,30 @@ const Popup = () => {
   useEffect(() => {
     //@ts-ignore
     let querying = browser.tabs.query({ currentWindow: true, active: true });
-
-    function onError(error) {
-      console.log(`Error: ${error}`);
-    }
-
     const createMessage = () => {
       if (typeof currentOn == "number" && rows[currentOn].text) {
-        return {
-          task: "mutate",
-          filter: rows[currentOn].text,
-        };
+        return { task: "mutate", filter: rows[currentOn].text };
       } else {
-        return {
-          task: "reset",
-        };
+        return { task: "reset" };
       }
     };
 
-    querying.then((tabs) => {
-      //@ts-ignore
-      browser.tabs.sendMessage(tabs[0].id, createMessage());
-    }, onError);
-  }, [currentOn]);
+    querying
+      .then((tabs) => {
+        //@ts-ignore
+        browser.tabs.sendMessage(tabs[0].id, createMessage());
+      })
+      .catch((error) => {
+        console.log(`Error: ${error}`);
+      });
+  }, [rows, currentOn]);
 
   interface options {
     id?: number;
     datum?: datum;
   }
 
-  function datumAPI(
+  function datumOperation(
     task: "post" | "get" | "patch" | "delete",
     options: options
   ) {
@@ -111,8 +81,7 @@ const Popup = () => {
         newRows[options.id] = options.datum;
         setRows(newRows);
       } else if (task == "delete") {
-        console.log(options.id);
-        console.log(newRows.splice(options.id, 1));
+        newRows.splice(options.id, 1);
         setRows(newRows);
       }
     } catch (error) {
@@ -128,12 +97,12 @@ const Popup = () => {
             id={index}
             isOn={index == currentOn}
             setCurrentOn={setCurrentOn}
-            datumAPI={datumAPI}
+            datumOperation={datumOperation}
           />
         );
       })}
       <div>
-        <Button onClick={() => datumAPI("post", { datum: newDatum })}>
+        <Button onClick={() => datumOperation("post", { datum: newDatum })}>
           Add Filter
         </Button>
       </div>

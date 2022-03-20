@@ -1,6 +1,23 @@
 // @ts-nocheck
 "use strict";
 
+const Alert = ({ color, ...props }) => {
+  return (
+    <div
+      class={`alert alert-${color} alert-dismissible fade show`}
+      role="alert"
+    >
+      {props.children}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  );
+};
+
 const Button = ({ color = "primary", onClick, ...props }) => {
   return (
     <button
@@ -40,4 +57,4 @@ const ToggleSwitch = ({ onChange, isOn = false }) => {
   );
 };
 
-export { Button, TextInput, ToggleSwitch };
+export { Alert, Button, TextInput, ToggleSwitch };

@@ -28,7 +28,10 @@ class ColumnElement {
   calculateValue(regex: RegExp) {
     this.#resetValues();
     for (const card of this.cards) {
-      if ((card as HTMLElement).dataset.cardType.includes("issue")) {
+      if (
+        (card as HTMLElement).dataset.cardType.includes("issue") &&
+        !card.classList.contains("d-none")
+      ) {
         const labels = card.getElementsByClassName("IssueLabel");
         const value = this.#extractValue(labels, regex);
         if (typeof value == "number") {

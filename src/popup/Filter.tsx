@@ -3,24 +3,19 @@ import { useEffect, useState } from "preact/hooks";
 
 import { Button, TextInput, ToggleSwitch } from "./Components";
 
-const Filter = ({ id, isOn, setCurrentOn, datumAPI }) => {
+const Filter = ({ id, isOn, setCurrentOn, datumOperation }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState("");
 
   useEffect(() => {
-    setText(datumAPI("get", { id: id }).text);
+    setText(datumOperation("get", { id: id }).text);
   }, []);
 
   function buttonClick() {
     if (isEdit) {
       setCurrentOn(id);
       setIsEdit(false);
-      datumAPI("patch", {
-        id: id,
-        datum: {
-          text: text,
-        },
-      });
+      datumOperation("patch", { id: id, datum: { text: text } });
     } else {
       setIsEdit(true);
     }
@@ -31,7 +26,7 @@ const Filter = ({ id, isOn, setCurrentOn, datumAPI }) => {
   }
 
   function closeButtonClick() {
-    datumAPI("delete", { id: id });
+    datumOperation("delete", { id: id });
     if (isOn) {
       setCurrentOn(null);
     }

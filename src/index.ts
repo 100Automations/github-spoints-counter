@@ -1,18 +1,21 @@
 "use strict";
 
 import { ColumnElement, composeRegex } from "./column";
+import { getData, data } from "./dataHandler";
 
 let observer: MutationObserver;
 const columns = collectColumns();
 
-function main(filter: string) {
+function main(filter: string, timer: number) {
   const targetNode = document.getElementsByClassName("project-columns")[0];
   const config = { childList: true, subtree: true };
-  const callback = debounce(() =>
-    mutationListener(filter, () => {
-      observer.disconnect();
-      observer.observe(targetNode, config);
-    })
+  const callback = debounce(
+    () =>
+      mutationListener(filter, () => {
+        observer.disconnect();
+        observer.observe(targetNode, config);
+      }),
+    timer
   );
   observer = new MutationObserver(callback);
   observer.observe(targetNode, config);
@@ -68,9 +71,18 @@ browser.runtime.onMessage.addListener(
 
     if (message.task == "mutate") {
       mutationListener(message.filter, () => {});
-      main(message.filter);
+      main(message.filter, 500);
     } else if (message.task == "reset") {
       resetColumns();
     }
   }
 );
+
+getData({ rows: [], currentOn: null })
+  .then((data: data) => {
+    mutationListener(data.rows[data.currentOn].text, () => {});
+    main(data.rows[data.currentOn].text, 1000);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
