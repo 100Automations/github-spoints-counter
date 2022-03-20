@@ -4,154 +4,79 @@
 import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import "./popup.css";
+import { Button, TextInput, ToggleSwitch } from "./components";
 
 const Popup = () => {
-  const [rows, setRows] = useState([Filter]);
-  const [currIndex, setCurrIndex] = useState(null);
-  const [currText, setCurrText] = useState(null);
+  const [currentOn, setCurrentOn] = useState(null);
+  const [data, setData] = useState([{ text: "", editState: true }]);
 
-  useEffect(() => {
-    if (currText) {
-      function sendText(tabs) {
-        console.log("here we go?");
-        browser.tabs.sendMessage(tabs[0].id, {
-          filter: currText,
-        });
-      }
-
-      function onError(error) {
-        console.log(`Error: ${error}`);
-      }
-
-      let querying = browser.tabs.query({ currentWindow: true, active: true });
-      querying.then(sendText, onError);
-    }
-  }, currText);
-
-  function setCurr(index, text) {
-    setCurrIndex(index);
-    setCurrText(text);
+  function addData() {
+    const newData = [...data];
+    newData.push({ text: "", editState: true });
+    setData(newData);
   }
 
   return (
     <div id="popup" class="container p-3">
-      {rows.map((Row, index) => {
+      {data.map((datum, index) => {
         return (
-          <Row
-            key={index}
-            isOn={index == currIndex}
-            setCurr={(text) => setCurr(index, text)}
+          <Filter
+            id={index}
+            isOn={index == currentOn}
+            setCurrentOn={setCurrentOn}
+            datum={datum}
           />
         );
       })}
-      <AddFilterButton rows={rows} setRows={setRows} />
+      <div>
+        <Button onClick={addData}>Add Filter</Button>
+      </div>
     </div>
   );
 };
 
-const Filter = ({ isOn, setCurr }) => {
-  const [isEdit, setIsEdit] = useState(true);
-  const [innerText, setInnerText] = useState("");
+const Filter = ({ id, isOn, setCurrentOn, datum }) => {
+  const [isEdit, setIsEdit] = useState(datum.editState);
+  const [text, setText] = useState(datum.text);
 
-  return isEdit ? (
-    <FilterEdit
-      innerText={innerText}
-      setIsEdit={setIsEdit}
-      setInnerText={setInnerText}
-      setCurr={setCurr}
-    />
-  ) : (
-    <FilterBase
-      innerText={innerText}
-      toogleEdit={setIsEdit}
-      isOn={isOn}
-      setCurr={setCurr}
-    />
-  );
-};
-
-const FilterEdit = ({ innerText, setIsEdit, setInnerText, setCurr }) => {
-  function handleClick() {
-    setIsEdit(false);
-    setCurr(innerText);
+  function buttonClick() {
+    if (isEdit) {
+      setCurrentOn(id);
+      datum.text = text;
+      setIsEdit(false);
+    } else {
+      setIsEdit(true);
+    }
   }
 
-  return (
-    <form class="row align-items-center">
-      <div class="col-3">
-        <button
-          class="btn btn-primary btn-sm"
-          type="button"
-          onClick={() => {
-            handleClick();
-          }}
-        >
-          Submit
-        </button>
-      </div>
-      <div class="col-6">
-        <input
-          class="form-control"
-          type="text"
-          value={innerText}
-          onInput={(e) => setInnerText(e.target.value)}
-        />
-      </div>
-    </form>
-  );
-};
+  function textInputEnter(e) {
+    setText(e.target.value);
+  }
 
-const FilterBase = ({ innerText, toogleEdit, isOn, setCurr }) => {
-  function handle(e) {
+  function toggleChange(e) {
     if (e.target.checked) {
-      setCurr(innerText);
+      setCurrentOn(id);
+    } else {
+      setCurrentOn(null);
     }
   }
 
   return (
     <form class="row align-items-center">
       <div class="col-3">
-        <button
-          class="btn btn-primary btn-sm"
-          type="button"
-          onClick={() => toogleEdit(true)}
-        >
-          Edit
-        </button>
+        <Button onClick={buttonClick}>{isEdit ? "Submit" : "Edit"}</Button>
       </div>
       <div class="col-6">
-        <input class="form-control" type="text" value={innerText} disabled />
-      </div>
-      <div class="col-3 form-switch d-flex justify-content-end">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          checked={isOn}
-          onChange={(e) => handle(e)}
+        <TextInput
+          value={text}
+          onInput={textInputEnter}
+          disabled={isEdit ? false : true}
         />
       </div>
+      <div class="col-3 d-flex justify-content-end">
+        {isEdit ? "" : <ToggleSwitch onChange={toggleChange} isOn={isOn} />}
+      </div>
     </form>
-  );
-};
-
-const AddFilterButton = ({ rows, setRows }) => {
-  function addRow() {
-    console.log("clicked");
-    const newRow = [...rows];
-    newRow.push(Filter);
-    setRows(newRow);
-  }
-
-  return (
-    <div>
-      <button
-        type="button"
-        class="btn btn-primary btn-sm"
-        onClick={() => addRow()}
-      >
-        Add Filter
-      </button>
-    </div>
   );
 };
 

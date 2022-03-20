@@ -5,6 +5,7 @@ module.exports = {
     index: "./src/index.ts",
     popup: "./src/popup/popup.tsx",
   },
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
