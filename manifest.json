@@ -3,8 +3,8 @@
   "name": "foxy-pangolins",
   "version": "1.0",
 
-  "description": "Adds a browser action icon to the toolbar. Click the button to choose a beast. The active tab's body content is then replaced with a picture of the chosen beast. See https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Examples#beastify",
-  "homepage_url": "https://github.com/mdn/webextensions-examples/tree/master/beastify",
+  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/Aveline-art/foxy-pangolins#README.md",
+  "homepage_url": "https://github.com/Aveline-art/foxy-pangolins",
   "icons": {
     "48": "icons/beverage-24.png"
   },

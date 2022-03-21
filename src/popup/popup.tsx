@@ -100,7 +100,7 @@ const Popup = () => {
       <Alert color={alert.color} hidden={alert.hidden}>
         {alert.text}
       </Alert>
-      <h1>Foxy-pangolins</h1>
+      <h1 class="mb-1">Foxy-pangolins</h1>
       {rows.map((datum, index) => {
         return (
           <Filter

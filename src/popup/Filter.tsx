@@ -6,14 +6,19 @@ import { Button, TextInput, ToggleSwitch } from "./Components";
 const Filter = ({ id, isOn, setCurrentOn, datumOperation }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState("");
+  const [isTogglable, setIsTogglable] = useState(false);
 
   useEffect(() => {
     setText(datumOperation("get", { id: id }).text);
   }, []);
 
+  useEffect(() => {
+    setIsTogglable(text ? true : false);
+  }, [text]);
+
   function buttonClick() {
     if (isEdit) {
-      setCurrentOn(id);
+      setCurrentOn(text ? id : null);
       setIsEdit(false);
       datumOperation("patch", { id: id, datum: { text: text } });
     } else {
@@ -33,7 +38,7 @@ const Filter = ({ id, isOn, setCurrentOn, datumOperation }) => {
   }
 
   function toggleChange(e) {
-    if (e.target.checked && text) {
+    if (e.target.checked) {
       setCurrentOn(id);
     } else {
       e.target.checked = false;
@@ -63,7 +68,15 @@ const Filter = ({ id, isOn, setCurrentOn, datumOperation }) => {
         )}
       </div>
       <div class="col-2 d-flex justify-content-end">
-        {isEdit ? "" : <ToggleSwitch onChange={toggleChange} isOn={isOn} />}
+        {isEdit ? (
+          ""
+        ) : (
+          <ToggleSwitch
+            onChange={toggleChange}
+            isOn={text && isOn}
+            disabled={!isTogglable}
+          />
+        )}
       </div>
     </form>
   );

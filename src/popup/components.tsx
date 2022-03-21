@@ -70,7 +70,7 @@ const TextInput = ({ onInput, value, disabled = false }) => {
   );
 };
 
-const ToggleSwitch = ({ onChange, isOn = false }) => {
+const ToggleSwitch = ({ onChange, disabled = false, isOn = false }) => {
   return (
     <div class="form-check form-switch">
       <input
@@ -78,6 +78,7 @@ const ToggleSwitch = ({ onChange, isOn = false }) => {
         type="checkbox"
         checked={isOn}
         onChange={(e) => onChange(e)}
+        disabled={disabled}
       />
     </div>
   );
