@@ -9,8 +9,8 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
   const [isTogglable, setIsTogglable] = useState(false);
 
   useEffect(() => {
-    setText(datumOperation("get", { id: id }).text);
-  }, [datum]);
+    setText(datum.text);
+  }, [datum.text]);
 
   useEffect(() => {
     setIsTogglable(text ? true : false);
