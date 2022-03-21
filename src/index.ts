@@ -2,10 +2,12 @@
 
 import { ColumnElement, composeRegex } from "./column";
 import { getData, data } from "./dataHandler";
+import { debounce } from "./utils";
 
 let observer: MutationObserver;
 const columns = collectColumns();
 
+// TODO, attach observer directly to each column and only call the column that is relevant
 function main(filter: string, timer: number) {
   const targetNode = document.getElementsByClassName("project-columns")[0];
   const config = { childList: true, subtree: true };
@@ -49,17 +51,6 @@ function resetColumns() {
   for (const column of columns) {
     column.resetCounter();
   }
-}
-
-// TODO, attach observer directly to each column and only call the column that is relevant
-function debounce(func: Function, timer = 500) {
-  let timeout: number;
-  return () => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      func();
-    }, timer);
-  };
 }
 
 //@ts-ignore

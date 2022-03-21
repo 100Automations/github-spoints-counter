@@ -15,6 +15,11 @@ const newDatum: datum = {
 const Popup = () => {
   const [rows, setRows] = useState([]);
   const [currentOn, setCurrentOn] = useState(null);
+  const [alert, setAlert] = useState({
+    text: "",
+    hidden: true,
+    color: "primary",
+  });
 
   useEffect(() => {
     getData({ rows: [], currentOn: null })
@@ -23,17 +28,17 @@ const Popup = () => {
         setCurrentOn(data.currentOn);
       })
       .catch((error) => {
-        console.log(error);
+        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
       });
   }, []);
 
   useEffect(() => {
     setData({ rows: rows, currentOn: currentOn })
       .then(() => {
-        console.log("success message in popup");
+        console.log("Saved.");
       })
       .catch((error) => {
-        console.log(error);
+        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
       });
   }, [rows, currentOn]);
 
@@ -54,7 +59,7 @@ const Popup = () => {
         browser.tabs.sendMessage(tabs[0].id, createMessage());
       })
       .catch((error) => {
-        console.log(`Error: ${error}`);
+        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
       });
   }, [rows, currentOn]);
 
@@ -80,17 +85,22 @@ const Popup = () => {
       } else if (task == "patch") {
         newRows[options.id] = options.datum;
         setRows(newRows);
+        setAlert({ text: "Saved.", hidden: false, color: "success" });
       } else if (task == "delete") {
         newRows.splice(options.id, 1);
         setRows(newRows);
       }
     } catch (error) {
-      console.log(error);
+      setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
     }
   }
 
   return (
     <div id="popup" class="container p-3 overflow-auto">
+      <Alert color={alert.color} hidden={alert.hidden}>
+        {alert.text}
+      </Alert>
+      <h1>Foxy-pangolins</h1>
       {rows.map((datum, index) => {
         return (
           <Filter

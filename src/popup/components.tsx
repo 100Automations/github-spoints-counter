@@ -1,10 +1,35 @@
 // @ts-nocheck
 "use strict";
 
-const Alert = ({ color, ...props }) => {
+import { useEffect, useState } from "preact/hooks";
+
+import { debounce } from "../utils";
+
+const Alert = ({ color, hidden, ...props }) => {
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    setIsHidden(hidden);
+  }, [hidden]);
+
+  useEffect(() => {
+    if (!isHidden) {
+      const callback = debounce(() => {
+        setIsHidden(true);
+      }, 1500);
+      callback();
+    }
+  }, [isHidden]);
+
+  function onClick() {
+    setIsHidden(true);
+  }
+
   return (
     <div
-      class={`alert alert-${color} alert-dismissible fade show`}
+      class={`alert alert-${color} alert-dismissible fade show fixed-top mx-4 ${
+        isHidden ? "hidden" : ""
+      }`}
       role="alert"
     >
       {props.children}
@@ -13,6 +38,7 @@ const Alert = ({ color, ...props }) => {
         class="btn-close"
         data-bs-dismiss="alert"
         aria-label="Close"
+        onClick={(e) => onClick(e)}
       ></button>
     </div>
   );
