@@ -5,7 +5,7 @@ import { useEffect, useState } from "preact/hooks";
 
 import { debounce } from "../utils";
 
-const Alert = ({ color, hidden, ...props }) => {
+const Alert = ({ color, hidden, onReset, ...props }) => {
   const [isHidden, setIsHidden] = useState(false);
 
   useEffect(() => {
@@ -16,7 +16,8 @@ const Alert = ({ color, hidden, ...props }) => {
     if (!isHidden) {
       const callback = debounce(() => {
         setIsHidden(true);
-      }, 1500);
+        onReset();
+      }, 3000);
       callback();
     }
   }, [isHidden]);

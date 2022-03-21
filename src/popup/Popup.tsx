@@ -85,7 +85,6 @@ const Popup = () => {
       } else if (task == "patch") {
         newRows[options.id] = options.datum;
         setRows(newRows);
-        setAlert({ text: "Saved.", hidden: false, color: "success" });
       } else if (task == "delete") {
         newRows.splice(options.id, 1);
         setRows(newRows);
@@ -95,12 +94,16 @@ const Popup = () => {
     }
   }
 
+  function alertReset() {
+    setAlert({ text: "", hidden: true, color: "primary" });
+  }
+
   return (
     <div id="popup" class="container p-3 overflow-auto">
-      <Alert color={alert.color} hidden={alert.hidden}>
+      <Alert color={alert.color} hidden={alert.hidden} onReset={alertReset}>
         {alert.text}
       </Alert>
-      <h1 class="mb-1">Foxy-pangolins</h1>
+      <h1 class="mb-2">Foxy-pangolins</h1>
       {rows.map((datum, index) => {
         return (
           <Filter
