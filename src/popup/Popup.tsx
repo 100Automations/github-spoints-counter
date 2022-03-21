@@ -110,6 +110,7 @@ const Popup = () => {
             id={index}
             isOn={index == currentOn}
             setCurrentOn={setCurrentOn}
+            datum={datum}
             datumOperation={datumOperation}
           />
         );

@@ -3,14 +3,14 @@ import { useEffect, useState } from "preact/hooks";
 
 import { Button, TextInput, ToggleSwitch } from "./Components";
 
-const Filter = ({ id, isOn, setCurrentOn, datumOperation }) => {
+const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [text, setText] = useState("");
   const [isTogglable, setIsTogglable] = useState(false);
 
   useEffect(() => {
     setText(datumOperation("get", { id: id }).text);
-  }, []);
+  }, [datum]);
 
   useEffect(() => {
     setIsTogglable(text ? true : false);
