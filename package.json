@@ -4,7 +4,7 @@
   "description": "",
   "main": "borderify.js",
   "scripts": {
-    "test": "jest",
+    "test": "tsc && jest",
     "test:w": "jest --watch",
     "build": "npx webpack --mode=production",
     "build:w": "npx webpack --mode=development --watch",
