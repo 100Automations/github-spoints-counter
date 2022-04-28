@@ -6,8 +6,8 @@
   "scripts": {
     "test": "jest",
     "test:w": "jest --watch",
-    "build": "npx webpack --mode=production",
-    "build:w": "npx webpack --mode=development --watch --no-devtool"
+    "build": "npx webpack --mode=production --no-devtool",
+    "build:w": "npx webpack --mode=development --watch"
   },
   "keywords": [],
   "author": "",
