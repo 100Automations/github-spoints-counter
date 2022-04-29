@@ -103,7 +103,7 @@ const Popup = () => {
       <Alert color={alert.color} hidden={alert.hidden} onReset={alertReset}>
         {alert.text}
       </Alert>
-      <h1 class="mb-2">Foxy-pangolins</h1>
+      <h1 class="mb-2 display-20">Foxy-pangolins</h1>
       {rows.map((datum, index) => {
         return (
           <Filter
