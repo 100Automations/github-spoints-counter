@@ -3,10 +3,10 @@
 import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-import "./popup.css";
 import { Alert, Button } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
+import "./popup.scss";
 
 const newDatum: datum = {
   text: "",
@@ -99,11 +99,13 @@ const Popup = () => {
   }
 
   return (
-    <div id="popup" class="container p-3 overflow-auto">
+    <div id="popup">
       <Alert color={alert.color} hidden={alert.hidden} onReset={alertReset}>
         {alert.text}
       </Alert>
-      <h1 class="mb-2 display-20">Foxy-pangolins</h1>
+      <h1 id="popup-title" class="photon-display-20">
+        Foxy-pangolins
+      </h1>
       {rows.map((datum, index) => {
         return (
           <Filter

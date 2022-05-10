@@ -1,10 +1,20 @@
+@import "./utility.scss";
+
 #popup {
   width: 400px;
   height: 300px;
+  padding: 24px;
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 #popup > * {
   margin-bottom: 8px;
+}
+
+#popup-title {
+  margin-bottom: 16px;
 }
 
 .hidden {
@@ -14,7 +24,7 @@
 .photon-btn {
   border: none;
   border-radius: 2px;
-  color:#ffffff;
+  color: #ffffff;
   font-size: 13px;
   height: 32px;
   padding-right: 8px;
@@ -35,7 +45,8 @@
 }
 
 .photon-btn-primary:focus {
-  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3)
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff,
+    0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
 .photon-btn-danger {
@@ -51,7 +62,8 @@
 }
 
 .photon-btn-danger:focus {
-  box-shadow: 0 0 0 1px #ff0039 inset, 0 0 0 1px #ff0039, 0 0 0 4px rgba(255 0 57 / 30%)
+  box-shadow: 0 0 0 1px #ff0039 inset, 0 0 0 1px #ff0039,
+    0 0 0 4px rgba(255 0 57 / 30%);
 }
 
 .photon-btn:disabled {
@@ -81,7 +93,7 @@
   box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
 }
 
-.display-20 {
+.photon-display-20 {
   font-size: 36px;
   font-weight: 200;
 }
