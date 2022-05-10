@@ -48,7 +48,7 @@ const Alert = ({ color, hidden, onReset, ...props }) => {
 const Button = ({ color = "primary", onClick, ...props }) => {
   return (
     <button
-      class={`btn btn-${color} btn-sm`}
+      class={`photon-btn photon-btn-${color}`}
       type="button"
       onClick={(e) => {
         onClick(e);
@@ -62,7 +62,7 @@ const Button = ({ color = "primary", onClick, ...props }) => {
 const TextInput = ({ onInput, value, disabled = false }) => {
   return (
     <input
-      class="form-control"
+      class="photon-form-input"
       type="text"
       value={value}
       onInput={(e) => onInput(e)}

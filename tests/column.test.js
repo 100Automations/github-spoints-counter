@@ -1,6 +1,6 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const { ColumnElement, composeRegex } = require("../dist-ts/column");
+const { ColumnElement, composeRegex } = require("../src/column");
 
 test("Column constructor", (done) => {
   JSDOM.fromFile("tests/assets/test.html")

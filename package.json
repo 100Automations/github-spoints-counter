@@ -6,15 +6,17 @@
   "scripts": {
     "test": "jest",
     "test:w": "jest --watch",
-    "build": "npx webpack --mode=production",
-    "build:w": "npx webpack --mode=development --watch",
-    "build:t": "tsc",
-    "build:tw": "tsc --watch"
+    "build": "npx webpack --mode=production --no-devtool",
+    "build:w": "npx webpack --mode=development --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "babel-jest": "^28.0.2",
     "css-loader": "^6.7.1",
     "jest": "^27.5.1",
     "preact": "^10.6.6",
