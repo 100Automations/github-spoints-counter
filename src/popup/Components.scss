@@ -81,7 +81,7 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 .photon-btn {
   border: none;
   border-radius: 2px;
-  color: #ffffff;
+  color: #fff;
   font-size: 13px;
   height: 32px;
   padding-right: 8px;
@@ -103,7 +103,7 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
 .photon-btn-primary:focus {
   box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff,
-    0 0 0 4px rgba(10, 132, 255, 0.3);
+    0 0 0 4px rgba(10 132 255 / 30%);
 }
 
 .photon-btn-danger {
@@ -129,7 +129,7 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 
 // Forms
 .photon-form-input {
-  border: rgba(12, 12, 13, 0.2) solid 2px;
+  border: rgba(12 12 13 / 20%) solid 2px;
   border-radius: 2px;
   box-sizing: border-box;
   height: 32px;
@@ -144,12 +144,12 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 }
 
 .photon-form-input:hover {
-  border: rgba(12, 12, 13, 0.3) solid 2px;
+  border: rgba(12 12 13 / 30%) solid 2px;
 }
 
 .photon-form-input:focus {
   border: #0a84ff solid 2px;
-  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10 132 255 / 30%);
 }
 
 // Headings
@@ -164,7 +164,7 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
   align-items: center;
   border-radius: 4px;
   box-sizing: border-box;
-  color: #ffffff;
+  color: #fff;
   display: flex;
   font-size: 15px;
   height: 48px;
