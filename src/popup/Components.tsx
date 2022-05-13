@@ -28,19 +28,19 @@ const Alert = ({ color, hidden, onReset, ...props }) => {
 
   return (
     <div
-      class={`alert alert-${color} alert-dismissible fade show fixed-top mx-4 ${
-        isHidden ? "hidden" : ""
-      }`}
+      class={`photon-alert photon-alert-${color} ${isHidden ? "hidden" : ""}`}
       role="alert"
     >
       {props.children}
       <button
         type="button"
-        class="btn-close"
+        class="photon-close-btn"
         data-bs-dismiss="alert"
         aria-label="Close"
-        onClick={(e) => onClick(e)}
-      ></button>
+        onClick={onClick}
+      >
+        X
+      </button>
     </div>
   );
 };
