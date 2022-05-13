@@ -47,18 +47,18 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
   }
 
   return (
-    <form class="row align-items-center">
-      <div class="col-3">
+    <form class="filter-container">
+      <div class="col-3 mr-2">
         <Button onClick={buttonClick}>{isEdit ? "Save" : "Edit"}</Button>
       </div>
-      <div class="col-5">
+      <div class="col-6 mr-2">
         <TextInput
           value={text}
           onInput={textInputEnter}
           disabled={isEdit ? false : true}
         />
       </div>
-      <div class="col-2 d-flex justify-content-end">
+      <div class="col-2 flex-end">
         {isEdit ? (
           ""
         ) : (
@@ -67,7 +67,7 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
           </Button>
         )}
       </div>
-      <div class="col-2 d-flex justify-content-end">
+      <div class="col-1 flex-end">
         {isEdit ? (
           ""
         ) : (

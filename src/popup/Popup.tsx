@@ -6,7 +6,7 @@ import { useEffect, useState } from "preact/hooks";
 import { Alert, Button } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
-import "./popup.scss";
+import "./Popup.scss";
 
 const newDatum: datum = {
   text: "",
@@ -104,7 +104,7 @@ const Popup = () => {
         {alert.text}
       </Alert>
       <h1 id="popup-title" class="photon-display-20">
-        Foxy-pangolins
+        Github-Spoints-Counter
       </h1>
       {rows.map((datum, index) => {
         return (
