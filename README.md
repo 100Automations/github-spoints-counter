@@ -20,6 +20,6 @@ In development
 
 For instructions on how to use the extension, visit [this site](https://100automations.github.io/github-spoints-counter/).
 
-##### Security Note
+### Security Note
 
 Although the application embeds user input into the DOM, it does so through `.textContent` which specifically escape strings. Visit [this link](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Safely_inserting_external_content_into_a_page#dom_node_creation_methods) to learn more on escaping HTML embeds.
