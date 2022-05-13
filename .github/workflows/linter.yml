@@ -43,11 +43,13 @@ jobs:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
-      - name: Download Eslint Plugin
+      - name: Download Linter Plugin
         uses: actions/setup-node@v3
         with:
           node-version: "14"
-      - run: npm install eslint-plugin-no-unsanitized
+      - run: |
+          npm install eslint-plugin-no-unsanitized
+          npm install stylelint-config-prettier-scss
 
       ################################
       # Run Linter against code base #
