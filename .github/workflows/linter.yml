@@ -19,6 +19,7 @@ on:
     # Remove the line above to run when pushing to master
   pull_request:
     branches: [master, main]
+  workflow_dispatch:
 
 ###############
 # Set the Job #
@@ -58,6 +59,6 @@ jobs:
         uses: github/super-linter/slim@v4
         env:
           JAVASCRIPT_DEFAULT_STYLE: prettier
-          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_ALL_CODEBASE: ${{ (github.event_name == 'workflow_dispatch' && true) || false }}
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
