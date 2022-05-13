@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "foxy-pangolins",
+  "name": "github-spoints-counter",
   "version": "1.0",
 
-  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/Aveline-art/foxy-pangolins#README.md",
-  "homepage_url": "https://github.com/Aveline-art/foxy-pangolins",
+  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-spoints-counter#README.md",
+  "homepage_url": "https://github.com/100Automations/github-spoints-counter",
   "icons": {
     "48": "icons/beverage-24.png"
   },
@@ -20,7 +20,7 @@
 
   "browser_action": {
     "default_icon": "icons/beverage-24.png",
-    "default_title": "foxy-pangolins",
+    "default_title": "github-spoints-counter",
     "default_popup": "dist/popup.html"
   }
 }
