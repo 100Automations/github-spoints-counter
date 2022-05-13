@@ -1,0 +1,17 @@
+@use "./Filter.scss";
+@use "./Components.scss";
+
+#popup {
+  width: 400px;
+  height: 300px;
+  padding: 8px;
+  overflow: auto;
+}
+
+#popup > * {
+  margin-bottom: 8px;
+}
+
+#popup-title {
+  margin-bottom: 16px;
+}
