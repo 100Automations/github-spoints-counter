@@ -1,0 +1,160 @@
+// External Imports
+@use "sass:list";
+@use "sass:map";
+
+.hidden {
+  display: none;
+}
+
+.fill {
+  width: 100%;
+}
+
+// Spacings
+$margin-abbrs: (
+  "m": margin,
+  "mt": margin-top,
+  "mr": margin-right,
+  "mb": margin-bottom,
+  "ml": margin-left,
+  "mx": margin-right margin-left,
+  "my": margin-top margin-bottom,
+);
+$padding-abbrs: (
+  "p": padding,
+  "pt": padding-top,
+  "pr": padding-right,
+  "pb": padding-bottom,
+  "pl": padding-left,
+  "px": padding-right padding-left,
+  "py": padding-top padding-bottom,
+);
+$spacing-abbrs: map.merge($margin-abbrs, $padding-abbrs);
+$spacing-sizes: 0, 1, 2, 3, 4, 5;
+
+@mixin spacing-size($name, $size) {
+  @if list.index("mx" "my" "px" "py", $name) {
+    @each $attr in map.get($spacing-abbrs, $name) {
+      #{$attr}: $size * 8px;
+    }
+  } @else {
+    #{map.get($spacing-abbrs, $name)}: $size * 8px;
+  }
+}
+
+@each $name in map.keys($spacing-abbrs) {
+  @each $size in $spacing-sizes {
+    .#{$name}-#{$size} {
+      @include spacing-size($name, $size);
+    }
+  }
+}
+
+// Columns
+$columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+
+@mixin col-size($col) {
+  box-sizing: border-box;
+  flex: 0 1 calc(8.33% * #{$col});
+
+  @each $name in map.keys($margin-abbrs) {
+    @each $size in $spacing-sizes {
+      &.#{$name}-#{$size} {
+        // recalculates column size to accomodate margins
+        @if list.index("mx" "my" "px" "py", $name) {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 16px);
+        } @else {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 8px);
+        }
+      }
+    }
+  }
+}
+
+@each $col in $columns {
+  .col-#{$col} {
+    @include col-size($col);
+  }
+}
+
+// Buttons
+.photon-btn {
+  border: none;
+  border-radius: 2px;
+  color: #ffffff;
+  font-size: 13px;
+  height: 32px;
+  padding-right: 8px;
+  padding-left: 8px;
+  width: 100%;
+}
+
+.photon-btn-primary {
+  background-color: #0060df;
+}
+
+.photon-btn-primary:hover {
+  background-color: #003eaa;
+}
+
+.photon-btn-primary:active {
+  background-color: #002275;
+}
+
+.photon-btn-primary:focus {
+  box-shadow: 0 0 0 1px #0a84ff inset, 0 0 0 1px #0a84ff,
+    0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+.photon-btn-danger {
+  background-color: #d70022;
+}
+
+.photon-btn-danger:hover {
+  background-color: #a4000f;
+}
+
+.photon-btn-danger:active {
+  background-color: #5a0002;
+}
+
+.photon-btn-danger:focus {
+  box-shadow: 0 0 0 1px #ff0039 inset, 0 0 0 1px #ff0039,
+    0 0 0 4px rgba(255 0 57 / 30%);
+}
+
+.photon-btn:disabled {
+  opacity: 40%;
+}
+
+// Forms
+.photon-form-input {
+  border: rgba(12, 12, 13, 0.2) solid 2px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  height: 32px;
+  padding-left: 8px;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.photon-form-input::placeholder {
+  color: #737373;
+  font-size: 0.833rem/1.4;
+}
+
+.photon-form-input:hover {
+  border: rgba(12, 12, 13, 0.3) solid 2px;
+}
+
+.photon-form-input:focus {
+  border: #0a84ff solid 2px;
+  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10, 132, 255, 0.3);
+}
+
+// Headings
+.photon-display-20 {
+  display: inline-block;
+  font-size: 36px;
+  font-weight: 200;
+}
