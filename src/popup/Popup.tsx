@@ -59,7 +59,11 @@ const Popup = () => {
         browser.tabs.sendMessage(tabs[0].id, createMessage());
       })
       .catch((error) => {
-        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
+        setAlert({
+          text: `Error: ${error.message}`,
+          hidden: false,
+          color: "danger",
+        });
       });
   }, [rows, currentOn]);
 
