@@ -6,15 +6,7 @@ There is a lot of project management that can be simplified through storypoints.
 
 ## Quickstart
 
-TBD
-
-### Inputs
-
-TBD
-
-### Outputs
-
-TBD
+To get started, take a look at the [installation instructions](#installation) to install. Then review our [instructions](#resourcesinstructions) to find steps to use the extension.
 
 ### Installation
 
@@ -26,7 +18,7 @@ In development
 
 ## Resources/Instructions
 
-TBD
+For instructions on how to use the extension, visit [this site](https://100automations.github.io/github-spoints-counter/).
 
 ##### Security Note
 
