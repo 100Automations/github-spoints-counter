@@ -14,7 +14,13 @@ In development
 
 ### Installation
 
-The project is currently in development. As such, the project is only available via download and testing for select developers. To become a developer,
+The project is currently in development. As such the current installation has not been vetted by the FireFox board and is not downloadable via the FireFox addon website. Please download and use this at your discretion.
+
+Steps to download the addon:
+
+1. Prereqs:
+   - [FireFox 48 or higher](https://www.mozilla.org/en-US/firefox/new/)
+2. Visit [this page](https://100automations.github.io/github-spoints-counter/).
 
 ## Resources/Instructions
 
