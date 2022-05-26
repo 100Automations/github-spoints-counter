@@ -8,13 +8,13 @@ There is a lot of project management that can be simplified through storypoints.
 
 To get started, take a look at the [installation instructions](#installation) to install. Then review our [instructions](#resourcesinstructions) to find steps to use the extension.
 
-### Installation
-
-TBD
-
 ### Current State
 
 In development
+
+### Installation
+
+The project is currently in development. As such, the project is only available via download and testing for select developers. To become a developer,
 
 ## Resources/Instructions
 
