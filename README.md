@@ -6,7 +6,7 @@ There is a lot of project management that can be simplified through storypoints.
 
 ## Quickstart
 
-To get started, take a look at the [installation instructions](#installation) to install. Then review our [instructions](#resourcesinstructions) to find steps to use the extension.
+To get started, take a look at the [Installation](#installation) steps to install. Then review our [Resources/Instuctions](#resourcesinstructions) to find steps to use the extension.
 
 ### Current State
 
