@@ -29,7 +29,7 @@ Steps to download the addon:
 
 ## Resources/Instructions
 
-For instructions on how to use the extension, visit [this site](https://100automations.github.io/github-spoints-counter/#steps).
+For instructions on how to use the extension, visit [this site](https://100automations.github.io/github-story-points-calculator/#steps).
 
 ### Security Note
 
