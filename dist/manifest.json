@@ -14,13 +14,13 @@
   "content_scripts": [
     {
       "matches": ["*://*.github.com/*/*/projects/*"],
-      "js": ["dist/index.bundle.js"]
+      "js": ["index.bundle.js"]
     }
   ],
 
   "browser_action": {
     "default_icon": "icons/beverage-24.png",
     "default_title": "github-spoints-counter",
-    "default_popup": "dist/popup.html"
+    "default_popup": "popup.html"
   }
 }

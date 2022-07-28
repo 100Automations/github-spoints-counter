@@ -2,6 +2,7 @@
 "use strict";
 
 import { useEffect, useState } from "preact/hooks";
+import { Fragment } from "preact/jsx-runtime";
 
 import { debounce } from "../utils";
 
@@ -59,15 +60,18 @@ const Button = ({ color = "primary", onClick, ...props }) => {
   );
 };
 
-const TextInput = ({ onInput, value, disabled = false }) => {
+const TextInput = ({ onInput, value, icon = undefined, disabled = false }) => {
   return (
-    <input
-      class="photon-form-input"
-      type="text"
-      value={value}
-      onInput={(e) => onInput(e)}
-      disabled={disabled}
-    />
+    <div className="filter-container">
+      {icon && <div className="col-2">{icon}</div>}
+      <input
+        class="photon-form-input col-4"
+        type="text"
+        value={value}
+        onInput={(e) => onInput(e)}
+        disabled={disabled}
+      />
+    </div>
   );
 };
 
@@ -76,7 +80,7 @@ const ToggleSwitch = ({ onChange, disabled = false, isOn = false }) => {
     <div class="form-check form-switch">
       <input
         class="form-check-input"
-        type="checkbox"
+        type="radio"
         checked={isOn}
         onChange={(e) => onChange(e)}
         disabled={disabled}
