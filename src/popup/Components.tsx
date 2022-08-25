@@ -4,7 +4,7 @@
 import { useEffect, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 
-import { debounce } from "../utils";
+import { combineClasses, debounce } from "../utils";
 
 const Alert = ({ color, hidden, onReset, ...props }) => {
   const [isHidden, setIsHidden] = useState(false);
@@ -46,10 +46,22 @@ const Alert = ({ color, hidden, onReset, ...props }) => {
   );
 };
 
-const Button = ({ color = "primary", onClick, ...props }) => {
+interface ButtonProps {
+  addClass?: string;
+  children?: preact.ReactNode;
+  color?: string;
+  onClick: () => any;
+}
+
+const Button = ({
+  color = "primary",
+  onClick,
+  addClass,
+  ...props
+}: ButtonProps) => {
   return (
     <button
-      class={`photon-btn photon-btn-${color}`}
+      class={combineClasses(`spoints-btn`, addClass)}
       type="button"
       onClick={(e) => {
         onClick(e);
@@ -65,7 +77,7 @@ const TextInput = ({ onInput, value, icon = undefined, disabled = false }) => {
     <div className="filter-container">
       {icon && <div className="col-2">{icon}</div>}
       <input
-        class="photon-form-input col-4"
+        class="photon-form-input"
         type="text"
         value={value}
         onInput={(e) => onInput(e)}

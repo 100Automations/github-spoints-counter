@@ -1,12 +1,17 @@
 "use strict";
 
-import { render } from "preact";
+import { Fragment, render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import { Alert, Button } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import "./Popup.scss";
+
+// @ts-ignore
+import * as logo from "../assets/logo-dark.svg";
+// @ts-ignore
+import * as gear from "../assets/gear.svg";
 
 const newDatum: datum = {
   text: "",
@@ -104,30 +109,41 @@ const Popup = () => {
 
   return (
     <div id="popup">
-      <Alert color={alert.color} hidden={alert.hidden} onReset={alertReset}>
-        {alert.text}
-      </Alert>
-      <h1 id="popup-title" class="photon-display-20">
-        Github-Spoints-Counter
-      </h1>
-      {rows.map((datum, index) => {
-        return (
-          <Filter
-            id={index}
-            isOn={index == currentOn}
-            setCurrentOn={setCurrentOn}
-            datum={datum}
-            datumOperation={datumOperation}
-          />
-        );
-      })}
-      <div>
-        <Button onClick={() => datumOperation("post", { datum: newDatum })}>
-          Add Filter
-        </Button>
-      </div>
+      <Header />
+      <Title />
+      <FilterDisplay />
+      <div className="row justify-center"></div>
     </div>
   );
 };
+
+function Header() {
+  return (
+    <div id="popup-header" className="flex-container align-center my-6 mx-3">
+      <img src={logo} alt="100 Automations Logo" />
+      <img src={gear} alt="Settings" />
+    </div>
+  );
+}
+
+function Title() {
+  return (
+    <h1 id="popup-title" class="spoints-title-1 row justify-center mb-9">
+      GitHub Story Points Calculator
+    </h1>
+  );
+}
+
+function FilterDisplay() {
+  return (
+    <div className="flex-column align-center">
+      <h3 className="spoints-title-3 mb-3">No Labels Yet</h3>
+      <p className="spoints-p-1 mb-5">
+        For more information about labels, visit our instructions guide.
+      </p>
+      <Button onClick={() => console.log("post")}>Create Label</Button>
+    </div>
+  );
+}
 
 render(<Popup />, document.getElementById("app"));

@@ -1,0 +1,265 @@
+// External Imports
+@use "sass:list";
+@use "sass:map";
+
+.hidden {
+  display: none !important;
+}
+
+// Layout
+.flex-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.fill {
+  width: 100%;
+}
+
+// Spacings
+$margin-abbrs: (
+  "m": margin,
+  "mt": margin-top,
+  "mr": margin-right,
+  "mb": margin-bottom,
+  "ml": margin-left,
+  "mx": margin-right margin-left,
+  "my": margin-top margin-bottom,
+);
+$padding-abbrs: (
+  "p": padding,
+  "pt": padding-top,
+  "pr": padding-right,
+  "pb": padding-bottom,
+  "pl": padding-left,
+  "px": padding-right padding-left,
+  "py": padding-top padding-bottom,
+);
+$spacing-abbrs: map.merge($margin-abbrs, $padding-abbrs);
+$spacing-sizes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
+
+@mixin spacing-size($name, $size) {
+  @if list.index("mx" "my" "px" "py", $name) {
+    @each $attr in map.get($spacing-abbrs, $name) {
+      #{$attr}: $size * 8px;
+    }
+  } @else {
+    #{map.get($spacing-abbrs, $name)}: $size * 8px;
+  }
+}
+
+@each $name in map.keys($spacing-abbrs) {
+  @each $size in $spacing-sizes {
+    .#{$name}-#{$size} {
+      @include spacing-size($name, $size);
+    }
+  }
+}
+
+// Columns
+$columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+
+@mixin col-size($col) {
+  box-sizing: border-box;
+  flex: 0 1 calc(8.33% * #{$col});
+
+  @each $name in map.keys($margin-abbrs) {
+    @each $size in $spacing-sizes {
+      &.#{$name}-#{$size} {
+        // recalculates column size to accomodate margins
+        @if list.index("mx" "my" "px" "py", $name) {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 16px);
+        } @else {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 8px);
+        }
+      }
+    }
+  }
+}
+
+@each $col in $columns {
+  .col-#{$col} {
+    @include col-size($col);
+  }
+}
+
+// Alignment
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-left {
+  justify-content: start;
+}
+
+.justify-right {
+  justify-content: end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-top {
+  align-items: flex-start;
+}
+
+.align-bottom {
+  align-items: flex-end;
+}
+
+// Fonts
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-ThinItalic.ttf") format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-SemiBoldItalic.ttf") format("truetype");
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-ExtraBoldItalic.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url("../assets/fonts/Poppins-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}

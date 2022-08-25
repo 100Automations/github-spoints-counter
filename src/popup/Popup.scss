@@ -1,17 +1,35 @@
+@use "./Basics.scss";
 @use "./Filter.scss";
 @use "./Components.scss";
 
+// Resets
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+}
+
 #popup {
-  width: 400px;
-  height: 300px;
-  padding: 8px;
+  background-image: url("../assets/background-dark.svg");
+  border-radius: 20px;
+  color: white;
+  width: 668px;
+  height: 630px;
   overflow: auto;
 }
 
-#popup > * {
-  margin-bottom: 8px;
+#popup-header {
+  justify-content: space-between;
 }
 
 #popup-title {
-  margin-bottom: 16px;
+  color: #fff;
 }

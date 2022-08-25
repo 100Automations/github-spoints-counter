@@ -19,7 +19,7 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
     setText(e.target.value);
   }
 
-  function closeButtonClick() {
+  function xButtonClick() {
     datumOperation("delete", { id: id });
     if (isOn) {
       setCurrentOn(null);
@@ -37,15 +37,22 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
 
   return (
     <form class="filter-container">
-      <div className="col-6 mr-2">
+      <div className="col-11 mr-2">
         <TextInput
           onInput={textInputEnter}
           value={text}
           icon={
-            <Button color="danger" onClick={closeButtonClick}>
+            <Button color="danger" onClick={xButtonClick}>
               X
             </Button>
           }
+        />
+      </div>
+      <div className="col-1">
+        <ToggleSwitch
+          onChange={toggleChange}
+          isOn={text && isOn}
+          disabled={!isTogglable}
         />
       </div>
     </form>

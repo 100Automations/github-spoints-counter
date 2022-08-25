@@ -24,10 +24,14 @@ module.exports = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.(svg|jpg)$/i,
+        type: "asset/inline",
+      },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", "jsx"],
   },
   output: {
     filename: "[name].bundle.js",

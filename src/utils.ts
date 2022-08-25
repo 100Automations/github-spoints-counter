@@ -1,3 +1,7 @@
+function combineClasses(...args: any[]) {
+  return args.filter((x) => typeof x === "string").join(" ");
+}
+
 function debounce(func: Function, timer = 500) {
   let timeout: number;
   return () => {
@@ -8,4 +12,4 @@ function debounce(func: Function, timer = 500) {
   };
 }
 
-export { debounce };
+export { combineClasses, debounce };
