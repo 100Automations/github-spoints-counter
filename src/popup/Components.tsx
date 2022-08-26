@@ -6,46 +6,6 @@ import { Fragment } from "preact/jsx-runtime";
 
 import { combineClasses, debounce } from "../utils";
 
-const Alert = ({ color, hidden, onReset, ...props }) => {
-  const [isHidden, setIsHidden] = useState(false);
-
-  useEffect(() => {
-    setIsHidden(hidden);
-  }, [hidden]);
-
-  useEffect(() => {
-    if (!isHidden) {
-      const callback = debounce(() => {
-        setIsHidden(true);
-        onReset();
-      }, 3000);
-      callback();
-    }
-  }, [isHidden]);
-
-  function onClick() {
-    setIsHidden(true);
-  }
-
-  return (
-    <div
-      class={`photon-alert photon-alert-${color} ${isHidden ? "hidden" : ""}`}
-      role="alert"
-    >
-      {props.children}
-      <button
-        type="button"
-        class="photon-close-btn"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-        onClick={onClick}
-      >
-        X
-      </button>
-    </div>
-  );
-};
-
 interface ButtonProps {
   addClass?: string;
   children?: preact.ReactNode;
@@ -72,16 +32,64 @@ const Button = ({
   );
 };
 
-const TextInput = ({ onInput, value, icon = undefined, disabled = false }) => {
+interface IconButtonProps {
+  addClass?: string;
+  onClick: () => any;
+  iconUrl: string;
+}
+
+const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
   return (
-    <div className="filter-container">
-      {icon && <div className="col-2">{icon}</div>}
+    <div className={combineClasses(addClass)} onClick={onClick}>
+      <img src={iconUrl}></img>
+    </div>
+  );
+};
+
+interface SelectionLabelProps {
+  addClass?: string;
+  children?: preact.ReactNode;
+}
+
+const SelectionLabel = ({ addClass, children }: SelectionLabelProps) => {
+  return (
+    <div
+      className={combineClasses(
+        "spoints-select-label",
+        "text-center",
+        addClass
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+interface TextInputProps {
+  addClass?: string;
+  disabled?: boolean;
+  onInput: (e: any) => any;
+  placeholder?: string | number;
+  value?: string | number;
+}
+
+const TextInput = ({
+  addClass,
+  disabled = false,
+  onInput,
+  placeholder,
+  value,
+}: TextInputProps) => {
+  return (
+    <div className={combineClasses("flex-container", addClass)}>
+      <span className="col-1">+</span>
       <input
-        class="photon-form-input"
+        class="spoints-form-input col-10"
         type="text"
         value={value}
         onInput={(e) => onInput(e)}
         disabled={disabled}
+        placeholder={placeholder}
       />
     </div>
   );
@@ -101,4 +109,4 @@ const ToggleSwitch = ({ onChange, disabled = false, isOn = false }) => {
   );
 };
 
-export { Alert, Button, TextInput, ToggleSwitch };
+export { Alert, Button, IconButton, SelectionLabel, TextInput, ToggleSwitch };

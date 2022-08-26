@@ -1,0 +1,58 @@
+@function light-dark($light, $dark) {
+  @return var(--light, #{$light}) var(--dark, #{$dark});
+}
+
+:root {
+  --ON: initial;
+  --OFF: ;
+}
+
+.theme-default,
+.theme-light {
+  --light: var(--ON);
+  --dark: var(--OFF);
+}
+
+.theme-dark {
+  --light: var(--OFF);
+  --dark: var(--ON);
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-default {
+    --light: var(--OFF);
+    --dark: var(--ON);
+  }
+}
+
+:root {
+  // white
+  $white: #fff;
+  $light-white: #d9e1e5;
+  $soft-white: #bfcdd3;
+  $off-white: #fcfcfc;
+  $dark-grey: #515151;
+
+  // other
+  $light-purple: #d6d6e7;
+  $dark-blue: #003750;
+  $light-red: #f6b6b6;
+  $dark-red: #a80909;
+
+  // light-dark theme definitions
+  --background: #{light-dark(
+      url("../assets/background-light.svg"),
+      url("../assets/background-dark.svg")
+    )};
+  --title-text: #{light-dark($dark-blue, $white)};
+  --no-label-text: #{light-dark($dark-grey, $soft-white)};
+  --no-label-selected-box: #{light-dark($dark-blue, $soft-white)};
+  --no-label-selected-box-text: #{light-dark($white, $dark-blue)};
+  --create-label-button: #{light-dark($dark-blue, $light-white)};
+  --create-label-input: #{light-dark($dark-blue, $soft-white)};
+  --filter-text: #{light-dark($dark-blue, $dark-blue)};
+  --text: #{light-dark($dark-blue, $white)};
+  --filter-edit: #{light-dark($dark-blue, $light-purple)};
+  --filter-delete: #{light-dark($dark-red, $light-red)};
+  --links: #{light-dark($dark-grey, $soft-white)};
+}

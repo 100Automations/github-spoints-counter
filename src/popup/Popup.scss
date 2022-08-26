@@ -1,3 +1,4 @@
+@use "./Themes.scss";
 @use "./Basics.scss";
 @use "./Filter.scss";
 @use "./Components.scss";
@@ -18,18 +19,23 @@ body {
 }
 
 #popup {
-  background-image: url("../assets/background-dark.svg");
+  background-image: var(--background);
   border-radius: 20px;
-  color: white;
+  box-sizing: border-box;
+  color: var(--text);
   width: 668px;
-  height: 630px;
+  height: 600px;
   overflow: auto;
 }
 
-#popup-header {
+.popup-header {
   justify-content: space-between;
 }
 
-#popup-title {
-  color: #fff;
+.popup-title {
+  color: var(--title-text);
+}
+
+.popup-labels {
+  max-height: 600px;
 }

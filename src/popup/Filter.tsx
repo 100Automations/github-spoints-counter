@@ -37,17 +37,7 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
 
   return (
     <form class="filter-container">
-      <div className="col-11 mr-2">
-        <TextInput
-          onInput={textInputEnter}
-          value={text}
-          icon={
-            <Button color="danger" onClick={xButtonClick}>
-              X
-            </Button>
-          }
-        />
-      </div>
+      <div className="col-11 mr-2"></div>
       <div className="col-1">
         <ToggleSwitch
           onChange={toggleChange}

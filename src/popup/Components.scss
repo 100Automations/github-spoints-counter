@@ -1,6 +1,6 @@
 // Buttons
 .spoints-btn {
-  background-color: #d9e1e5;
+  background-color: var(--create-label-button);
   border: none;
   border-radius: 28px;
   color: #003750;
@@ -10,15 +10,35 @@
   padding: 12px 30px;
 }
 
+// Links
+.spoints-links {
+  color: #fff;
+}
+
+// Selection Label
+.spoints-select-label {
+  background-color: var(--no-label-selected-box);
+  border-radius: 12px;
+  color: var(--no-label-selected-box-text);
+  font-size: 20px;
+  font-weight: 600;
+  padding: 25px 20px;
+  width: fit-content;
+}
+
 // Forms
-.photon-form-input {
-  border: rgba(12 12 13 / 20%) solid 2px;
-  border-radius: 2px;
-  box-sizing: border-box;
-  height: 32px;
-  padding-left: 8px;
-  padding-right: 8px;
+.spoints-form-input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid var(--create-label-input);
+  color: var(--create-label-input);
+  font-size: 20px;
+  font-weight: 600;
   width: 100%;
+
+  &:focus {
+    outline: 0;
+  }
 }
 
 .photon-form-input::placeholder {
