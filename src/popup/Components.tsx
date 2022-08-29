@@ -1,10 +1,17 @@
 // @ts-nocheck
 "use strict";
 
+// external imports
 import { useEffect, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 
+// internal imports
 import { combineClasses, debounce } from "../utils";
+
+// @ts-ignore
+import * as enter from "../assets/icon-enter.svg";
+// @ts-ignore
+import * as plus from "../assets/icon-plus.svg";
 
 interface ButtonProps {
   addClass?: string;
@@ -80,17 +87,33 @@ const TextInput = ({
   placeholder,
   value,
 }: TextInputProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
-    <div className={combineClasses("flex-container", addClass)}>
-      <span className="col-1">+</span>
+    <div
+      className={combineClasses(
+        "flex-container",
+        "align-center",
+        isFocused && "justify-right",
+        addClass
+      )}
+    >
+      {!isFocused && (
+        <img src={plus} className="col-1" width={16} height={16} />
+      )}
       <input
-        class="spoints-form-input col-10"
+        class="spoints-form-input col-10 px-1 mx-2"
         type="text"
         value={value}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
         onInput={(e) => onInput(e)}
         disabled={disabled}
         placeholder={placeholder}
       />
+      {isFocused && (
+        <img src={enter} className="col-1" width={16} height={16} />
+      )}
     </div>
   );
 };

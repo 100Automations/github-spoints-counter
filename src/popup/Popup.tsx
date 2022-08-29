@@ -17,7 +17,7 @@ import "./Popup.scss";
 // @ts-ignore
 import * as logo from "../assets/logo-dark.svg";
 // @ts-ignore
-import * as gear from "../assets/gear.svg";
+import * as gear from "../assets/icon-gear.svg";
 
 const newDatum: datum = {
   text: "",
@@ -120,9 +120,9 @@ const Popup = () => {
       <Header />
       <Title />
       {hasLabels ? (
-        <div className="flex-column align-center mt-5" style={{ flexGrow: 2 }}>
+        <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
           <SelectionLabel>No Labels Selected</SelectionLabel>
-          <div className="row fill mt-2">
+          <div className="row fill mt-3">
             <span>SELECT A LABEL</span>
           </div>
           <div
@@ -133,7 +133,7 @@ const Popup = () => {
             <div>LABEL 2</div>
             <div>LABEL 3</div>
           </div>
-          <div className="row fill mt-1 mx-1">
+          <div className="row fill mt-1">
             <TextInput
               addClass="fill"
               onInput={(e) => console.log(e)}
@@ -150,7 +150,7 @@ const Popup = () => {
 
 function Header() {
   return (
-    <div className="popup-header flex-container align-center mt-3">
+    <div className="popup-header flex-container">
       <img src={logo} alt="100 Automations Logo" />
       <IconButton iconUrl={gear} onClick={() => console.log("gear clicked")} />
     </div>
@@ -159,7 +159,7 @@ function Header() {
 
 function Title() {
   return (
-    <h1 class="popup-title spoints-title-1 row justify-center mt-5">
+    <h1 class="popup-title spoints-title-1 mt-3">
       GitHub Story Points Calculator
     </h1>
   );

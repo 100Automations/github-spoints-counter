@@ -44,6 +44,7 @@
       url("../assets/background-light.svg"),
       url("../assets/background-dark.svg")
     )};
+  --background-color: #light-dark($white, $dark-blue);
   --title-text: #{light-dark($dark-blue, $white)};
   --no-label-text: #{light-dark($dark-grey, $soft-white)};
   --no-label-selected-box: #{light-dark($dark-blue, $soft-white)};

@@ -19,11 +19,12 @@ body {
 }
 
 #popup {
+  background-color: var(--background-color);
   background-image: var(--background);
-  border-radius: 20px;
+  background-repeat: no-repeat;
   box-sizing: border-box;
   color: var(--text);
-  width: 668px;
+  width: 800px;
   height: 600px;
   overflow: auto;
 }
