@@ -32,7 +32,7 @@ const Popup = () => {
     color: "primary",
   });
 
-  const [hasLabels, setHasLabels] = useState(true);
+  const [hasLabels, setHasLabels] = useState(false);
 
   useEffect(() => {
     getData({ rows: [], currentOn: null })

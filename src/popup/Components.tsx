@@ -2,7 +2,7 @@
 "use strict";
 
 // external imports
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { Fragment } from "preact/jsx-runtime";
 
 // internal imports
@@ -88,6 +88,11 @@ const TextInput = ({
   value,
 }: TextInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   return (
     <div
@@ -110,6 +115,7 @@ const TextInput = ({
         onInput={(e) => onInput(e)}
         disabled={disabled}
         placeholder={placeholder}
+        ref={inputRef}
       />
       {isFocused && (
         <img src={enter} className="col-1" width={16} height={16} />
