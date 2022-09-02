@@ -119,11 +119,8 @@ const Popup = () => {
           <div className="row fill mt-3">
             <span>SELECT A FILTER</span>
           </div>
-          <div
-            className="popup-labels fill my-2"
-            style={{ flexGrow: 2, overflowY: "scroll" }}
-          >
-            {[1, 2, 3, 4].map((text, index) => {
+          <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
+            {[1, 2, 3].map((text, index) => {
               return (
                 <Filter key={index} text={`Filter ${text}`} addClass="mb-2" />
               );
