@@ -1,3 +1,5 @@
+@use "./Colors.scss" as *;
+
 @function light-dark($light, $dark) {
   @return var(--light, #{$light}) var(--dark, #{$dark});
 }
@@ -26,19 +28,6 @@
 }
 
 :root {
-  // white
-  $white: #fff;
-  $light-white: #d9e1e5;
-  $soft-white: #bfcdd3;
-  $off-white: #fcfcfc;
-  $dark-grey: #515151;
-
-  // other
-  $light-purple: #d6d6e7;
-  $dark-blue: #003750;
-  $light-red: #f6b6b6;
-  $dark-red: #a80909;
-
   // light-dark theme definitions
   --background: #{light-dark(
       url("../assets/background-light.svg"),
@@ -46,11 +35,11 @@
     )};
   --background-color: #light-dark($white, $dark-blue);
   --title-text: #{light-dark($dark-blue, $white)};
-  --no-label-text: #{light-dark($dark-grey, $soft-white)};
-  --no-label-selected-box: #{light-dark($dark-blue, $soft-white)};
-  --no-label-selected-box-text: #{light-dark($white, $dark-blue)};
-  --create-label-button: #{light-dark($dark-blue, $light-white)};
-  --create-label-input: #{light-dark($dark-blue, $soft-white)};
+  --no-filter-text: #{light-dark($dark-grey, $soft-white)};
+  --no-filter-info-box: #{light-dark($dark-blue, $soft-white)};
+  --no-filter-info-box-text: #{light-dark($white, $dark-blue)};
+  --create-filter-button: #{light-dark($dark-blue, $light-white)};
+  --create-filter-input: #{light-dark($dark-blue, $soft-white)};
   --filter-text: #{light-dark($dark-blue, $dark-blue)};
   --text: #{light-dark($dark-blue, $white)};
   --filter-edit: #{light-dark($dark-blue, $light-purple)};

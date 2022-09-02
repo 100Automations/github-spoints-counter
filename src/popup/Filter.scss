@@ -1,7 +1,13 @@
-.filter-container {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
+@use "./Colors.scss" as *;
+
+.filter {
+  background-color: $white;
+  border-radius: 12px;
+  color: var(--filter-text);
+  font-size: 18px;
+  font-weight: 400;
+  height: 55px;
+  padding: 13px 48px;
 }
 
 .flex-end {

@@ -1,6 +1,6 @@
 // Buttons
 .spoints-btn {
-  background-color: var(--create-label-button);
+  background-color: var(--create-filter-button);
   border: none;
   border-radius: 28px;
   color: #003750;
@@ -12,17 +12,17 @@
 
 // Links
 .spoints-links {
-  color: #fff;
+  color: inherit;
 }
 
 // Selection Label
-.spoints-select-label {
-  background-color: var(--no-label-selected-box);
+.spoints-info-box {
+  background-color: var(--no-filter-info-box);
   border-radius: 12px;
-  color: var(--no-label-selected-box-text);
+  color: var(--no-filter-info-box-text);
   font-size: 20px;
   font-weight: 600;
-  padding: 25px 20px;
+  padding: 20px 25px;
   width: fit-content;
 }
 
@@ -30,8 +30,8 @@
 .spoints-form-input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--create-label-input);
-  color: var(--create-label-input);
+  border-bottom: 1px solid var(--create-filter-input);
+  color: var(--create-filter-input);
   font-size: 20px;
   font-weight: 600;
   width: 100%;

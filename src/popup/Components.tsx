@@ -53,19 +53,15 @@ const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
   );
 };
 
-interface SelectionLabelProps {
+interface InfoBoxProps {
   addClass?: string;
   children?: preact.ReactNode;
 }
 
-const SelectionLabel = ({ addClass, children }: SelectionLabelProps) => {
+const InfoBox = ({ addClass, children }: InfoBoxProps) => {
   return (
     <div
-      className={combineClasses(
-        "spoints-select-label",
-        "text-center",
-        addClass
-      )}
+      className={combineClasses("spoints-info-box", "text-center", addClass)}
     >
       {children}
     </div>
@@ -138,4 +134,4 @@ const ToggleSwitch = ({ onChange, disabled = false, isOn = false }) => {
   );
 };
 
-export { Alert, Button, IconButton, SelectionLabel, TextInput, ToggleSwitch };
+export { Alert, Button, IconButton, InfoBox, TextInput, ToggleSwitch };

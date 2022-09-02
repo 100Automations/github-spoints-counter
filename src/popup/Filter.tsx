@@ -1,9 +1,16 @@
 "use strict";
 import { useEffect, useState } from "preact/hooks";
+import { combineClasses } from "../utils";
 
 import { Button, TextInput, ToggleSwitch } from "./Components";
 
-const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
+interface FilterProps {
+  addClass?: string;
+  text?: string;
+}
+
+const Filter = ({ addClass, text }: FilterProps) => {
+  /*
   const [text, setText] = useState("");
   const [isTogglable, setIsTogglable] = useState(false);
 
@@ -34,18 +41,23 @@ const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
       setCurrentOn(null);
     }
   }
+  */
 
   return (
-    <form class="filter-container">
-      <div className="col-11 mr-2"></div>
-      <div className="col-1">
-        <ToggleSwitch
-          onChange={toggleChange}
-          isOn={text && isOn}
-          disabled={!isTogglable}
-        />
-      </div>
-    </form>
+    <div
+      className={combineClasses(
+        "filter",
+        "flex-container",
+        "align-center",
+        "fill",
+        addClass
+      )}
+    >
+      <div className="col-1">O</div>
+      <span className="col-9">{text}</span>
+      <div className="col-1">E</div>
+      <div className="col-1">D</div>
+    </div>
   );
 };
 

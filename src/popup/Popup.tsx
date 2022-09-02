@@ -3,13 +3,7 @@
 import { Fragment, render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-import {
-  Alert,
-  Button,
-  IconButton,
-  SelectionLabel,
-  TextInput,
-} from "./Components";
+import { Alert, Button, IconButton, InfoBox, TextInput } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import "./Popup.scss";
@@ -114,24 +108,26 @@ const Popup = () => {
   function alertReset() {
     setAlert({ text: "", hidden: true, color: "primary" });
   }
-
+  // note do not do flex grow 2; rather make the bottom input sticky
   return (
     <div id="popup" className="flex-column p-3">
       <Header />
       <Title />
       {hasLabels ? (
         <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
-          <SelectionLabel>No Labels Selected</SelectionLabel>
+          <InfoBox>No Filters Selected</InfoBox>
           <div className="row fill mt-3">
-            <span>SELECT A LABEL</span>
+            <span>SELECT A FILTER</span>
           </div>
           <div
-            className="popup-labels flex-column align-center fill my-2"
-            style={{ flexGrow: 2 }}
+            className="popup-labels fill my-2"
+            style={{ flexGrow: 2, overflowY: "scroll" }}
           >
-            <div>LABEL 1</div>
-            <div>LABEL 2</div>
-            <div>LABEL 3</div>
+            {[1, 2, 3, 4].map((text, index) => {
+              return (
+                <Filter key={index} text={`Filter ${text}`} addClass="mb-2" />
+              );
+            })}
           </div>
           <div className="row fill mt-1">
             <TextInput
@@ -142,7 +138,7 @@ const Popup = () => {
           </div>
         </div>
       ) : (
-        <FilterDisplay onClick={() => setHasLabels(true)} />
+        <NoFilterDisplay onClick={() => setHasLabels(true)} />
       )}
     </div>
   );
@@ -165,18 +161,18 @@ function Title() {
   );
 }
 
-function FilterDisplay({ onClick }) {
+function NoFilterDisplay({ onClick }) {
   return (
-    <div className="flex-column align-center">
-      <h3 className="spoints-title-3 mb-2 mt-8">No Labels Yet</h3>
-      <p className="spoints-p-1 mb-4">
-        For more information about labels, visit our{" "}
+    <div className="flex-column align-center no-filter-display">
+      <h3 className="spoints-title-3 mb-2 mt-7">No filters yet</h3>
+      <p className="spoints-p-1 mb-7">
+        For more information about filters, visit our{" "}
         <a className="spoints-links" href="www.google.com">
           instructions guide
         </a>
         .
       </p>
-      <Button onClick={() => onClick()}>Create Label</Button>
+      <Button onClick={() => onClick()}>Create filter</Button>
     </div>
   );
 }
