@@ -36,5 +36,12 @@ module.exports = {
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    clean: {
+      keep(asset) {
+        return ["popup.html", "manifest.json", "icons/"].some((path) => {
+          return asset.includes(path);
+        });
+      },
+    },
   },
 };
