@@ -13,6 +13,13 @@
   flex-wrap: wrap;
 }
 
+.flex-align-center {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .flex-column {
   box-sizing: border-box;
   display: flex;
@@ -49,7 +56,7 @@ $padding-abbrs: (
   "py": padding-top padding-bottom,
 );
 $spacing-abbrs: map.merge($margin-abbrs, $padding-abbrs);
-$spacing-sizes: 0, 1, 2, 3, 4, 5, 7;
+$spacing-sizes: 0, 1, 2, 3, 4, 5, 7, 10;
 
 @mixin spacing-size($name, $size) {
   @if list.index("mx" "my" "px" "py", $name) {

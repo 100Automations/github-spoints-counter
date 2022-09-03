@@ -1,17 +1,19 @@
 "use strict";
 
+// external imports
 import { Fragment, render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
+// internal imports
 import { Alert, Button, IconButton, InfoBox, TextInput } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import "./Popup.scss";
 
 // @ts-ignore
-import * as logo from "../assets/logo-dark.svg";
+import logo from "../assets/logo-dark.svg";
 // @ts-ignore
-import * as gear from "../assets/icon-gear.svg";
+import gear from "../assets/icon-gear.svg";
 
 const newDatum: datum = {
   text: "",
@@ -130,7 +132,7 @@ const Popup = () => {
             <TextInput
               addClass="fill"
               onInput={(e) => console.log(e)}
-              placeholder={"Add a label"}
+              placeholder="Enter a label with an assigned numerical value"
             />
           </div>
         </div>

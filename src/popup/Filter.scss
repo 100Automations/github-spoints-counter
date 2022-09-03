@@ -4,13 +4,45 @@
   background-color: $white;
   border-radius: 12px;
   color: var(--filter-text);
-  font-size: 18px;
-  font-weight: 400;
-  height: 55px;
-  padding: 13px 48px;
+  height: 64px;
+
+  & > *:first-child {
+    border-radius: 12px 0 0 12px;
+    border-right: none;
+  }
+
+  & > *:last-child {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+  }
 }
 
-.flex-end {
-  display: flex;
-  justify-content: end;
+.filter-text {
+  border: none;
+  color: var(--filter-text);
+  font-size: 18px;
+  font-weight: 400;
+  outline: none;
+}
+
+.filter-icon {
+  border: none;
+  box-sizing: border-box;
+  height: 64px;
+  padding: 0px;
+  margin: 0px;
+  width: 64px;
+
+  &:hover {
+    outline: 5px auto #5e9ed6;
+    z-index: 1;
+  }
+}
+
+.filter-edit {
+  background-color: var(--filter-edit);
+}
+
+.filter-trash {
+  background-color: var(--filter-trash);
 }

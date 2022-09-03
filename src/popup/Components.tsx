@@ -7,11 +7,8 @@ import { Fragment } from "preact/jsx-runtime";
 
 // internal imports
 import { combineClasses, debounce } from "../utils";
-
-// @ts-ignore
-import * as enter from "../assets/icon-enter.svg";
-// @ts-ignore
-import * as plus from "../assets/icon-plus.svg";
+import enter from "../assets/icon-enter.svg";
+import plus from "../assets/icon-plus.svg";
 
 interface ButtonProps {
   addClass?: string;

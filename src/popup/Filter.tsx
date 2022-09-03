@@ -1,8 +1,15 @@
 "use strict";
-import { useEffect, useState } from "preact/hooks";
-import { combineClasses } from "../utils";
 
+// external imports
+import { useEffect, useState } from "preact/hooks";
+
+// internal imports
+import { combineClasses } from "../utils";
 import { Button, TextInput, ToggleSwitch } from "./Components";
+import radioInactive from "../assets/icon-radio.svg";
+import radioActive from "../assets/icon-radio-active.svg";
+import edit from "../assets/icon-edit.svg";
+import trash from "../assets/icon-trash.svg";
 
 interface FilterProps {
   addClass?: string;
@@ -47,17 +54,61 @@ const Filter = ({ addClass, text }: FilterProps) => {
     <div
       className={combineClasses(
         "filter",
-        "flex-container",
-        "align-center",
+        "flex-align-center",
         "fill",
         addClass
       )}
     >
-      <div className="col-1">O</div>
-      <span className="col-9">{text}</span>
-      <div className="col-1">E</div>
-      <div className="col-1">D</div>
+      <FilterRadio />
+      <input type="text" className="filter-text" style={{ flexGrow: 2 }}>
+        {text}
+      </input>
+      <FilterIcon iconUrl={edit} addClass="filter-edit" />
+      <FilterIcon iconUrl={trash} addClass="filter-trash" />
     </div>
+  );
+};
+
+interface FilterRadioProps {
+  active?: boolean;
+  addClass?: string;
+  color?: string;
+  onChange?: (isActive: boolean) => any;
+}
+
+const FilterRadio = ({
+  active = false,
+  addClass,
+  color,
+  onChange,
+}: FilterRadioProps) => {
+  const [isActive, setIsActive] = useState(active);
+
+  useEffect(() => {
+    onChange(isActive);
+  }, [isActive]);
+
+  return (
+    <div className="row ml-4 mr-10">
+      <img
+        src={isActive ? radioActive : radioInactive}
+        onClick={() => setIsActive(!isActive)}
+      />
+    </div>
+  );
+};
+
+interface FilterIconProps {
+  addClass?: string;
+  color?: string;
+  iconUrl: string;
+}
+
+const FilterIcon = ({ addClass, iconUrl }: FilterIconProps) => {
+  return (
+    <button className={combineClasses("filter-icon", addClass)}>
+      <img src={iconUrl} />
+    </button>
   );
 };
 
