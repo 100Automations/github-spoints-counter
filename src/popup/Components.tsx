@@ -3,10 +3,9 @@
 
 // external imports
 import { useEffect, useRef, useState } from "preact/hooks";
-import { Fragment } from "preact/jsx-runtime";
 
 // internal imports
-import { combineClasses, debounce } from "../utils";
+import { combineClasses } from "../utils";
 import enter from "../assets/icon-enter.svg";
 import plus from "../assets/icon-plus.svg";
 
@@ -68,7 +67,7 @@ const InfoBox = ({ addClass, children }: InfoBoxProps) => {
 interface TextInputProps {
   addClass?: string;
   disabled?: boolean;
-  onInput: (e: any) => any;
+  onEnter: (value: string) => any;
   placeholder?: string | number;
   value?: string | number;
 }
@@ -76,7 +75,7 @@ interface TextInputProps {
 const TextInput = ({
   addClass,
   disabled = false,
-  onInput,
+  onEnter,
   placeholder,
   value,
 }: TextInputProps) => {
@@ -105,30 +104,24 @@ const TextInput = ({
         value={value}
         onBlur={() => setIsFocused(false)}
         onFocus={() => setIsFocused(true)}
-        onInput={(e) => onInput(e)}
         disabled={disabled}
         placeholder={placeholder}
         ref={inputRef}
       />
       {isFocused && (
-        <img src={enter} className="col-1" width={16} height={16} />
+        <img
+          src={enter}
+          className="col-1"
+          width={16}
+          height={16}
+          onClick={(e) => {
+            console.log("helloworld");
+            onEnter(inputRef.current.value);
+          }}
+        />
       )}
     </div>
   );
 };
 
-const ToggleSwitch = ({ onChange, disabled = false, isOn = false }) => {
-  return (
-    <div class="form-check form-switch">
-      <input
-        class="form-check-input"
-        type="radio"
-        checked={isOn}
-        onChange={(e) => onChange(e)}
-        disabled={disabled}
-      />
-    </div>
-  );
-};
-
-export { Alert, Button, IconButton, InfoBox, TextInput, ToggleSwitch };
+export { Alert, Button, IconButton, InfoBox, TextInput };

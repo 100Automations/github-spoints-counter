@@ -1,54 +1,39 @@
 "use strict";
-
 // external imports
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 
 // internal imports
 import { combineClasses } from "../utils";
-import { Button, TextInput, ToggleSwitch } from "./Components";
 import radioInactive from "../assets/icon-radio.svg";
 import radioActive from "../assets/icon-radio-active.svg";
 import edit from "../assets/icon-edit.svg";
+import save from "../assets/icon-save.svg";
 import trash from "../assets/icon-trash.svg";
 
 interface FilterProps {
+  active: boolean;
   addClass?: string;
+  arrayApi: Function;
   text?: string;
 }
 
-const Filter = ({ addClass, text }: FilterProps) => {
-  /*
-  const [text, setText] = useState("");
-  const [isTogglable, setIsTogglable] = useState(false);
+const Filter = ({ active = false, addClass, arrayApi, text }: FilterProps) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const inputRef = useRef(null);
+
+  function handleEdit(e: MouseEvent) {
+    if (isEdit) {
+      console.log(inputRef.current.value);
+      arrayApi("patch", inputRef.current.value);
+    }
+    setIsEdit(!isEdit);
+  }
 
   useEffect(() => {
-    setText(datum.text);
-  }, [datum.text]);
-
-  useEffect(() => {
-    setIsTogglable(text ? true : false);
-  }, [text]);
-
-  function textInputEnter(e) {
-    setText(e.target.value);
-  }
-
-  function xButtonClick() {
-    datumOperation("delete", { id: id });
-    if (isOn) {
-      setCurrentOn(null);
+    if (isEdit) {
+      inputRef.current.focus();
     }
-  }
-
-  function toggleChange(e) {
-    if (e.target.checked) {
-      setCurrentOn(id);
-    } else {
-      e.target.checked = false;
-      setCurrentOn(null);
-    }
-  }
-  */
+  }, [isEdit]);
 
   return (
     <div
@@ -59,12 +44,30 @@ const Filter = ({ addClass, text }: FilterProps) => {
         addClass
       )}
     >
-      <FilterRadio />
-      <input type="text" className="filter-text" style={{ flexGrow: 2 }}>
-        {text}
-      </input>
-      <FilterIcon iconUrl={edit} addClass="filter-edit" />
-      <FilterIcon iconUrl={trash} addClass="filter-trash" />
+      <FilterRadio active={active} addClass="ml-4 mr-10" />
+      {isEdit ? (
+        <input
+          type="text"
+          className="filter-input filter-text"
+          style={{ flexGrow: 2 }}
+          value={text}
+          ref={inputRef}
+        />
+      ) : (
+        <div className="filter-text" style={{ flexGrow: 2 }}>
+          {text}
+        </div>
+      )}
+      <FilterIcon
+        iconUrl={isEdit ? save : edit}
+        addClass="filter-edit"
+        onClick={handleEdit}
+      />
+      <FilterIcon
+        iconUrl={trash}
+        addClass="filter-trash"
+        onClick={arrayApi("delete")}
+      />
     </div>
   );
 };
@@ -85,11 +88,13 @@ const FilterRadio = ({
   const [isActive, setIsActive] = useState(active);
 
   useEffect(() => {
-    onChange(isActive);
+    if (onChange) {
+      onChange(isActive);
+    }
   }, [isActive]);
 
   return (
-    <div className="row ml-4 mr-10">
+    <div className={combineClasses("row", addClass)}>
       <img
         src={isActive ? radioActive : radioInactive}
         onClick={() => setIsActive(!isActive)}
@@ -102,11 +107,15 @@ interface FilterIconProps {
   addClass?: string;
   color?: string;
   iconUrl: string;
+  onClick?: (e: MouseEvent) => any;
 }
 
-const FilterIcon = ({ addClass, iconUrl }: FilterIconProps) => {
+const FilterIcon = ({ addClass, iconUrl, onClick }: FilterIconProps) => {
   return (
-    <button className={combineClasses("filter-icon", addClass)}>
+    <button
+      className={combineClasses("filter-icon", addClass)}
+      onClick={onClick}
+    >
       <img src={iconUrl} />
     </button>
   );

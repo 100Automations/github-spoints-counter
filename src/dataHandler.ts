@@ -1,6 +1,6 @@
 interface data {
   rows: datum[];
-  currentOn: number;
+  currentSelected: number;
 }
 
 interface datum {

@@ -69,10 +69,10 @@ browser.runtime.onMessage.addListener(
   }
 );
 
-getData({ rows: [], currentOn: null })
+getData({ rows: [], currentSelected: null })
   .then((data: data) => {
-    mutationListener(data.rows[data.currentOn].text, () => {});
-    main(data.rows[data.currentOn].text, 1000);
+    mutationListener(data.rows[data.currentSelected].text, () => {});
+    main(data.rows[data.currentSelected].text, 1000);
   })
   .catch((error) => {
     console.log(error);

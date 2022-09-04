@@ -17,12 +17,15 @@
   }
 }
 
-.filter-text {
+.filter-input {
   border: none;
+  outline: none;
+}
+
+.filter-text {
   color: var(--filter-text);
   font-size: 18px;
   font-weight: 400;
-  outline: none;
 }
 
 .filter-icon {

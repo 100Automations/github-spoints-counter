@@ -2,7 +2,7 @@
 
 // external imports
 import { Fragment, render } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
 import { Alert, Button, IconButton, InfoBox, TextInput } from "./Components";
@@ -10,9 +10,7 @@ import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import "./Popup.scss";
 
-// @ts-ignore
 import logo from "../assets/logo-dark.svg";
-// @ts-ignore
 import gear from "../assets/icon-gear.svg";
 
 const newDatum: datum = {
@@ -21,95 +19,53 @@ const newDatum: datum = {
 
 const Popup = () => {
   const [rows, setRows] = useState([]);
-  const [currentOn, setCurrentOn] = useState(null);
-  const [alert, setAlert] = useState({
-    text: "",
-    hidden: true,
-    color: "primary",
-  });
+  const arrayApi = useArrayState(rows, setRows);
+  const [currentSelected, setCurrentSelected] = useState(null);
 
   const [hasLabels, setHasLabels] = useState(false);
 
   useEffect(() => {
-    getData({ rows: [], currentOn: null })
+    getData({ rows: [], currentSelected: null })
       .then((data: data) => {
         setRows(data.rows);
-        setCurrentOn(data.currentOn);
+        setCurrentSelected(data.currentSelected);
       })
-      .catch((error) => {
-        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
+      .catch((error: Error) => {
+        console.log(error);
       });
   }, []);
 
   useEffect(() => {
-    setData({ rows: rows, currentOn: currentOn })
+    setData({ rows: rows, currentSelected: currentSelected })
       .then(() => {
         console.log("Saved.");
       })
-      .catch((error) => {
-        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
+      .catch((error: Error) => {
+        console.log(error);
       });
-  }, [rows, currentOn]);
+  }, [rows, currentSelected]);
 
   useEffect(() => {
     //@ts-ignore
     let querying = browser.tabs.query({ currentWindow: true, active: true });
     const createMessage = () => {
-      if (typeof currentOn == "number" && rows[currentOn].text) {
-        return { task: "mutate", filter: rows[currentOn].text };
+      if (typeof currentSelected == "number" && rows[currentSelected].text) {
+        return { task: "mutate", filter: rows[currentSelected].text };
       } else {
         return { task: "reset" };
       }
     };
 
     querying
-      .then((tabs) => {
+      .then((tabs: any) => {
         //@ts-ignore
         browser.tabs.sendMessage(tabs[0].id, createMessage());
       })
-      .catch((error) => {
-        setAlert({
-          text: `Error: ${error.message}`,
-          hidden: false,
-          color: "danger",
-        });
+      .catch((error: Error) => {
+        console.log(error);
       });
-  }, [rows, currentOn]);
+  }, [rows, currentSelected]);
 
-  interface options {
-    id?: number;
-    datum?: datum;
-  }
-
-  function datumOperation(
-    task: "post" | "get" | "patch" | "delete",
-    options: options
-  ) {
-    try {
-      const newRows = [...rows];
-      if (task == "post") {
-        if (rows.length < 10) {
-          const newRows = [...rows];
-          newRows.push(options.datum);
-          setRows(newRows);
-        }
-      } else if (task == "get") {
-        return newRows[options.id];
-      } else if (task == "patch") {
-        newRows[options.id] = options.datum;
-        setRows(newRows);
-      } else if (task == "delete") {
-        newRows.splice(options.id, 1);
-        setRows(newRows);
-      }
-    } catch (error) {
-      setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
-    }
-  }
-
-  function alertReset() {
-    setAlert({ text: "", hidden: true, color: "primary" });
-  }
   // note do not do flex grow 2; rather make the bottom input sticky
   return (
     <div id="popup" className="flex-column p-3">
@@ -122,16 +78,27 @@ const Popup = () => {
             <span>SELECT A FILTER</span>
           </div>
           <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
-            {[1, 2, 3].map((text, index) => {
+            {rows.map((datum, index) => {
               return (
-                <Filter key={index} text={`Filter ${text}`} addClass="mb-2" />
+                <Filter
+                  key={index}
+                  text={datum.text}
+                  active={index == datum.id}
+                  addClass="mb-2"
+                  arrayApi={(task: task, value?: string) => {
+                    arrayApi(task, { id: index, datum: { text: value } });
+                  }}
+                />
               );
             })}
           </div>
           <div className="row fill mt-1">
             <TextInput
               addClass="fill"
-              onInput={(e) => console.log(e)}
+              onEnter={(value: string) => {
+                console.log(value);
+                arrayApi("post", { datum: { text: value } });
+              }}
               placeholder="Enter a label with an assigned numerical value"
             />
           </div>
@@ -166,7 +133,7 @@ function NoFilterDisplay({ onClick }) {
       <h3 className="spoints-title-3 mb-2 mt-7">No filters yet</h3>
       <p className="spoints-p-1 mb-7">
         For more information about filters, visit our{" "}
-        <a className="spoints-links" href="www.google.com">
+        <a className="spoints-links" href="https://www.google.com">
           instructions guide
         </a>
         .
@@ -174,6 +141,43 @@ function NoFilterDisplay({ onClick }) {
       <Button onClick={() => onClick()}>Create filter</Button>
     </div>
   );
+}
+
+interface options {
+  id?: number;
+  datum?: datum;
+}
+
+type task = "post" | "get" | "patch" | "delete";
+
+function useArrayState(array: any[], setArray: StateUpdater<any[]>) {
+  function arrayApi(task: task, options?: options) {
+    try {
+      const newArray = [...array];
+      switch (task) {
+        case "post":
+          const newArray = [...array];
+          newArray.push(options.datum);
+          setArray(newArray);
+          break;
+        case "get":
+          return newArray[options.id];
+        case "patch":
+          newArray[options.id] = options.datum;
+          break;
+        case "delete":
+          newArray.splice(options.id, 1);
+          setArray(newArray);
+          break;
+        default:
+          console.log(`No operation called ${task}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return arrayApi;
 }
 
 render(<Popup />, document.getElementById("app"));

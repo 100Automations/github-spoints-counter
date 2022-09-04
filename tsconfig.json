@@ -9,6 +9,5 @@
     "esModuleInterop": true,
     "jsxImportSource": "preact",
     "types": ["preact"]
-  },
-  "include": ["src/custom.d.ts"]
+  }
 }
