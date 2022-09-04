@@ -19,7 +19,6 @@ const newDatum: datum = {
 
 const Popup = () => {
   const [rows, setRows] = useState([]);
-  const arrayApi = useArrayState(rows, setRows);
   const [currentSelected, setCurrentSelected] = useState(null);
 
   const [hasLabels, setHasLabels] = useState(false);
@@ -66,43 +65,17 @@ const Popup = () => {
       });
   }, [rows, currentSelected]);
 
-  // note do not do flex grow 2; rather make the bottom input sticky
   return (
     <div id="popup" className="flex-column p-3">
       <Header />
       <Title />
-      {hasLabels ? (
-        <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
-          <InfoBox>No Filters Selected</InfoBox>
-          <div className="row fill mt-3">
-            <span>SELECT A FILTER</span>
-          </div>
-          <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
-            {rows.map((datum, index) => {
-              return (
-                <Filter
-                  key={index}
-                  text={datum.text}
-                  active={index == datum.id}
-                  addClass="mb-2"
-                  arrayApi={(task: task, value?: string) => {
-                    arrayApi(task, { id: index, datum: { text: value } });
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="row fill mt-1">
-            <TextInput
-              addClass="fill"
-              onEnter={(value: string) => {
-                console.log(value);
-                arrayApi("post", { datum: { text: value } });
-              }}
-              placeholder="Enter a label with an assigned numerical value"
-            />
-          </div>
-        </div>
+      {rows ? (
+        <FilterDisplay
+          rows={rows}
+          setRows={setRows}
+          currentSelected={currentSelected}
+          setCurrentSelected={setCurrentSelected}
+        />
       ) : (
         <NoFilterDisplay onClick={() => setHasLabels(true)} />
       )}
@@ -143,31 +116,32 @@ function NoFilterDisplay({ onClick }) {
   );
 }
 
-interface options {
-  id?: number;
-  datum?: datum;
-}
+function FilterDisplay({ rows, setRows, currentSelected, setCurrentSelected }) {
+  interface options {
+    id?: number;
+    datum?: datum;
+  }
 
-type task = "post" | "get" | "patch" | "delete";
+  type task = "post" | "get" | "patch" | "delete";
 
-function useArrayState(array: any[], setArray: StateUpdater<any[]>) {
   function arrayApi(task: task, options?: options) {
+    console.log(task, options);
     try {
-      const newArray = [...array];
+      const newArray = [...rows];
       switch (task) {
         case "post":
-          const newArray = [...array];
           newArray.push(options.datum);
-          setArray(newArray);
+          setRows(newArray);
           break;
         case "get":
           return newArray[options.id];
         case "patch":
           newArray[options.id] = options.datum;
+          setRows(newArray);
           break;
         case "delete":
           newArray.splice(options.id, 1);
-          setArray(newArray);
+          setRows(newArray);
           break;
         default:
           console.log(`No operation called ${task}`);
@@ -176,8 +150,47 @@ function useArrayState(array: any[], setArray: StateUpdater<any[]>) {
       console.log(error);
     }
   }
-
-  return arrayApi;
+  // note do not do flex grow 2; rather make the bottom input sticky
+  return (
+    <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
+      <InfoBox>
+        {rows && currentSelected !== null
+          ? rows[currentSelected].text
+          : "No Filters Selected"}
+      </InfoBox>
+      <div className="row fill mt-3">
+        <span>SELECT A FILTER</span>
+      </div>
+      <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
+        {rows.map((datum: datum, index: number) => {
+          console.log(index, currentSelected);
+          return (
+            <Filter
+              key={index}
+              text={datum.text}
+              active={index == currentSelected}
+              addClass="mb-2"
+              arrayApi={(task: task, value?: string) => {
+                arrayApi(task, { id: index, datum: { text: value } });
+              }}
+              onSelected={() => setCurrentSelected(index)}
+            />
+          );
+        })}
+      </div>
+      <div className="row fill mt-1">
+        <TextInput
+          addClass="fill"
+          onEnter={(value: string) => {
+            console.log(value);
+            arrayApi("post", { datum: { text: value } });
+          }}
+          placeholder="Add a filter"
+          label="Enter a label with an assigned numerical value."
+        />
+      </div>
+    </div>
+  );
 }
 
 render(<Popup />, document.getElementById("app"));

@@ -67,6 +67,7 @@ const InfoBox = ({ addClass, children }: InfoBoxProps) => {
 interface TextInputProps {
   addClass?: string;
   disabled?: boolean;
+  label?: string;
   onEnter: (value: string) => any;
   placeholder?: string | number;
   value?: string | number;
@@ -75,6 +76,7 @@ interface TextInputProps {
 const TextInput = ({
   addClass,
   disabled = false,
+  label,
   onEnter,
   placeholder,
   value,
@@ -98,28 +100,29 @@ const TextInput = ({
       {!isFocused && (
         <img src={plus} className="col-1" width={16} height={16} />
       )}
-      <input
-        class="spoints-form-input col-10 px-1 mx-2"
-        type="text"
-        value={value}
-        onBlur={() => setIsFocused(false)}
-        onFocus={() => setIsFocused(true)}
-        disabled={disabled}
-        placeholder={placeholder}
-        ref={inputRef}
-      />
-      {isFocused && (
+      <div className="col-10 px-1 mx-2">
+        <input
+          class="spoints-form-input"
+          type="text"
+          value={value}
+          onBlur={() => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
+          disabled={disabled}
+          placeholder={placeholder}
+          ref={inputRef}
+        />
+        <span className="spoints-form-label pl-1">{label}</span>
+      </div>
+      {
         <img
           src={enter}
           className="col-1"
-          width={16}
           height={16}
           onClick={(e) => {
-            console.log("helloworld");
             onEnter(inputRef.current.value);
           }}
         />
-      )}
+      }
     </div>
   );
 };

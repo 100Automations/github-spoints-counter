@@ -41,6 +41,10 @@
   }
 }
 
+.spoints-form-label {
+  color: var(--create-filter-input);
+}
+
 .photon-form-input::placeholder {
   color: #737373;
   font-size: 0.833rem/1.4;

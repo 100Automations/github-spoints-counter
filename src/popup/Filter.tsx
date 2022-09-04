@@ -14,10 +14,17 @@ interface FilterProps {
   active: boolean;
   addClass?: string;
   arrayApi: Function;
+  onSelected: () => any;
   text?: string;
 }
 
-const Filter = ({ active = false, addClass, arrayApi, text }: FilterProps) => {
+const Filter = ({
+  active,
+  addClass,
+  arrayApi,
+  onSelected,
+  text,
+}: FilterProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const inputRef = useRef(null);
 
@@ -44,7 +51,15 @@ const Filter = ({ active = false, addClass, arrayApi, text }: FilterProps) => {
         addClass
       )}
     >
-      <FilterRadio active={active} addClass="ml-4 mr-10" />
+      <FilterRadio
+        active={active}
+        addClass="ml-4 mr-10"
+        onChange={(active: boolean) => {
+          if (active) {
+            onSelected();
+          }
+        }}
+      />
       {isEdit ? (
         <input
           type="text"
@@ -66,7 +81,7 @@ const Filter = ({ active = false, addClass, arrayApi, text }: FilterProps) => {
       <FilterIcon
         iconUrl={trash}
         addClass="filter-trash"
-        onClick={arrayApi("delete")}
+        onClick={() => arrayApi("delete")}
       />
     </div>
   );
@@ -80,7 +95,7 @@ interface FilterRadioProps {
 }
 
 const FilterRadio = ({
-  active = false,
+  active,
   addClass,
   color,
   onChange,
