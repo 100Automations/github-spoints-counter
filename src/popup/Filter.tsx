@@ -30,7 +30,6 @@ const Filter = ({
 
   function handleEdit(e: MouseEvent) {
     if (isEdit) {
-      console.log(inputRef.current.value);
       arrayApi("patch", inputRef.current.value);
     }
     setIsEdit(!isEdit);

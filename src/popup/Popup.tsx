@@ -20,8 +20,7 @@ const newDatum: datum = {
 const Popup = () => {
   const [rows, setRows] = useState([]);
   const [currentSelected, setCurrentSelected] = useState(null);
-
-  const [hasLabels, setHasLabels] = useState(false);
+  const [isInputFocusing, setIsInputFocusing] = useState(false);
 
   useEffect(() => {
     getData({ rows: [], currentSelected: null })
@@ -65,19 +64,24 @@ const Popup = () => {
       });
   }, [rows, currentSelected]);
 
+  console.log(rows);
+
   return (
     <div id="popup" className="flex-column p-3">
       <Header />
       <Title />
-      {rows ? (
+      {rows.length <= 0 && !isInputFocusing ? (
+        <NoFilterDisplay onClick={() => setIsInputFocusing(true)} />
+      ) : (
         <FilterDisplay
           rows={rows}
           setRows={setRows}
           currentSelected={currentSelected}
           setCurrentSelected={setCurrentSelected}
+          onBlur={() => setIsInputFocusing(false)}
+          onFocus={() => setIsInputFocusing(true)}
+          isFocused={isInputFocusing}
         />
-      ) : (
-        <NoFilterDisplay onClick={() => setHasLabels(true)} />
       )}
     </div>
   );
@@ -102,8 +106,8 @@ function Title() {
 
 function NoFilterDisplay({ onClick }) {
   return (
-    <div className="flex-column align-center no-filter-display">
-      <h3 className="spoints-title-3 mb-2 mt-7">No filters yet</h3>
+    <div className="flex-column align-center mt-3 no-filter-display">
+      <h3 className="spoints-title-3 mb-2 mt-4">No filters yet</h3>
       <p className="spoints-p-1 mb-7">
         For more information about filters, visit our{" "}
         <a className="spoints-links" href="https://www.google.com">
@@ -111,12 +115,20 @@ function NoFilterDisplay({ onClick }) {
         </a>
         .
       </p>
-      <Button onClick={() => onClick()}>Create filter</Button>
+      <Button onClick={onClick}>Create filter</Button>
     </div>
   );
 }
 
-function FilterDisplay({ rows, setRows, currentSelected, setCurrentSelected }) {
+function FilterDisplay({
+  rows,
+  setRows,
+  currentSelected,
+  setCurrentSelected,
+  onBlur,
+  onFocus,
+  isFocused,
+}) {
   interface options {
     id?: number;
     datum?: datum;
@@ -125,7 +137,6 @@ function FilterDisplay({ rows, setRows, currentSelected, setCurrentSelected }) {
   type task = "post" | "get" | "patch" | "delete";
 
   function arrayApi(task: task, options?: options) {
-    console.log(task, options);
     try {
       const newArray = [...rows];
       switch (task) {
@@ -163,7 +174,6 @@ function FilterDisplay({ rows, setRows, currentSelected, setCurrentSelected }) {
       </div>
       <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
         {rows.map((datum: datum, index: number) => {
-          console.log(index, currentSelected);
           return (
             <Filter
               key={index}
@@ -178,17 +188,17 @@ function FilterDisplay({ rows, setRows, currentSelected, setCurrentSelected }) {
           );
         })}
       </div>
-      <div className="row fill mt-1">
-        <TextInput
-          addClass="fill"
-          onEnter={(value: string) => {
-            console.log(value);
-            arrayApi("post", { datum: { text: value } });
-          }}
-          placeholder="Add a filter"
-          label="Enter a label with an assigned numerical value."
-        />
-      </div>
+      <TextInput
+        addClass="fill mt-1"
+        isFocused={isFocused}
+        onBlur={onBlur}
+        onFocus={onFocus}
+        onEnter={(value: string) => {
+          arrayApi("post", { datum: { text: value } });
+        }}
+        placeholder="Add a filter"
+        label="Enter a label with an assigned numerical value."
+      />
     </div>
   );
 }

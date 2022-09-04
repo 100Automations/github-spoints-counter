@@ -67,8 +67,11 @@ const InfoBox = ({ addClass, children }: InfoBoxProps) => {
 interface TextInputProps {
   addClass?: string;
   disabled?: boolean;
+  isFocused: boolean;
   label?: string;
+  onBlur: (e: FocusEvent) => any;
   onEnter: (value: string) => any;
+  onFocus: (e: FocusEvent) => any;
   placeholder?: string | number;
   value?: string | number;
 }
@@ -76,17 +79,19 @@ interface TextInputProps {
 const TextInput = ({
   addClass,
   disabled = false,
+  isFocused,
   label,
+  onBlur,
   onEnter,
+  onFocus,
   placeholder,
   value,
 }: TextInputProps) => {
-  const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [isFocused]);
 
   return (
     <div
@@ -105,8 +110,14 @@ const TextInput = ({
           class="spoints-form-input"
           type="text"
           value={value}
-          onBlur={() => setIsFocused(false)}
-          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => {
+            e.preventDefault();
+            onBlur();
+          }}
+          onFocus={(e) => {
+            e.preventDefault();
+            onFocus();
+          }}
           disabled={disabled}
           placeholder={placeholder}
           ref={inputRef}
