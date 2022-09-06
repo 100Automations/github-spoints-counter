@@ -12,4 +12,13 @@ function debounce(func: Function, timer = 500) {
   };
 }
 
-export { combineClasses, debounce };
+function onKey(fn: (e: KeyboardEvent) => any, ...keyValues: string[]) {
+  return (e: KeyboardEvent) => {
+    if (keyValues.includes(e.key)) {
+      e.preventDefault();
+      fn(e);
+    }
+  };
+}
+
+export { combineClasses, debounce, onKey };

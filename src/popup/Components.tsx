@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 
 // internal imports
-import { combineClasses } from "../utils";
+import { combineClasses, onKey } from "../utils";
 import enter from "../assets/icon-enter.svg";
 import plus from "../assets/icon-plus.svg";
 
@@ -90,7 +90,9 @@ const TextInput = ({
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (isFocused) {
+      inputRef.current.focus();
+    }
   }, [isFocused]);
 
   return (
@@ -118,22 +120,16 @@ const TextInput = ({
             e.preventDefault();
             onFocus();
           }}
+          onKeyDown={onKey((e) => {
+            onEnter(inputRef.current.value);
+            inputRef.current.blur();
+          }, "Enter")}
           disabled={disabled}
           placeholder={placeholder}
           ref={inputRef}
         />
         <span className="spoints-form-label pl-1">{label}</span>
       </div>
-      {
-        <img
-          src={enter}
-          className="col-1"
-          height={16}
-          onClick={(e) => {
-            onEnter(inputRef.current.value);
-          }}
-        />
-      }
     </div>
   );
 };

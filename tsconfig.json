@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "rootDir": "./src",
     "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "ES6",
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "rootDir": "./src",
     "jsxImportSource": "preact",
-    "types": ["preact"]
+    "types": ["preact"],
+    "lib": ["dom", "ES7", "dom.iterable"]
   }
 }
