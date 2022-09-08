@@ -14,7 +14,7 @@ interface FilterProps {
   active: boolean;
   addClass?: string;
   arrayApi: Function;
-  onSelected: () => any;
+  onRadioClick: () => any;
   text?: string;
 }
 
@@ -22,7 +22,7 @@ const Filter = ({
   active,
   addClass,
   arrayApi,
-  onSelected,
+  onRadioClick,
   text,
 }: FilterProps) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -53,11 +53,7 @@ const Filter = ({
       <FilterRadio
         active={active}
         addClass="ml-4 mr-10"
-        onChange={(active: boolean) => {
-          if (active) {
-            onSelected();
-          }
-        }}
+        onChange={onRadioClick}
       />
       {isEdit ? (
         <input
@@ -90,7 +86,7 @@ interface FilterRadioProps {
   active?: boolean;
   addClass?: string;
   color?: string;
-  onChange?: (isActive: boolean) => any;
+  onChange?: (e: MouseEvent) => any;
 }
 
 const FilterRadio = ({
@@ -99,20 +95,9 @@ const FilterRadio = ({
   color,
   onChange,
 }: FilterRadioProps) => {
-  const [isActive, setIsActive] = useState(active);
-
-  useEffect(() => {
-    if (onChange) {
-      onChange(isActive);
-    }
-  }, [isActive]);
-
   return (
     <div className={combineClasses("row", addClass)}>
-      <img
-        src={isActive ? radioActive : radioInactive}
-        onClick={() => setIsActive(!isActive)}
-      />
+      <img src={active ? radioActive : radioInactive} onClick={onChange} />
     </div>
   );
 };
