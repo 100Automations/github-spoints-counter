@@ -6,8 +6,6 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 // internal imports
 import { combineClasses, onKey } from "../utils";
-import enter from "../assets/icon-enter.svg";
-import plus from "../assets/icon-plus.svg";
 
 interface ButtonProps {
   addClass?: string;
@@ -96,40 +94,28 @@ const TextInput = ({
   }, [isFocused]);
 
   return (
-    <div
-      className={combineClasses(
-        "flex-container",
-        "align-center",
-        isFocused && "justify-right",
-        addClass
-      )}
-    >
-      {!isFocused && (
-        <img src={plus} className="col-1" width={16} height={16} />
-      )}
-      <div className="col-10 px-1 mx-2">
-        <input
-          class="spoints-form-input"
-          type="text"
-          value={value}
-          onBlur={(e) => {
-            e.preventDefault();
-            onBlur();
-          }}
-          onFocus={(e) => {
-            e.preventDefault();
-            onFocus();
-          }}
-          onKeyDown={onKey((e) => {
-            onEnter(inputRef.current.value);
-            inputRef.current.blur();
-          }, "Enter")}
-          disabled={disabled}
-          placeholder={placeholder}
-          ref={inputRef}
-        />
-        <span className="spoints-form-label pl-1">{label}</span>
-      </div>
+    <div className={addClass}>
+      <input
+        class="spoints-form-input"
+        type="text"
+        value={value}
+        onBlur={(e) => {
+          e.preventDefault();
+          onBlur();
+        }}
+        onFocus={(e) => {
+          e.preventDefault();
+          onFocus();
+        }}
+        onKeyDown={onKey((e) => {
+          onEnter(inputRef.current.value);
+          inputRef.current.blur();
+        }, "Enter")}
+        disabled={disabled}
+        placeholder={placeholder}
+        ref={inputRef}
+      />
+      <span className="spoints-form-label pl-1">{label}</span>
     </div>
   );
 };

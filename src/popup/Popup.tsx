@@ -8,10 +8,13 @@ import { StateUpdater, useEffect, useState } from "preact/hooks";
 import { Button, IconButton, InfoBox, TextInput } from "./Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
+import { combineClasses } from "../utils";
 import "./Popup.scss";
 
-import logo from "../assets/logo-dark.svg";
+// svgs
 import gear from "../assets/icon-gear.svg";
+import logo from "../assets/logo-dark.svg";
+import plus from "../assets/icon-plus.svg";
 
 const Popup = () => {
   const [rows, setRows] = useState<datum[]>([]);
@@ -112,18 +115,28 @@ const Popup = () => {
               );
             })}
           </div>
-          <TextInput
-            addClass="fill mt-1"
-            isFocused={isInputFocusing}
-            onBlur={() => setIsInputFocusing(false)}
-            onFocus={() => setIsInputFocusing(true)}
-            onEnter={(value: string) => {
-              const index = arrayApi("post", { datum: { text: value } });
-              setCurrentSelected(index);
-            }}
-            placeholder="Add a filter"
-            label="Enter a label with an assigned numerical value."
-          />
+          <div
+            className={combineClasses(
+              "flex-container align-center fill",
+              isInputFocusing && "justify-center"
+            )}
+          >
+            {!isInputFocusing && (
+              <img src={plus} className="col-1" width={16} height={16} />
+            )}
+            <TextInput
+              addClass="col-10 px-1 mx-2"
+              isFocused={isInputFocusing}
+              onBlur={() => setIsInputFocusing(false)}
+              onFocus={() => setIsInputFocusing(true)}
+              onEnter={(value: string) => {
+                const index = arrayApi("post", { datum: { text: value } });
+                setCurrentSelected(index);
+              }}
+              placeholder="Add a filter"
+              label="Enter a label with an assigned numerical value."
+            />
+          </div>
         </div>
       )}
     </div>
