@@ -67,9 +67,9 @@ interface TextInputProps {
   disabled?: boolean;
   isFocused: boolean;
   label?: string;
-  onBlur: (e: FocusEvent) => any;
-  onEnter: (value: string) => any;
-  onFocus: (e: FocusEvent) => any;
+  onBlur: (e?: FocusEvent) => any;
+  onEnter: (e?: KeyboardEvent) => any;
+  onFocus: (e?: FocusEvent) => any;
   placeholder?: string | number;
   value?: string | number;
 }
@@ -100,16 +100,15 @@ const TextInput = ({
         type="text"
         value={value}
         onBlur={(e) => {
-          e.preventDefault();
-          onBlur();
+          onBlur(e);
         }}
         onFocus={(e) => {
-          e.preventDefault();
-          onFocus();
+          onFocus(e);
         }}
         onKeyDown={onKey((e) => {
-          onEnter(inputRef.current.value);
+          onEnter(e);
           inputRef.current.blur();
+          inputRef.current.value = "";
         }, "Enter")}
         disabled={disabled}
         placeholder={placeholder}

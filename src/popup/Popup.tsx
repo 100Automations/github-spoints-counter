@@ -88,7 +88,7 @@ const Popup = () => {
       ) : (
         <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
           <InfoBox>
-            {rows && currentSelected !== null
+            {rows.length > 0 && currentSelected !== null
               ? rows[currentSelected].text
               : "No Filters Selected"}
           </InfoBox>
@@ -111,6 +111,12 @@ const Popup = () => {
                       ? setCurrentSelected(null)
                       : setCurrentSelected(index);
                   }}
+                  onDelete={() => {
+                    const deleted = arrayApi("delete", { index: index });
+                    if (deleted == currentSelected) {
+                      setCurrentSelected(null);
+                    }
+                  }}
                 />
               );
             })}
@@ -129,12 +135,13 @@ const Popup = () => {
               isFocused={isInputFocusing}
               onBlur={() => setIsInputFocusing(false)}
               onFocus={() => setIsInputFocusing(true)}
-              onEnter={(value: string) => {
+              onEnter={(e: KeyboardEvent) => {
+                const value = (e.target as HTMLInputElement).value;
                 const index = arrayApi("post", { datum: { text: value } });
                 setCurrentSelected(index);
               }}
               placeholder="Add a filter"
-              label="Enter a label with an assigned numerical value."
+              label="Enter label with assigned numerical value"
             />
           </div>
         </div>
@@ -174,7 +181,7 @@ function api(
       case "delete":
         newDataArray.splice(options.index, 1);
         setData(newDataArray);
-        break;
+        return options.index;
       default:
         console.log(`No operation called ${task}`);
     }

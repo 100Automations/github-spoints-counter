@@ -14,6 +14,7 @@ interface FilterProps {
   active: boolean;
   addClass?: string;
   arrayApi: Function;
+  onDelete: () => any;
   onRadioClick: () => any;
   text?: string;
 }
@@ -22,6 +23,7 @@ const Filter = ({
   active,
   addClass,
   arrayApi,
+  onDelete,
   onRadioClick,
   text,
 }: FilterProps) => {
@@ -73,11 +75,7 @@ const Filter = ({
         addClass="filter-edit"
         onClick={handleEdit}
       />
-      <FilterIcon
-        iconUrl={trash}
-        addClass="filter-trash"
-        onClick={() => arrayApi("delete")}
-      />
+      <FilterIcon iconUrl={trash} addClass="filter-trash" onClick={onDelete} />
     </div>
   );
 };
