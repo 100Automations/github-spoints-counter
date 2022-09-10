@@ -26,9 +26,8 @@ body {
   background-repeat: no-repeat;
   box-sizing: border-box;
   color: var(--text);
-  width: 800px;
   height: 600px;
-  overflow: auto;
+  width: 800px;
 }
 
 .popup-header {
@@ -39,8 +38,9 @@ body {
   color: var(--title-text);
 }
 
-.popup-labels {
-  max-height: 600px;
+.popup-filters {
+  height: 240px;
+  overflow: scroll;
 }
 
 .no-filter-display {

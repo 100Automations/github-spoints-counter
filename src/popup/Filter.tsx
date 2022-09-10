@@ -14,6 +14,7 @@ interface FilterProps {
   active: boolean;
   addClass?: string;
   arrayApi: Function;
+  onClick: (e?: MouseEvent) => any;
   onDelete: () => any;
   onRadioClick: () => any;
   text?: string;
@@ -23,6 +24,7 @@ const Filter = ({
   active,
   addClass,
   arrayApi,
+  onClick,
   onDelete,
   onRadioClick,
   text,
@@ -55,7 +57,9 @@ const Filter = ({
       <FilterRadio
         active={active}
         addClass="ml-4 mr-10"
-        onChange={onRadioClick}
+        onChange={() => {
+          if (!isEdit) onRadioClick();
+        }}
       />
       {isEdit ? (
         <input
@@ -66,7 +70,11 @@ const Filter = ({
           ref={inputRef}
         />
       ) : (
-        <div className="filter-text" style={{ flexGrow: 2 }}>
+        <div
+          className="flex-align-center filter-text"
+          style={{ flexGrow: 2 }}
+          onClick={onClick}
+        >
           {text}
         </div>
       )}

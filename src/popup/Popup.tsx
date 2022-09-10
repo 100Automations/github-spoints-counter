@@ -1,7 +1,7 @@
 "use strict";
 
 // external imports
-import { render } from "preact";
+import { Fragment, render } from "preact";
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
@@ -60,7 +60,7 @@ const Popup = () => {
   }
 
   return (
-    <div id="popup" className="flex-column p-3">
+    <div id="popup" className="p-3">
       <div className="popup-header flex-container">
         <img src={logo} alt="100 Automations Logo" />
         <IconButton
@@ -86,40 +86,45 @@ const Popup = () => {
           </Button>
         </div>
       ) : (
-        <div className="flex-column align-center mt-3" style={{ flexGrow: 2 }}>
-          <InfoBox>
-            {rows.length > 0 && currentSelected !== null
-              ? rows[currentSelected].text
-              : "No Filters Selected"}
-          </InfoBox>
-          <div className="row fill mt-3">
-            <span>SELECT A FILTER</span>
-          </div>
-          <div className="popup-labels fill my-2" style={{ flexGrow: 2 }}>
-            {rows.map((datum: datum, index: number) => {
-              return (
-                <Filter
-                  key={index}
-                  text={datum.text}
-                  active={index == currentSelected}
-                  addClass="mb-2"
-                  arrayApi={(task: task, value?: string) => {
-                    arrayApi(task, { index: index, datum: { text: value } });
-                  }}
-                  onRadioClick={() => {
-                    index == currentSelected
-                      ? setCurrentSelected(null)
-                      : setCurrentSelected(index);
-                  }}
-                  onDelete={() => {
-                    const deleted = arrayApi("delete", { index: index });
-                    if (deleted == currentSelected) {
-                      setCurrentSelected(null);
-                    }
-                  }}
-                />
-              );
-            })}
+        <Fragment>
+          <div className="flex-column align-center mt-3">
+            <InfoBox>
+              {rows.length > 0 && currentSelected !== null
+                ? rows[currentSelected].text
+                : "No Filters Selected"}
+            </InfoBox>
+            <div className="row fill mt-3">
+              <span>SELECT A FILTER</span>
+            </div>
+            <div className="popup-filters fill my-2">
+              {rows.map((datum: datum, index: number) => {
+                return (
+                  <Filter
+                    key={index}
+                    text={datum.text}
+                    active={index == currentSelected}
+                    addClass="mb-2"
+                    arrayApi={(task: task, value?: string) => {
+                      arrayApi(task, { index: index, datum: { text: value } });
+                    }}
+                    onClick={() => setCurrentSelected(index)}
+                    onRadioClick={() => {
+                      index == currentSelected
+                        ? setCurrentSelected(null)
+                        : setCurrentSelected(index);
+                    }}
+                    onDelete={() => {
+                      const deleted = arrayApi("delete", { index: index });
+                      if (deleted == currentSelected) {
+                        setCurrentSelected(null);
+                      } else if (deleted < currentSelected) {
+                        setCurrentSelected(currentSelected - 1);
+                      }
+                    }}
+                  />
+                );
+              })}
+            </div>
           </div>
           <div
             className={combineClasses(
@@ -144,7 +149,7 @@ const Popup = () => {
               label="Enter label with assigned numerical value"
             />
           </div>
-        </div>
+        </Fragment>
       )}
     </div>
   );
