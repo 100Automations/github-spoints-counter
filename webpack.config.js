@@ -2,8 +2,12 @@ const path = require("path");
 
 module.exports = {
   entry: {
-    index: "./src/index.ts",
-    popup: "./src/popup/Popup.tsx",
+    index: { import: "./src/index.ts", filename: "[name].bundle.js" },
+    popup: { import: "./src/popup/Popup.tsx", filename: "[name].bundle.js" },
+    instruction: {
+      import: "./src/docs/Instruction.tsx",
+      filename: "../docs/[name].bundle.js",
+    },
   },
   devtool: "inline-source-map",
   module: {
@@ -34,10 +38,10 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js", "jsx"],
   },
   output: {
-    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: {
       keep(asset) {
+        console.log(asset);
         return ["popup.html", "manifest.json", "icons/"].some((path) => {
           return asset.includes(path);
         });
