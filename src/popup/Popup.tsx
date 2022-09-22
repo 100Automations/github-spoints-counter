@@ -5,7 +5,12 @@ import { Fragment, render } from "preact";
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
-import { Button, IconButton, InfoBox, TextInput } from "./Components";
+import {
+  Button,
+  IconButton,
+  InfoBox,
+  TextInput,
+} from "../components/Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import { combineClasses } from "../utils";
@@ -68,12 +73,12 @@ const Popup = () => {
           onClick={() => console.log("gear clicked")}
         />
       </div>
-      <h1 class="popup-title spoints-title-1 mt-3">
+      <h1 class="popup-title spoints-title-3 mt-3">
         GitHub Story Points Calculator
       </h1>
       {rows.length <= 0 && !isInputFocusing ? (
         <div className="flex-column align-center mt-3 no-filter-display">
-          <h3 className="spoints-title-3 mb-2 mt-4">No filters yet</h3>
+          <h3 className="spoints-title-4 mb-2 mt-4">No filters yet</h3>
           <p className="spoints-p-1 mb-7">
             For more information about filters, visit our{" "}
             <a className="spoints-links" href="https://www.google.com">

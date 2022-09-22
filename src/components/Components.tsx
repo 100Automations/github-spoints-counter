@@ -1,15 +1,14 @@
-// @ts-nocheck
 "use strict";
 
 // external imports
-import { useEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 
 // internal imports
 import { combineClasses, onKey } from "../utils";
 
 interface ButtonProps {
   addClass?: string;
-  children?: preact.ReactNode;
+  children?: preact.ComponentChildren;
   color?: string;
   onClick: () => any;
 }
@@ -25,7 +24,7 @@ const Button = ({
       class={combineClasses(`spoints-btn`, addClass)}
       type="button"
       onClick={(e) => {
-        onClick(e);
+        onClick();
       }}
     >
       {props.children}
@@ -49,7 +48,7 @@ const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
 
 interface InfoBoxProps {
   addClass?: string;
-  children?: preact.ReactNode;
+  children?: preact.ComponentChildren;
 }
 
 const InfoBox = ({ addClass, children }: InfoBoxProps) => {
@@ -111,7 +110,7 @@ const TextInput = ({
           inputRef.current.value = "";
         }, "Enter")}
         disabled={disabled}
-        placeholder={placeholder}
+        placeholder={placeholder.toString()}
         ref={inputRef}
       />
       <span className="spoints-form-label pl-1">{label}</span>
@@ -119,4 +118,4 @@ const TextInput = ({
   );
 };
 
-export { Alert, Button, IconButton, InfoBox, TextInput };
+export { Button, IconButton, InfoBox, TextInput };

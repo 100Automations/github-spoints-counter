@@ -1,4 +1,4 @@
-@use "./Colors.scss" as *;
+@use "../components/Colors.scss" as *;
 
 @function light-dark($light, $dark) {
   @return var(--light, #{$light}) var(--dark, #{$dark});
@@ -33,7 +33,7 @@
       url("../assets/background-light.svg"),
       url("../assets/background-dark.svg")
     )};
-  --background-color: #light-dark($white, $dark-blue);
+  --background-color: #{light-dark($white, $dark-blue)};
   --title-text: #{light-dark($dark-blue, $white)};
   --no-filter-text: #{light-dark($dark-grey, $soft-white)};
   --no-filter-info-box: #{light-dark($dark-blue, $soft-white)};

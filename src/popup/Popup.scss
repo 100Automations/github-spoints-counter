@@ -1,8 +1,8 @@
-@use "./Colors.scss";
+@use "../components/Colors.scss";
 @use "./Themes.scss";
-@use "./Basics.scss";
+@use "../components/Basics.scss";
 @use "./Filter.scss";
-@use "./Components.scss";
+@use "../components/Components.scss";
 
 // Resets
 h1 {
@@ -40,7 +40,8 @@ body {
 
 .popup-filters {
   height: 240px;
-  overflow: scroll;
+  overflow-y: scroll;
+  scrollbar-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
 }
 
 .no-filter-display {

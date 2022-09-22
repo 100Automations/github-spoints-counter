@@ -45,32 +45,23 @@
   color: var(--create-filter-input);
 }
 
-.photon-form-input::placeholder {
-  color: #737373;
-  font-size: 0.833rem/1.4;
-}
-
-.photon-form-input:hover {
-  border: rgba(12 12 13 / 30%) solid 2px;
-}
-
-.photon-form-input:focus {
-  border: #0a84ff solid 2px;
-  box-shadow: 0 0 0 1px #0a84ff, 0 0 0 4px rgba(10 132 255 / 30%);
-}
-
 // Headings and Paragraphs
 .spoints-title-1 {
-  font-size: 40px;
+  font-size: 64px;
   font-weight: 600;
 }
 
 .spoints-title-2 {
-  font-size: 34px;
+  font-size: 48px;
   font-weight: 600;
 }
 
 .spoints-title-3 {
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.spoints-title-4 {
   font-size: 28px;
   font-weight: 600;
 }
@@ -78,39 +69,4 @@
 .spoints-p-1 {
   font-size: 18px;
   font-weight: 600;
-}
-
-// Alerts
-.photon-alert {
-  align-items: center;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: #fff;
-  display: flex;
-  font-size: 15px;
-  height: 48px;
-  justify-content: space-between;
-  padding: {
-    left: 16px;
-    right: 16px;
-  }
-
-  width: 100%;
-}
-
-.photon-close-btn {
-  background-color: inherit;
-  border: none;
-  color: inherit;
-  font-size: 18px;
-}
-
-.photon-alert-primary {
-  background-color: #0060df;
-  color: #fff;
-}
-
-.photon-alert-danger {
-  background-color: #d70022;
-  color: #fff;
 }
