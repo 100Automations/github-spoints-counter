@@ -1,0 +1,31 @@
+@use "../components/Colors.scss" as *;
+@use "../components/Basics.scss";
+@use "../components/Components.scss";
+
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+.instruction-header {
+  background-color: $dark-blue;
+  color: $white;
+  height: 200px;
+}
+
+.instruction-content {
+  width: 1000px;
+}
+
+.instruction-footer {
+  background-color: $dark-blue;
+  color: $white;
+  height: 200px;
+}
