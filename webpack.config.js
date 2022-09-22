@@ -41,7 +41,6 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: {
       keep(asset) {
-        console.log(asset);
         return ["popup.html", "manifest.json", "icons/"].some((path) => {
           return asset.includes(path);
         });
