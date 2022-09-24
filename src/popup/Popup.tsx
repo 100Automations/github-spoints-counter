@@ -17,9 +17,9 @@ import { combineClasses } from "../utils";
 import "./Popup.scss";
 
 // svgs
-import gear from "../assets/icon-gear.svg";
-import logo from "../assets/logo-dark.svg";
-import plus from "../assets/icon-plus.svg";
+import gear from "../assets/svgs/icon-gear.svg";
+import logo from "../assets/svgs/logo-dark.svg";
+import plus from "../assets/svgs/icon-plus.svg";
 
 const Popup = () => {
   const [rows, setRows] = useState<datum[]>([]);
@@ -73,12 +73,12 @@ const Popup = () => {
           onClick={() => console.log("gear clicked")}
         />
       </div>
-      <h1 class="popup-title spoints-title-3 mt-3">
+      <h1 class="popup-title spoints-title-1 mt-3">
         GitHub Story Points Calculator
       </h1>
       {rows.length <= 0 && !isInputFocusing ? (
         <div className="flex-column align-center mt-3 no-filter-display">
-          <h3 className="spoints-title-4 mb-2 mt-4">No filters yet</h3>
+          <h3 className="spoints-title-3 mb-2 mt-4">No filters yet</h3>
           <p className="spoints-p-1 mb-7">
             For more information about filters, visit our{" "}
             <a className="spoints-links" href="https://www.google.com">

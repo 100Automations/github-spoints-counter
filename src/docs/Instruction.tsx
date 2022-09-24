@@ -4,14 +4,15 @@
 import { Fragment, render } from "preact";
 
 import "./Instruction.scss";
+import addfilter1 from "../assets/jpgs/addfilter1.jpg";
 
 const Instruction = () => {
   return (
     <Fragment>
       <header className="instruction-header flex-align-center">
         <div className="ml-7">
-          <h2 className="spoints-title-2">Getting started with</h2>
-          <h1 className="spoints-title-1">GitHub Story Points Calculator</h1>
+          <h2 className="spoints-title-4">Getting started with</h2>
+          <h1 className="spoints-title-2">GitHub Story Points Calculator</h1>
         </div>
       </header>
       <main className="flex-justify-center">
@@ -62,7 +63,7 @@ interface SectionProps {
 const Section = ({ addClass, children, subtitle, title }: SectionProps) => {
   return (
     <div className={addClass}>
-      <h3 className="spoints-title-2">{title}</h3>
+      <h3 className="spoints-title-3">{title}</h3>
       <p className="spoints-p-1">{subtitle}</p>
       {children}
     </div>
@@ -76,6 +77,20 @@ const SubSection = ({ addClass, children, title }: SubSectionProps) => {
     <div className={addClass}>
       <h4 className="spoints-title-4">{title}</h4>
       {children}
+    </div>
+  );
+};
+
+interface StepProps {
+  children: preact.ComponentChild;
+  img: any;
+  imgSize: [number, number];
+}
+
+const Step = ({ children, img, imgSize }) => {
+  return (
+    <div>
+      <img src={img} width={imgSize[0]} height={imgSize[1]} />
     </div>
   );
 };

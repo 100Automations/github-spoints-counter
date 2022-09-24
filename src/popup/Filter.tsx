@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 // internal imports
 import { combineClasses } from "../utils";
-import radioInactive from "../assets/icon-radio.svg";
-import radioActive from "../assets/icon-radio-active.svg";
-import edit from "../assets/icon-edit.svg";
-import save from "../assets/icon-save.svg";
-import trash from "../assets/icon-trash.svg";
+import radioInactive from "../assets/svgs/icon-radio.svg";
+import radioActive from "../assets/svgs/icon-radio-active.svg";
+import edit from "../assets/svgs/icon-edit.svg";
+import save from "../assets/svgs/icon-save.svg";
+import trash from "../assets/svgs/icon-trash.svg";
 
 interface FilterProps {
   active: boolean;
