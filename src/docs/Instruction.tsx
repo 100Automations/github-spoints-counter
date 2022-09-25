@@ -22,31 +22,33 @@ const Instruction = () => {
             subtitle="How to install the extension in just a few clicks."
           ></Section>
           <Section title="Instructional Guide">
-            1. Click on the GitHub Story Points Calculator extension
+            <Step step="1. Click on the GitHub Story Points Calculator extension" />
             <SubSection title="Adding Filters">
-              2. Add a new filter by typing in the designated filter area. Press
-              'enter' on your keyboard to create the filter.
+              <Step
+                step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter."
+                img={addfilter1}
+              />
             </SubSection>
             <SubSection title="Editing and Deleting Filters">
-              3. To edit the existing filter, tap on the icon. Confirm the
-              changes by tapping on the icon. To delete the filter,tap on the
-              icon.
+              <Step step="3. To edit the existing filter, tap on the icon. Confirm the changes by tapping on the icon. To delete the filter,tap on the icon." />
             </SubSection>
             <SubSection title="Activating and Deactivating Filters">
-              4. To activate a filter, tap on the desired filter. 'No filters
-              selected' should change to the targeted selection. To deactivate a
-              filter, deselect it by tapping on the icon.
+              <Step step="4. To activate a filter, tap on the desired filter. 'No filters selected' should change to the targeted selection. To deactivate a filter, deselect it by tapping on the icon." />
             </SubSection>
           </Section>
           <Section
             title="Troubleshooting"
             subtitle="If you can't find your GitHub Story Points Calculator, it's possible that the extension is not enabled. Here’s how to check:"
-          ></Section>
+          >
+            <Step step="1. Navigate to your FireFox browser settings." />
+            <Step step="2. Select Extensions and Themes on the left of the page. You should see a list of your enabled extensions. Double check that the GitHub Story Points Calculator is enabled." />
+          </Section>
         </div>
       </main>
       <footer className="instruction-footer flex-container align-center justify-center">
         <h2 className="spoints-title-2">
-          Questions, comments, concerns? Contact us here.
+          Questions, comments, concerns?{" "}
+          <span className="underline">Contact us here.</span>
         </h2>
       </footer>
     </Fragment>
@@ -82,15 +84,24 @@ const SubSection = ({ addClass, children, title }: SubSectionProps) => {
 };
 
 interface StepProps {
-  children: preact.ComponentChild;
-  img: any;
-  imgSize: [number, number];
+  children?: preact.ComponentChild;
+  img?: any;
+  imgSize?: [number, number];
+  step: string;
 }
 
-const Step = ({ children, img, imgSize }) => {
+const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
   return (
     <div>
-      <img src={img} width={imgSize[0]} height={imgSize[1]} />
+      <p className="spoints-p-2">{step}</p>
+      {children}
+      {img && (
+        <img
+          src={img}
+          width={imgSize[0] ? imgSize[0] : "auto"}
+          height={imgSize[1] ? imgSize[1] : "auto"}
+        />
+      )}
     </div>
   );
 };
