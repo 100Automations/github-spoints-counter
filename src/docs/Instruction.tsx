@@ -25,7 +25,7 @@ const Instruction = () => {
             <Step step="1. Click on the GitHub Story Points Calculator extension" />
             <SubSection title="Adding Filters">
               <Step
-                step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter."
+                step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter. hahaha"
                 img={addfilter1}
               />
             </SubSection>
@@ -91,6 +91,8 @@ interface StepProps {
 }
 
 const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
+  console.log(img);
+
   return (
     <div>
       <p className="spoints-p-2">{step}</p>
