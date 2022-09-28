@@ -25,15 +25,24 @@ const Instruction = () => {
             <Step step="1. Click on the GitHub Story Points Calculator extension" />
             <SubSection title="Adding Filters">
               <Step
-                step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter. hahaha"
+                step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter."
                 img={addfilter1}
+                imgSize={[600, 400]}
               />
             </SubSection>
             <SubSection title="Editing and Deleting Filters">
-              <Step step="3. To edit the existing filter, tap on the icon. Confirm the changes by tapping on the icon. To delete the filter,tap on the icon." />
+              <Step
+                step="3. To edit the existing filter, tap on the icon. Confirm the changes by tapping on the icon. To delete the filter,tap on the icon."
+                img={addfilter1}
+                imgSize={[600, 400]}
+              />
             </SubSection>
             <SubSection title="Activating and Deactivating Filters">
-              <Step step="4. To activate a filter, tap on the desired filter. 'No filters selected' should change to the targeted selection. To deactivate a filter, deselect it by tapping on the icon." />
+              <Step
+                step="4. To activate a filter, tap on the desired filter. 'No filters selected' should change to the targeted selection. To deactivate a filter, deselect it by tapping on the icon."
+                img={addfilter1}
+                imgSize={[600, 400]}
+              />
             </SubSection>
           </Section>
           <Section
@@ -94,15 +103,17 @@ const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
   console.log(img);
 
   return (
-    <div>
+    <div className="my-4">
       <p className="spoints-p-2">{step}</p>
       {children}
       {img && (
-        <img
-          src={img}
-          width={imgSize[0] ? imgSize[0] : "auto"}
-          height={imgSize[1] ? imgSize[1] : "auto"}
-        />
+        <div className="flex-justify-center fill">
+          <img
+            src={img}
+            width={imgSize[0] ? imgSize[0] : "auto"}
+            height={imgSize[1] ? imgSize[1] : "auto"}
+          />
+        </div>
       )}
     </div>
   );
