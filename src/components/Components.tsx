@@ -2,6 +2,7 @@
 
 // external imports
 import { useEffect, useRef } from "preact/hooks";
+import { Fragment } from "preact/jsx-runtime";
 
 // internal imports
 import { combineClasses, onKey } from "../utils";
@@ -61,6 +62,14 @@ const InfoBox = ({ addClass, children }: InfoBoxProps) => {
   );
 };
 
+interface InlineImgProps {
+  src: string;
+}
+
+const InlineImg = ({ src }: InlineImgProps) => {
+  return <img src={src} className="vertical-sub" />;
+};
+
 interface TextInputProps {
   addClass?: string;
   disabled?: boolean;
@@ -118,4 +127,4 @@ const TextInput = ({
   );
 };
 
-export { Button, IconButton, InfoBox, TextInput };
+export { Button, IconButton, InfoBox, InlineImg, TextInput };

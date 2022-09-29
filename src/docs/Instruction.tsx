@@ -1,12 +1,25 @@
 "use strict";
 
 // external imports
-import { Fragment, FunctionalComponent, render } from "preact";
-
-import "./Instruction.scss";
-import addfilter1 from "../assets/jpgs/addfilter1.jpg";
-import { combineClasses } from "../utils";
+import { Fragment, render } from "preact";
 import { JSXInternal } from "preact/src/jsx";
+
+// internal imports
+import "./Instruction.scss";
+import { combineClasses } from "../utils";
+import { InlineImg } from "../components/Components";
+
+// assets
+import addfilter1 from "../assets/jpgs/addfilter1.jpg";
+import sizeLabel from "../assets/jpgs/sizeLabel.jpg";
+
+import confirm from "../assets/svgs/icon-confirm.svg";
+import deselect from "../assets/svgs/icon-deselect.svg";
+import edit from "../assets/svgs/icon-edit.svg";
+import trash from "../assets/svgs/icon-trash.svg";
+
+const aboutLabelsUrl =
+  "https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work";
 
 const Instruction = () => {
   return (
@@ -29,20 +42,36 @@ const Instruction = () => {
           </Section>
           <Section title="Instructional Guide">
             <Step step="1. Click on the GitHub Story Points Calculator extension" />
-            <SubSection title="Adding Filters">
+            <SubSection title="Adding Filters *">
               <Step
                 step="2. Add a new filter by typing in the designated filter area. Press 'enter' on your keyboard to create the filter."
                 img={addfilter1}
                 imgSize={[600, 400]}
-              />
+              >
+                <p className="pl-3 my-4">
+                  * Filters will only have effect if issues in GitHub are
+                  assigned labels with a numerical value. For example,{" "}
+                  <InlineImg src={sizeLabel} /> has a numerical value of 2
+                  attached to a 'size' label.
+                </p>
+                <p className="pl-3 my-4">
+                  <b>
+                    <a href={aboutLabelsUrl}>
+                      More information about GitHub labels.
+                    </a>
+                  </b>
+                </p>
+              </Step>
             </SubSection>
             <SubSection title="Editing and Deleting Filters">
               <Step
                 step={
                   <Fragment>
-                    3. To <b>edit</b> the existing filter, tap on the icon.
-                    Confirm the changes by tapping on the icon. To <b>delete</b>{" "}
-                    the filter,tap on the icon.
+                    3. To <b>edit</b> the existing filter, tap on the{" "}
+                    <InlineImg src={edit} /> icon. Confirm the changes by
+                    tapping on the <InlineImg src={confirm} /> icon. To{" "}
+                    <b>delete</b> the filter, tap on the{" "}
+                    <InlineImg src={trash} /> icon.
                   </Fragment>
                 }
                 img={addfilter1}
@@ -51,7 +80,14 @@ const Instruction = () => {
             </SubSection>
             <SubSection title="Activating and Deactivating Filters">
               <Step
-                step="4. To activate a filter, tap on the desired filter. 'No filters selected' should change to the targeted selection. To deactivate a filter, deselect it by tapping on the icon."
+                step={
+                  <Fragment>
+                    4. To activate a filter, tap on the desired filter. 'No
+                    filters selected' should change to the targeted selection.
+                    To deactivate a filter, deselect it by tapping on the{" "}
+                    <InlineImg src={deselect} /> icon.
+                  </Fragment>
+                }
                 img={addfilter1}
                 imgSize={[600, 400]}
               />
