@@ -43,7 +43,7 @@ module.exports = (env) => {
     output: {
       assetModuleFilename: "assets/[name][ext][query]",
       path: path.resolve(__dirname, "docs"),
-      publicPath: env.development ? "auto" : "github-spoints-calculator/",
+      publicPath: env.development ? "auto" : "github-spoints-counter/",
       clean: {
         keep(asset) {
           return ["index.html"].some((path) => {
