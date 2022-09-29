@@ -16,10 +16,11 @@ import { getData, setData, datum, data } from "../dataHandler";
 import { combineClasses } from "../utils";
 import "./Popup.scss";
 
-// svgs
-import gear from "../assets/svgs/icon-gear.svg";
+// assets
+import deselect from "../assets/svgs/icon-deselect.svg";
 import logo from "../assets/svgs/logo-dark.svg";
 import plus from "../assets/svgs/icon-plus.svg";
+import settings from "../assets/svgs/icon-settings.svg";
 
 const Popup = () => {
   const [rows, setRows] = useState<datum[]>([]);
@@ -69,7 +70,7 @@ const Popup = () => {
       <div className="popup-header flex-container">
         <img src={logo} alt="100 Automations Logo" />
         <IconButton
-          iconUrl={gear}
+          iconUrl={settings}
           onClick={() => console.log("gear clicked")}
         />
       </div>
@@ -94,9 +95,11 @@ const Popup = () => {
         <Fragment>
           <div className="flex-column align-center mt-3">
             <InfoBox>
-              {rows.length > 0 && currentSelected !== null
-                ? rows[currentSelected].text
-                : "No Filters Selected"}
+              {rows.length > 0 && currentSelected !== null ? (
+                <Fragment>rows[currentSelected].text</Fragment>
+              ) : (
+                "No Filters Selected"
+              )}
             </InfoBox>
             <div className="row fill mt-3">
               <span>SELECT A FILTER</span>

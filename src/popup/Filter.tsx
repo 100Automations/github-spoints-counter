@@ -7,7 +7,7 @@ import { combineClasses } from "../utils";
 import radioInactive from "../assets/svgs/icon-radio.svg";
 import radioActive from "../assets/svgs/icon-radio-active.svg";
 import edit from "../assets/svgs/icon-edit.svg";
-import save from "../assets/svgs/icon-save.svg";
+import confirm from "../assets/svgs/icon-confirm.svg";
 import trash from "../assets/svgs/icon-trash.svg";
 
 interface FilterProps {
@@ -79,7 +79,7 @@ const Filter = ({
         </div>
       )}
       <FilterIcon
-        iconUrl={isEdit ? save : edit}
+        iconUrl={isEdit ? confirm : edit}
         addClass="filter-edit"
         onClick={handleEdit}
       />
