@@ -1,10 +1,12 @@
 "use strict";
 
 // external imports
-import { Fragment, render } from "preact";
+import { Fragment, FunctionalComponent, render } from "preact";
 
 import "./Instruction.scss";
 import addfilter1 from "../assets/jpgs/addfilter1.jpg";
+import { combineClasses } from "../utils";
+import { JSXInternal } from "preact/src/jsx";
 
 const Instruction = () => {
   return (
@@ -16,11 +18,15 @@ const Instruction = () => {
         </div>
       </header>
       <main className="flex-justify-center">
-        <div className="instruction-content m-5">
+        <div className="instruction-content mx-5">
           <Section
             title="Installation"
             subtitle="How to install the extension in just a few clicks."
-          ></Section>
+          >
+            <div className="flex-justify-center">
+              <img src={addfilter1} width="600" height="400" />
+            </div>
+          </Section>
           <Section title="Instructional Guide">
             <Step step="1. Click on the GitHub Story Points Calculator extension" />
             <SubSection title="Adding Filters">
@@ -32,7 +38,13 @@ const Instruction = () => {
             </SubSection>
             <SubSection title="Editing and Deleting Filters">
               <Step
-                step="3. To edit the existing filter, tap on the icon. Confirm the changes by tapping on the icon. To delete the filter,tap on the icon."
+                step={
+                  <Fragment>
+                    3. To <b>edit</b> the existing filter, tap on the icon.
+                    Confirm the changes by tapping on the icon. To <b>delete</b>{" "}
+                    the filter,tap on the icon.
+                  </Fragment>
+                }
                 img={addfilter1}
                 imgSize={[600, 400]}
               />
@@ -47,10 +59,24 @@ const Instruction = () => {
           </Section>
           <Section
             title="Troubleshooting"
-            subtitle="If you can't find your GitHub Story Points Calculator, it's possible that the extension is not enabled. Here’s how to check:"
+            subtitle="If you can't find your GitHub Story Points Calculator, it's possible that the extension is not enabled. Here's how to check:"
           >
-            <Step step="1. Navigate to your FireFox browser settings." />
-            <Step step="2. Select Extensions and Themes on the left of the page. You should see a list of your enabled extensions. Double check that the GitHub Story Points Calculator is enabled." />
+            <Step
+              step="1. Navigate to your FireFox browser settings."
+              img={addfilter1}
+              imgSize={[600, 400]}
+            />
+            <Step
+              step={
+                <Fragment>
+                  2. Select <b>Extensions and Themes</b> on the left of the
+                  page. You should see a list of your enabled extensions. Double
+                  check that the GitHub Story Points Calculator is enabled.
+                </Fragment>
+              }
+              img={addfilter1}
+              imgSize={[600, 400]}
+            />
           </Section>
         </div>
       </main>
@@ -73,8 +99,9 @@ interface SectionProps {
 
 const Section = ({ addClass, children, subtitle, title }: SectionProps) => {
   return (
-    <div className={addClass}>
+    <div className={combineClasses("my-5", addClass)}>
       <h3 className="spoints-title-3">{title}</h3>
+      <hr></hr>
       <p className="spoints-p-1">{subtitle}</p>
       {children}
     </div>
@@ -96,13 +123,13 @@ interface StepProps {
   children?: preact.ComponentChild;
   img?: any;
   imgSize?: [number, number];
-  step: string;
+  step: JSXInternal.Element | string;
 }
 
 const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
   return (
     <div className="my-4">
-      <p className="spoints-p-2">{step}</p>
+      <p className="pl-2 spoints-p-2">{step}</p>
       {children}
       {img && (
         <div className="flex-justify-center fill">

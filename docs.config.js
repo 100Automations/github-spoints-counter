@@ -41,7 +41,7 @@ module.exports = () => {
       extensions: [".tsx", ".ts", ".js", "jsx"],
     },
     output: {
-      assetModuleFilename: "assets/[name][ext][query]",
+      assetModuleFilename: "assets/[hash][ext][query]",
       path: path.resolve(__dirname, "docs"),
       publicPath: "",
       clean: {
