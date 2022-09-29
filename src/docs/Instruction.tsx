@@ -16,7 +16,7 @@ const Instruction = () => {
         </div>
       </header>
       <main className="flex-justify-center">
-        <div className="instruction-content my-5">
+        <div className="instruction-content m-5">
           <Section
             title="Installation"
             subtitle="How to install the extension in just a few clicks."
@@ -100,8 +100,6 @@ interface StepProps {
 }
 
 const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
-  console.log(img);
-
   return (
     <div className="my-4">
       <p className="spoints-p-2">{step}</p>
