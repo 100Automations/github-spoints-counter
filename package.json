@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test:w": "jest --watch",
-    "build": "npx webpack --mode=production --no-devtool && npx webpack --mode=production --no-devtool --config ./docs.config.js",
+    "build": "npx webpack --mode=production --no-devtool --env browser=firefox && npx webpack --mode=production --no-devtool --config ./docs.config.js",
     "build:w": "npx webpack --mode=development --watch",
     "build:dw": "npx webpack --mode=development --watch --config ./docs.config.js"
   },
