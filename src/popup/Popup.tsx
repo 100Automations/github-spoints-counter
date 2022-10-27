@@ -5,6 +5,7 @@ import { Fragment, render } from "preact";
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
+import getBrowser from "../handler/browser";
 import {
   Button,
   IconButton,
@@ -15,6 +16,8 @@ import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import { combineClasses } from "../utils";
 import "./Popup.scss";
+
+const browser = getBrowser();
 
 // assets
 import deselect from "../assets/svgs/icon-deselect.svg";
@@ -43,7 +46,6 @@ const Popup = () => {
   }, [rows, currentSelected]);
 
   useEffect(() => {
-    //@ts-ignore
     let querying = browser.tabs.query({ currentWindow: true, active: true });
     const createMessage = () => {
       if (typeof currentSelected == "number" && rows[currentSelected].text) {
@@ -55,7 +57,6 @@ const Popup = () => {
 
     querying
       .then((tabs: any) => {
-        //@ts-ignore
         browser.tabs.sendMessage(tabs[0].id, createMessage());
       })
       .catch((error: Error) => console.log(error));
@@ -96,7 +97,7 @@ const Popup = () => {
           <div className="flex-column align-center mt-3">
             <InfoBox>
               {rows.length > 0 && currentSelected !== null ? (
-                <Fragment>rows[currentSelected].text</Fragment>
+                <Fragment>{rows[currentSelected].text}</Fragment>
               ) : (
                 "No Filters Selected"
               )}

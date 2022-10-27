@@ -3,7 +3,9 @@
 import { ColumnElement, composeRegex } from "./column";
 import { getData, data } from "./dataHandler";
 import { debounce } from "./utils";
+import getBrowser from "./handler/browser";
 
+const browser = getBrowser();
 let observer: MutationObserver;
 const columns = collectColumns();
 
@@ -53,7 +55,6 @@ function resetColumns() {
   }
 }
 
-//@ts-ignore
 browser.runtime.onMessage.addListener(
   (message: { task: string; filter?: string }) => {
     if (observer) {

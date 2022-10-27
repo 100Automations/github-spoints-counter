@@ -1,3 +1,7 @@
+import getBrowser from "./handler/browser";
+
+const browser = getBrowser();
+
 interface data {
   rows: datum[];
   currentSelected: number;
@@ -8,12 +12,10 @@ interface datum {
 }
 
 function getData(keys: data) {
-  //@ts-ignore
   return browser.storage.local.get(keys);
 }
 
 function setData(data: data) {
-  //@ts-ignore
   return browser.storage.local.set(data);
 }
 
