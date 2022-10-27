@@ -2,11 +2,28 @@
 
 ## Testing
 
-To run tests, use `npm run test` or `npm run test:w` for watch mode. This lets you run tests while
+```bash
+# Run tests once
+npm run test
+
+# Run tests in watch mode
+npm run test:w
+```
 
 ## Debugging
 
-You can debug the application using your [Firefox browser](https://extensionworkshop.com/documentation/develop/#test-and-debug). To compile the code as you debug, it is helpful to build development files in watch mode with `npm run build:w`.
+You can debug the application using your [Firefox browser](https://extensionworkshop.com/documentation/develop/#test-and-debug). Here are some commands you can run to help you compile the code as you debug:
+
+```bash
+# Run development watch mode for FireFox version
+npm run dev:ff
+
+# Run development watch mode for Chrome version
+npm run dev:ch
+
+# Run development watch mode for instructional website
+npm run dev:docs
+```
 
 ## Pull Request
 

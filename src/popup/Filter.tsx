@@ -64,7 +64,7 @@ const Filter = ({
       {isEdit ? (
         <input
           type="text"
-          className="filter-input filter-text"
+          className="filter-input filter-text p-0"
           style={{ flexGrow: 2 }}
           value={text}
           ref={inputRef}

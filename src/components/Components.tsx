@@ -2,7 +2,6 @@
 
 // external imports
 import { useEffect, useRef } from "preact/hooks";
-import { Fragment } from "preact/jsx-runtime";
 
 // internal imports
 import { combineClasses, onKey } from "../utils";
@@ -107,12 +106,8 @@ const TextInput = ({
         class="spoints-form-input"
         type="text"
         value={value}
-        onBlur={(e) => {
-          onBlur(e);
-        }}
-        onFocus={(e) => {
-          onFocus(e);
-        }}
+        onBlur={(e) => onBlur(e)}
+        onFocus={(e) => onFocus(e)}
         onKeyDown={onKey((e) => {
           onEnter(e);
           inputRef.current.blur();
