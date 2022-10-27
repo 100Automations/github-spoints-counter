@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "rootDir": "./src",
     "jsxImportSource": "preact",
-    "types": ["preact"],
+    "types": ["preact", "chrome", "firefox-webext-browser"],
     "lib": ["dom", "ES7", "dom.iterable"]
   }
 }
