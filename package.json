@@ -7,8 +7,9 @@
     "test": "jest",
     "test:w": "jest --watch",
     "build": "npx webpack --mode=production --no-devtool --env browser=firefox && npx webpack --mode=production --no-devtool --env browser=chrome && npx webpack --mode=production --no-devtool --config ./docs.config.js",
-    "build:w": "npx webpack --mode=development --watch",
-    "build:dw": "npx webpack --mode=development --watch --config ./docs.config.js"
+    "dev:ch": "npx webpack --mode=development --watch --env browser=chrome",
+    "dev:docs": "npx webpack --mode=development --watch --config ./docs.config.js",
+    "dev:ff": "npx webpack --mode=development --watch --env browser=firefox"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,8 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
+    "@types/chrome": "^0.0.200",
+    "@types/firefox-webext-browser": "^94.0.1",
     "babel-jest": "^28.0.2",
     "css-loader": "^6.7.1",
     "jest": "^27.5.1",
