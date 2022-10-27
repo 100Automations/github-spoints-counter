@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "github-spoints-counter",
+  "version": "1.14",
+
+  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-spoints-counter#README.md",
+  "homepage_url": "https://github.com/100Automations/github-spoints-counter",
+  "icons": {
+    "48": "icons/beverage-24.png"
+  },
+
+  "permissions": ["activeTab", "storage"],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.github.com/*/*/projects/*"],
+      "js": ["index.bundle.js"]
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/beverage-24.png",
+    "default_title": "github-spoints-counter",
+    "default_popup": "popup.html"
+  }
+}

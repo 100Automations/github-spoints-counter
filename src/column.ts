@@ -62,7 +62,7 @@ class ColumnElement {
   rewriteCounter(text: string) {
     this.columnCounter.textContent = `${text}: ${this.value.toFixed(
       1
-    )} | missing: ${this.missingValue}`;
+    )} | Issues without ${text} label: ${this.missingValue}`;
   }
 
   resetCounter() {

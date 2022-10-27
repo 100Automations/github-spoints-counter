@@ -7,7 +7,7 @@ import { JSXInternal } from "preact/src/jsx";
 // internal imports
 import "./Instruction.scss";
 import { combineClasses } from "../utils";
-import { InlineImg } from "../components/Components";
+import { Button, InlineImg } from "../components/Components";
 
 // assets
 import addfilter1 from "../assets/jpgs/addfilter1.jpg";
@@ -36,8 +36,13 @@ const Instruction = () => {
             title="Installation"
             subtitle="How to install the extension in just a few clicks."
           >
-            <div className="flex-justify-center">
-              <img src={addfilter1} width="600" height="400" />
+            <div className="flex-justify-center my-4">
+              <img src={addfilter1} className="row" width="600" height="400" />
+            </div>
+            <div className="flex-justify-center my-4">
+              <Button onClick={() => {}} addClass="instruction-get-button">
+                Get the FireFox extension!
+              </Button>
             </div>
           </Section>
           <Section title="Instructional Guide">
