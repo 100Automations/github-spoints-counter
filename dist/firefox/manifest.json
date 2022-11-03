@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.github.com/*/*/projects/*"],
-      "js": ["index.bundle.js"]
+      "js": ["browser-polyfill.js", "index.bundle.js"]
     }
   ],
 

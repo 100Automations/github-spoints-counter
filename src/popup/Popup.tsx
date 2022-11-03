@@ -5,7 +5,6 @@ import { Fragment, render } from "preact";
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
-import getBrowser from "../handler/browser";
 import {
   Button,
   IconButton,
@@ -16,8 +15,6 @@ import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import { combineClasses } from "../utils";
 import "./Popup.scss";
-
-const browser = getBrowser();
 
 // assets
 import deselect from "../assets/svgs/icon-deselect.svg";

@@ -27,4 +27,8 @@ npm run dev:docs
 
 ## Pull Request
 
-Before making a pull request, make sure to rebuild the dist files with `npm run build`.
+Before making a pull request, make sure to rebuild the dist files.
+
+```bash
+npm run build
+```

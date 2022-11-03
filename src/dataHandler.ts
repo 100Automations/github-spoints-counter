@@ -1,7 +1,3 @@
-import getBrowser from "./handler/browser";
-
-const browser = getBrowser();
-
 interface data {
   rows: datum[];
   currentSelected: number;
