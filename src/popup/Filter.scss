@@ -17,6 +17,10 @@
   }
 }
 
+.filter-radio {
+  cursor: pointer;
+}
+
 .filter-input {
   border: none;
   outline: none;
@@ -45,8 +49,10 @@
 
 .filter-edit {
   background-color: var(--filter-edit);
+  cursor: pointer;
 }
 
 .filter-trash {
   background-color: var(--filter-trash);
+  cursor: pointer;
 }

@@ -17,7 +17,6 @@ import { combineClasses } from "../utils";
 import "./Popup.scss";
 
 // assets
-import deselect from "../assets/svgs/icon-deselect.svg";
 import logo from "../assets/svgs/logo-dark.svg";
 import plus from "../assets/svgs/icon-plus.svg";
 import settings from "../assets/svgs/icon-settings.svg";
@@ -102,7 +101,7 @@ const Popup = () => {
             <div className="row fill mt-3">
               <span>SELECT A FILTER</span>
             </div>
-            <div className="popup-filters fill my-2">
+            <div className="popup-filters chrome fill my-2">
               {rows.map((datum: datum, index: number) => {
                 return (
                   <Filter

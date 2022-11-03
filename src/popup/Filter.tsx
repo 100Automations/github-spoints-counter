@@ -95,14 +95,9 @@ interface FilterRadioProps {
   onChange?: (e: MouseEvent) => any;
 }
 
-const FilterRadio = ({
-  active,
-  addClass,
-  color,
-  onChange,
-}: FilterRadioProps) => {
+const FilterRadio = ({ active, addClass, onChange }: FilterRadioProps) => {
   return (
-    <div className={combineClasses("row", addClass)}>
+    <div className={combineClasses("filter-radio", "row", addClass)}>
       <img src={active ? radioActive : radioInactive} onClick={onChange} />
     </div>
   );
