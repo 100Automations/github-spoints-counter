@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "github-spoints-counter",
-  "version": "1.14",
+  "version": "1.15",
 
   "action": {
     "default_icon": "icons/beverage-24.png",
