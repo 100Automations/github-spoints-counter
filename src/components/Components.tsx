@@ -40,7 +40,10 @@ interface IconButtonProps {
 
 const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
   return (
-    <div className={combineClasses(addClass)} onClick={onClick}>
+    <div
+      className={combineClasses("spoints-icon-button", addClass)}
+      onClick={onClick}
+    >
       <img src={iconUrl}></img>
     </div>
   );

@@ -17,6 +17,7 @@ import { combineClasses } from "../utils";
 import "./Popup.scss";
 
 // assets
+import deselect from "../assets/svgs/icon-deselect.svg";
 import logo from "../assets/svgs/logo-dark.svg";
 import plus from "../assets/svgs/icon-plus.svg";
 import settings from "../assets/svgs/icon-settings.svg";
@@ -91,9 +92,16 @@ const Popup = () => {
       ) : (
         <Fragment>
           <div className="flex-column align-center mt-3">
-            <InfoBox>
+            <InfoBox addClass="flex-align-center">
               {rows.length > 0 && currentSelected !== null ? (
-                <Fragment>{rows[currentSelected].text}</Fragment>
+                <Fragment>
+                  {rows[currentSelected].text}&nbsp;
+                  <IconButton
+                    addClass="popup-infobox-icon"
+                    iconUrl={deselect}
+                    onClick={() => setCurrentSelected(null)}
+                  />
+                </Fragment>
               ) : (
                 "No Filters Selected"
               )}
