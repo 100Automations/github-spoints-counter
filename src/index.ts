@@ -1,15 +1,16 @@
 "use strict";
 
-import { ClassicColumnElement, composeRegex } from "./column";
+import { composeRegex } from "./column";
+import { ProjectBoard } from "./projectBoard";
 import { getData, data } from "./dataHandler";
 import { debounce } from "./utils";
 
 let observer: MutationObserver;
-const columns = collectColumns();
+const projectBoard = new ProjectBoard();
 
 // TODO, attach observer directly to each column and only call the column that is relevant
 function main(filter: string, timer: number) {
-  const targetNode = document.getElementsByClassName("project-columns")[0];
+  const targetNode = projectBoard.targetNode;
   const config = { childList: true, subtree: true };
   const callback = debounce(
     () =>
@@ -20,7 +21,7 @@ function main(filter: string, timer: number) {
     timer
   );
   observer = new MutationObserver(callback);
-  observer.observe(targetNode, config);
+  observer.observe(document, config);
 }
 
 function mutationListener(filter: string, callback: Function) {
@@ -28,28 +29,17 @@ function mutationListener(filter: string, callback: Function) {
   callback();
 }
 
-function collectColumns() {
-  const elements = document.getElementsByClassName("project-column");
-  let columns = [];
-  for (const element of elements) {
-    if (element instanceof HTMLElement) {
-      columns.push(new ClassicColumnElement(element));
-    }
-  }
-  return columns;
-}
-
 function rewriteColumns(label: string) {
   // composeRegex is not called in the Column class because it only needs calculation once and is otherwise stable.
   const regex = composeRegex(label);
-  for (const column of columns) {
+  for (const column of projectBoard.columns) {
     column.calculateValue(regex);
     column.rewriteCounter(label);
   }
 }
 
 function resetColumns() {
-  for (const column of columns) {
+  for (const column of projectBoard.columns) {
     column.resetCounter();
   }
 }
@@ -71,8 +61,8 @@ browser.runtime.onMessage.addListener(
 
 getData({ rows: [], currentSelected: null })
   .then((data: data) => {
-    mutationListener(data.rows[data.currentSelected].text, () => {});
     main(data.rows[data.currentSelected].text, 1000);
+    mutationListener(data.rows[data.currentSelected].text, () => {});
   })
   .catch((error) => {
     console.log(error);

@@ -124,6 +124,60 @@ class ClassicColumnElement extends ColumnElement {
   }
 }
 
+class NewProjectsColumnElement extends ColumnElement {
+  readonly cachedResetText: string;
+
+  constructor(element: HTMLElement) {
+    super(element);
+    this.cachedResetText = this.columnCounter.textContent;
+  }
+
+  protected get id() {
+    return this.element.id;
+  }
+
+  protected get cards() {
+    return this.element.getElementsByClassName("card__CardBase-sc-0-0");
+  }
+
+  protected get columnCounter() {
+    return this.element.querySelector("[data-test-id~='column-items-counter']");
+  }
+
+  protected get resetText() {
+    return this.cachedResetText;
+  }
+
+  protected extractValue(
+    cards: HTMLCollection,
+    labelRegex: RegExp
+  ): [number, number] {
+    let value = 0;
+    let missingValue = 0;
+    for (const card of cards) {
+      const labels = card.querySelectorAll("[data-test-id~='issue-label']");
+      const label_value = this.extractLabelValue(labels, labelRegex);
+      if (typeof label_value == "number") {
+        value += label_value;
+      } else {
+        missingValue++;
+      }
+    }
+    return [value, missingValue];
+  }
+
+  protected extractLabelValue(labels: NodeList, labelRegex: RegExp) {
+    for (const label of labels) {
+      const labelName = label.textContent;
+      const result = labelName.match(labelRegex);
+      if (result) {
+        return parseFloat(result[1]);
+      }
+    }
+    return null;
+  }
+}
+
 /**
  * This function assumes that the labels are in the form of a string, followed by a number or some small variations. `${string} ${number}`
  * @param str The category of the label, such as Size, Feature, or Role
@@ -134,4 +188,4 @@ function composeRegex(str: string) {
   return regex;
 }
 
-export { ClassicColumnElement, composeRegex };
+export { ClassicColumnElement, NewProjectsColumnElement, composeRegex };
