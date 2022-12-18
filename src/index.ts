@@ -39,11 +39,12 @@ function collectColumns() {
   return columns;
 }
 
-function rewriteColumns(str: string) {
-  const regex = composeRegex(str);
+function rewriteColumns(label: string) {
+  // composeRegex is not called in the Column class because it only needs calculation once and is otherwise stable.
+  const regex = composeRegex(label);
   for (const column of columns) {
     column.calculateValue(regex);
-    column.rewriteCounter(str);
+    column.rewriteCounter(label);
   }
 }
 

@@ -11,6 +11,31 @@ abstract class ColumnElement {
     this.element = element;
   }
 
+  calculateValue = (labelRegex: RegExp) => {
+    this.#resetValues();
+    try {
+      [this.value, this.missingValue] = this.extractValue(
+        this.cards,
+        labelRegex
+      );
+    } catch {}
+  };
+
+  #resetValues() {
+    this.value = 0;
+    this.missingValue = 0;
+  }
+
+  rewriteCounter(text: string) {
+    this.columnCounter.textContent = `${text}: ${this.value.toFixed(
+      1
+    )} | Issues without ${text} label: ${this.missingValue}`;
+  }
+
+  resetCounter() {
+    this.columnCounter.textContent = this.resetText;
+  }
+
   /**
    * The unique id of the column. This is not used, but is here in case it is needed in the future.
    */
@@ -31,30 +56,13 @@ abstract class ColumnElement {
    */
   protected abstract get resetText(): string;
 
-  calculateValue(regex: RegExp) {
-    this.#resetValues();
-    [this.value, this.missingValue] = this.extractValue(this.cards, regex);
-  }
-
+  /**
+   * The first number returned should be the value of this column. The second should be the number of cards without the specified label.
+   */
   protected abstract extractValue(
     cards: HTMLCollection,
-    regex: RegExp
+    labelRegex: RegExp
   ): [number, number];
-
-  #resetValues() {
-    this.value = 0;
-    this.missingValue = 0;
-  }
-
-  rewriteCounter(text: string) {
-    this.columnCounter.textContent = `${text}: ${this.value.toFixed(
-      1
-    )} | Issues without ${text} label: ${this.missingValue}`;
-  }
-
-  resetCounter() {
-    this.columnCounter.textContent = this.resetText;
-  }
 }
 
 class ClassicColumnElement extends ColumnElement {
@@ -83,31 +91,31 @@ class ClassicColumnElement extends ColumnElement {
 
   protected extractValue(
     cards: HTMLCollection,
-    regex: RegExp
+    labelRegex: RegExp
   ): [number, number] {
+    let value = 0;
+    let missingValue = 0;
     for (const card of cards) {
-      let value = 0;
-      let missingValue = 0;
       if (
         (card as HTMLElement).dataset.cardType.includes("issue") &&
         !card.classList.contains("d-none")
       ) {
         const labels = card.getElementsByClassName("IssueLabel");
-        const label_value = this.extractValue(labels, regex);
+        const label_value = this.extractLabelValue(labels, labelRegex);
         if (typeof label_value == "number") {
           value += label_value;
         } else {
           missingValue++;
         }
       }
-      return [value, missingValue];
     }
+    return [value, missingValue];
   }
 
-  protected extractLabelValue(labels: HTMLCollection, regex: RegExp) {
+  protected extractLabelValue(labels: HTMLCollection, labelRegex: RegExp) {
     for (const label of labels) {
       const labelName = label.textContent;
-      const result = labelName.match(regex);
+      const result = labelName.match(labelRegex);
       if (result) {
         return parseFloat(result[1]);
       }
@@ -116,6 +124,11 @@ class ClassicColumnElement extends ColumnElement {
   }
 }
 
+/**
+ * This function assumes that the labels are in the form of a string, followed by a number or some small variations. `${string} ${number}`
+ * @param str The category of the label, such as Size, Feature, or Role
+ * @returns A RegExp that searches for the
+ */
 function composeRegex(str: string) {
   const regex = new RegExp(`.*${str}:.*?(\\d+\\.?[\\d]*).*`);
   return regex;
