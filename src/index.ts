@@ -1,6 +1,5 @@
 "use strict";
-
-import { ProjectBoard } from "./projectBoard";
+import { ProjectBoard } from "./projectBoard/projectBoard";
 import { getData, data } from "./dataHandler";
 import { composeRegex, debounce } from "./utils";
 

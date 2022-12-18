@@ -21,6 +21,20 @@ function onKey(fn: (e: KeyboardEvent) => any, ...keyValues: string[]) {
   };
 }
 
+function extractValueFromElements(
+  elements: NodeList | HTMLCollection,
+  itemRegex: RegExp
+) {
+  for (const element of elements) {
+    const text = element.textContent;
+    const result = text.match(itemRegex);
+    if (result) {
+      return parseFloat(result[1]);
+    }
+  }
+  return null;
+}
+
 /**
  * This function assumes that the labels are in the form of a string, followed by a number or some small variations. `${string} ${number}`
  * @param str The category of the label, such as Size, Feature, or Role
@@ -31,4 +45,10 @@ function composeRegex(str: string) {
   return regex;
 }
 
-export { combineClasses, composeRegex, debounce, onKey };
+export {
+  combineClasses,
+  composeRegex,
+  debounce,
+  extractValueFromElements,
+  onKey,
+};

@@ -6,14 +6,13 @@ global.TextDecoder = TextDecoder;
 // Imports
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const {
-  ColumnElement,
-  composeRegex,
-  ClassicColumnElement,
-} = require("../src/column");
+const { ClassicColumnElement } = require("../src/projectBoard/classicColumn");
+const { composeRegex } = require("../src/utils");
+
+const file = "tests/assets/test-classic.html";
 
 test("Column constructor", (done) => {
-  JSDOM.fromFile("tests/assets/test.html")
+  JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
       const backlogElement =
@@ -32,7 +31,7 @@ test("Column constructor", (done) => {
 });
 
 test("Column calculateValue", (done) => {
-  JSDOM.fromFile("tests/assets/test.html")
+  JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
       const backlogElement =
@@ -54,7 +53,7 @@ test("Column calculateValue", (done) => {
 });
 
 test("Column calculateValue no-issue-card-column", (done) => {
-  JSDOM.fromFile("tests/assets/test.html")
+  JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
       const backlogElement =
@@ -71,7 +70,7 @@ test("Column calculateValue no-issue-card-column", (done) => {
 });
 
 test("Column rewriteCounter", (done) => {
-  JSDOM.fromFile("tests/assets/test.html")
+  JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
       const backlogElement =

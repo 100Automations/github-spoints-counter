@@ -1,6 +1,6 @@
 "use strict";
-
-import { ClassicColumnElement, NewProjectsColumnElement } from "./column";
+import { ClassicColumnElement } from "./classicColumn";
+import { NewProjectColumnElement } from "./newProjectColumn";
 
 class ProjectBoard {
   readonly columns: ClassicColumnElement[];
@@ -38,7 +38,7 @@ class ProjectBoard {
         if (isClassic) {
           columns.push(new ClassicColumnElement(element));
         } else {
-          columns.push(new NewProjectsColumnElement(element));
+          columns.push(new NewProjectColumnElement(element));
         }
       }
     }
