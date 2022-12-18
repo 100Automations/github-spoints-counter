@@ -1,9 +1,8 @@
 "use strict";
 
-import { composeRegex } from "./column";
 import { ProjectBoard } from "./projectBoard";
 import { getData, data } from "./dataHandler";
-import { debounce } from "./utils";
+import { composeRegex, debounce } from "./utils";
 
 let observer: MutationObserver;
 const projectBoard = new ProjectBoard();
@@ -30,7 +29,6 @@ function mutationListener(filter: string, callback: Function) {
 }
 
 function rewriteColumns(label: string) {
-  // composeRegex is not called in the Column class because it only needs calculation once and is otherwise stable.
   const regex = composeRegex(label);
   for (const column of projectBoard.columns) {
     column.calculateValue(regex);
