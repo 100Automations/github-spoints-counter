@@ -1,6 +1,6 @@
 "use strict";
 
-import { ColumnElement, composeRegex } from "./column";
+import { ClassicColumnElement, composeRegex } from "./column";
 import { getData, data } from "./dataHandler";
 import { debounce } from "./utils";
 
@@ -33,7 +33,7 @@ function collectColumns() {
   let columns = [];
   for (const element of elements) {
     if (element instanceof HTMLElement) {
-      columns.push(new ColumnElement(element));
+      columns.push(new ClassicColumnElement(element));
     }
   }
   return columns;
