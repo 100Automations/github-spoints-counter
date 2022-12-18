@@ -8,7 +8,7 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const {
   NewProjectColumnElement,
-} = require("../src/projectBoard/NewProjectColumn");
+} = require("../src/projectBoard/newProjectColumn");
 const { composeRegex } = require("../src/utils");
 
 const file = "tests/assets/test-new.html";
