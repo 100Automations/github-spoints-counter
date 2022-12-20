@@ -23,7 +23,7 @@ test("Column constructor", (done) => {
       const column = new NewProjectColumnElement(approvalElement);
       expect(column.value).toBe(0);
       expect(column.missingValue).toBe(0);
-      expect(column.id).toBe("1cbc18bf");
+      expect(column.id).toBe("225a3075");
       expect(column.cards.length).toBe(3);
       expect(column.columnCounter.textContent).toBe("3");
       done();
@@ -39,7 +39,7 @@ test("Column calculateValue", (done) => {
       const document = dom.window.document;
       const approvalElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
-      )[2];
+      )[1];
       const column = new NewProjectColumnElement(approvalElement);
 
       column.calculateValue(composeRegex("size"));

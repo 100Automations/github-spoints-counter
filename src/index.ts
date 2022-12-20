@@ -1,10 +1,16 @@
 "use strict";
-import { ProjectBoard } from "./projectBoard/projectBoard";
+import {
+  ProjectBoard,
+  ClassicProjectBoard,
+  NewProjectBoard,
+} from "./projectBoard/projectBoard";
 import { getData, data } from "./dataHandler";
-import { composeRegex, debounce } from "./utils";
+import { debounce } from "./utils";
 
 let observer: MutationObserver;
-const projectBoard = new ProjectBoard();
+const projectBoard = ProjectBoard.isClassic()
+  ? new ClassicProjectBoard()
+  : new NewProjectBoard();
 
 // TODO, attach observer directly to each column and only call the column that is relevant
 function main(filter: string, timer: number) {
@@ -23,16 +29,8 @@ function main(filter: string, timer: number) {
 }
 
 function mutationListener(filter: string, callback: Function) {
-  rewriteColumns(filter);
+  projectBoard.calculateColumns(filter);
   callback();
-}
-
-function rewriteColumns(label: string) {
-  const regex = composeRegex(label);
-  for (const column of projectBoard.columns) {
-    column.calculateValue(regex);
-    column.rewriteCounter(label);
-  }
 }
 
 function resetColumns() {
