@@ -35,6 +35,16 @@ function extractValueFromElements(
   return null;
 }
 
+function extractValueFromStrings(strings: string[], itemRegex: RegExp) {
+  for (const str of strings) {
+    const result = str.match(itemRegex);
+    if (result) {
+      return parseFloat(result[1]);
+    }
+  }
+  return null;
+}
+
 /**
  * This function assumes that the labels are in the form of a string, followed by a number or some small variations. `${string} ${number}`
  * @param str The category of the label, such as Size, Feature, or Role
@@ -50,5 +60,6 @@ export {
   composeRegex,
   debounce,
   extractValueFromElements,
+  extractValueFromStrings,
   onKey,
 };

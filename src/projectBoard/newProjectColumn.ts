@@ -1,16 +1,17 @@
 "use strict";
 import { ColumnElement } from "./column";
-import { extractValueFromElements } from "../utils";
+import { extractValueFromStrings } from "../utils";
 
 class NewProjectColumnElement extends ColumnElement {
   readonly cachedResetText: string;
+  labels: string[][];
 
   constructor(element: HTMLElement) {
     super(element);
     this.cachedResetText = this.columnCounter.textContent;
   }
 
-  protected get id() {
+  get id() {
     return this.element.id;
   }
 
@@ -26,15 +27,18 @@ class NewProjectColumnElement extends ColumnElement {
     return this.cachedResetText;
   }
 
+  setLabels(labels: string[][]) {
+    this.labels = labels;
+  }
+
   protected extractValue(
     cards: HTMLCollection,
     labelRegex: RegExp
   ): [number, number] {
     let value = 0;
     let missingValue = 0;
-    for (const card of cards) {
-      const labels = card.querySelectorAll("[data-test-id~='issue-label']");
-      const label_value = extractValueFromElements(labels, labelRegex);
+    for (const issueLabels of this.labels) {
+      const label_value = extractValueFromStrings(issueLabels, labelRegex);
       if (typeof label_value == "number") {
         value += label_value;
       } else {
