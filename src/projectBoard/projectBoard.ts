@@ -57,9 +57,24 @@ class NewProjectBoard extends ProjectBoard {
     return document.querySelector("[data-test-id~='app-root']");
   }
 
-  private get viewsData() {
-    const data = document.getElementById("memex-views").textContent;
-    const jsonViewsData = JSON.parse(data);
+  private apidata(callback) {
+    const apiData = document.getElementById(
+      "memex-refresh-api-data"
+    ).textContent;
+    const apiURL = JSON.parse(apiData).url;
+    fetch(`https://github.com/${apiURL}?visibleFields=%5B%22Labels%22%5D`, {
+      headers: {
+        Accept: "application/json",
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        callback(data.memexProjectItems, data.memexViews);
+      });
+  }
+
+  private getGroupById(jsonViewsData: any[]) {
     const viewNumbertoDataMap = {};
     for (const view of jsonViewsData) {
       if (view.layout == "board_layout") {
@@ -71,29 +86,29 @@ class NewProjectBoard extends ProjectBoard {
     return viewNumbertoDataMap;
   }
 
-  private columnToLabels(boardNumber: number) {
-    const columnToLabels = {};
-    const groupByID = this.viewsData[boardNumber];
-    const data = document.getElementById("memex-items-data").textContent;
-    const jsonData = JSON.parse(data);
-    for (const issue of jsonData) {
-      const issueColumns = issue.memexProjectColumnValues;
-      const labels = [];
-      let columnId: string;
-      for (const column of issueColumns) {
-        if (column.memexProjectColumnId == groupByID) {
-          columnId = column.value.id;
-        }
-        if (column.memexProjectColumnId == "Labels") {
-          for (const label of column.value) {
-            labels.push(label.name);
+  private columnToLabels(boardNumber: number, callback) {
+    this.apidata((issueData: any[], jsonViewsData: any[]) => {
+      const columnToLabels = {};
+      const groupByID = this.getGroupById(jsonViewsData)[boardNumber];
+      for (const issue of issueData) {
+        const issueColumns = issue.memexProjectColumnValues;
+        const labels = [];
+        let columnId: string;
+        for (const column of issueColumns) {
+          if (column.memexProjectColumnId == groupByID) {
+            columnId = column.value.id;
+          }
+          if (column.memexProjectColumnId == "Labels") {
+            for (const label of column.value) {
+              labels.push(label.name);
+            }
           }
         }
+        columnToLabels[columnId] ??= [];
+        columnToLabels[columnId].push(labels);
       }
-      columnToLabels[columnId] ??= [];
-      columnToLabels[columnId].push(labels);
-    }
-    return columnToLabels;
+      callback(columnToLabels);
+    });
   }
 
   protected collectColumns(): ColumnElement[] {
@@ -111,12 +126,13 @@ class NewProjectBoard extends ProjectBoard {
 
   calculateColumns(filter: string): void {
     const regex = composeRegex(filter);
-    const columnToLabels = this.columnToLabels(2);
-    for (const column of this.columns) {
-      column.setLabels(columnToLabels[column.id]);
-      column.calculateValue(regex);
-      column.rewriteCounter(filter);
-    }
+    this.columnToLabels(2, (columnToLabels: any) => {
+      for (const column of this.columns) {
+        column.setLabels(columnToLabels[column.id]);
+        column.calculateValue(regex);
+        column.rewriteCounter(filter);
+      }
+    });
   }
 }
 
