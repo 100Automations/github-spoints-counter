@@ -15,7 +15,10 @@
 
   "content_scripts": [
     {
-      "matches": ["*://*.github.com/*/projects/*"],
+      "matches": [
+        "*://*.github.com/*/*/projects/*",
+        "*://github.com/orgs/*/*/*/views/*"
+      ],
       "js": ["browser-polyfill.min.js", "index.bundle.js"]
     }
   ],

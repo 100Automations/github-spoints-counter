@@ -51,7 +51,7 @@ class ClassicProjectBoard extends ProjectBoard {
 }
 
 class NewProjectBoard extends ProjectBoard {
-  readonly columns: NewProjectColumnElement[];
+  columns: NewProjectColumnElement[];
 
   get targetNode(): Element {
     return document.querySelector("[data-test-id~='app-root']");
@@ -111,7 +111,7 @@ class NewProjectBoard extends ProjectBoard {
     return columnToLabels;
   }
 
-  protected collectColumns(): ColumnElement[] {
+  protected collectColumns(): NewProjectColumnElement[] {
     const elements = document.getElementsByClassName(
       "column-frame__StyledFrame-sc-0-0"
     );
@@ -125,8 +125,11 @@ class NewProjectBoard extends ProjectBoard {
   }
 
   calculateColumns(filter: string): void {
+    // Columns need to be collected during calculation time because when the board is swapped, the dom is destroyed and remade rather than refreshed.
+    this.columns = this.collectColumns();
     const regex = composeRegex(filter);
-    this.columnToLabels(2).then((columnToLabelsMap) => {
+    const boardNumber = parseInt(window.location.href.slice(-1));
+    this.columnToLabels(boardNumber).then((columnToLabelsMap) => {
       for (const column of this.columns) {
         column.setLabels(columnToLabelsMap[column.id]);
         column.calculateValue(regex);
