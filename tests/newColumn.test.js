@@ -17,15 +17,15 @@ test("Column constructor", (done) => {
   JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
-      const approvalElement = document.getElementsByClassName(
+      const dependencyElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
       )[2];
-      const column = new NewProjectColumnElement(approvalElement);
+      const column = new NewProjectColumnElement(dependencyElement);
       expect(column.value).toBe(0);
       expect(column.missingValue).toBe(0);
       expect(column.id).toBe("225a3075");
-      expect(column.cards.length).toBe(3);
-      expect(column.columnCounter.textContent).toBe("3");
+      expect(column.cards.length).toBe(6);
+      expect(column.columnCounter.textContent).toBe("6");
       done();
     })
     .catch((err) => {
@@ -37,18 +37,25 @@ test("Column calculateValue", (done) => {
   JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
-      const approvalElement = document.getElementsByClassName(
+      const dependencyElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
       )[1];
-      const column = new NewProjectColumnElement(approvalElement);
+      const column = new NewProjectColumnElement(dependencyElement);
 
+      column.setLabels([
+        ["size: 3pt"],
+        ["size: 10"],
+        ["size 0"],
+        ["size +1", "not-here 4"],
+        ["dependency: 3pt"],
+      ]);
       column.calculateValue(composeRegex("size"));
-      expect(column.value.toFixed(1)).toBe("6.0");
-      expect(column.missingValue).toBe(0);
+      expect(column.value.toFixed(1)).toBe("14.0");
+      expect(column.missingValue).toBe(1);
 
       column.calculateValue(composeRegex("not-here"));
-      expect(column.value.toFixed(1)).toBe("0.0");
-      expect(column.missingValue).toBe(3);
+      expect(column.value.toFixed(1)).toBe("4.0");
+      expect(column.missingValue).toBe(4);
       done();
     })
     .catch((err) => {
@@ -60,12 +67,12 @@ test("Column calculateValue no-issue-card-column", (done) => {
   JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
-      const approvalElement = document.getElementsByClassName(
+      const noStatusElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
-      )[2];
-      const column = new NewProjectColumnElement(approvalElement);
+      )[0];
+      const column = new NewProjectColumnElement(noStatusElement);
       column.calculateValue(composeRegex("size"));
-      expect(column.value.toFixed(1)).toBe("6.0");
+      expect(column.value.toFixed(1)).toBe("0.0");
       expect(column.missingValue).toBe(0);
       done();
     })
@@ -78,10 +85,10 @@ test("Column rewriteCounter", (done) => {
   JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
-      const approvalElement = document.getElementsByClassName(
+      const toDoElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
       )[3];
-      const column = new NewProjectColumnElement(approvalElement);
+      const column = new NewProjectColumnElement(toDoElement);
 
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe(

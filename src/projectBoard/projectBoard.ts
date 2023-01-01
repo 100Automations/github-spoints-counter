@@ -75,9 +75,9 @@ class NewProjectBoard extends ProjectBoard {
     return [data.memexProjectItems, data.memexViews];
   }
 
-  private getGroupById(jsonViewsData: any[]) {
+  private getGroupById(viewsData: any[]) {
     const viewNumbertoDataMap = {};
-    for (const view of jsonViewsData) {
+    for (const view of viewsData) {
       if (view.layout == "board_layout") {
         const groupByID = view.verticalGroupBy;
         viewNumbertoDataMap[view.number] =
@@ -87,26 +87,31 @@ class NewProjectBoard extends ProjectBoard {
     return viewNumbertoDataMap;
   }
 
+  private getLabelsData(fields: any, targetFieldId: string) {
+    let fieldId: string;
+    const labels = [];
+    for (const field of fields) {
+      if (field.memexProjectColumnId == targetFieldId) {
+        fieldId = field.value.id;
+      }
+      if (field.memexProjectColumnId == "Labels") {
+        for (const label of field.value) {
+          labels.push(label.name);
+        }
+      }
+    }
+    return [fieldId, labels] as const;
+  }
+
   private async columnToLabels(boardNumber: number) {
     const columnToLabels = {};
     const [issueData, jsonViewsData] = await this.apidata();
-    const groupByID = this.getGroupById(jsonViewsData)[boardNumber];
+    const groupByID: string = this.getGroupById(jsonViewsData)[boardNumber];
     for (const issue of issueData) {
-      const issueColumns = issue.memexProjectColumnValues;
-      const labels = [];
-      let columnId: string;
-      for (const column of issueColumns) {
-        if (column.memexProjectColumnId == groupByID) {
-          columnId = column.value.id;
-        }
-        if (column.memexProjectColumnId == "Labels") {
-          for (const label of column.value) {
-            labels.push(label.name);
-          }
-        }
-      }
-      columnToLabels[columnId] ??= [];
-      columnToLabels[columnId].push(labels);
+      const issueFields = issue.memexProjectColumnValues;
+      const [fieldId, labels] = this.getLabelsData(issueFields, groupByID);
+      columnToLabels[fieldId] ??= [];
+      columnToLabels[fieldId].push(labels);
     }
     return columnToLabels;
   }
