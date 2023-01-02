@@ -103,9 +103,8 @@ class NewProjectBoard extends ProjectBoard {
     return [fieldId, labels] as const;
   }
 
-  private async columnToLabels(boardNumber: number) {
+  private columnToLabels(issueData, jsonViewsData, boardNumber: number) {
     const columnToLabels = {};
-    const [issueData, jsonViewsData] = await this.apidata();
     const groupByID: string = this.getGroupById(jsonViewsData)[boardNumber];
     for (const issue of issueData) {
       const issueFields = issue.memexProjectColumnValues;
@@ -134,7 +133,13 @@ class NewProjectBoard extends ProjectBoard {
     this.columns = this.collectColumns();
     const regex = composeRegex(filter);
     const boardNumber = parseInt(window.location.href.slice(-1));
-    this.columnToLabels(boardNumber).then((columnToLabelsMap) => {
+    this.apidata().then((data) => {
+      const [issueData, jsonViewsData] = data;
+      const columnToLabelsMap = this.columnToLabels(
+        issueData,
+        jsonViewsData,
+        boardNumber
+      );
       for (const column of this.columns) {
         column.setLabels(columnToLabelsMap[column.id]);
         column.calculateValue(regex);

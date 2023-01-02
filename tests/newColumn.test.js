@@ -6,9 +6,12 @@ global.TextDecoder = TextDecoder;
 // Imports
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const { NewProjectBoard } = require("../src/projectBoard/projectBoard");
 const {
   NewProjectColumnElement,
 } = require("../src/projectBoard/newProjectColumn");
+const { issueData } = require("./assets/asset-items");
+const { jsonViewsData } = require("./assets/asset-views");
 const { composeRegex } = require("../src/utils");
 
 const file = "tests/assets/test-new.html";
@@ -85,10 +88,17 @@ test("Column rewriteCounter", (done) => {
   JSDOM.fromFile(file)
     .then((dom) => {
       const document = dom.window.document;
+
+      // Setup board
+      const board = new NewProjectBoard();
+      const columnToLabels = board.columnToLabels(issueData, jsonViewsData, 2);
+
+      // Setup element
       const toDoElement = document.getElementsByClassName(
         "column-frame__StyledFrame-sc-0-0"
       )[3];
       const column = new NewProjectColumnElement(toDoElement);
+      column.setLabels(columnToLabels[column.id]);
 
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe(
@@ -100,7 +110,7 @@ test("Column rewriteCounter", (done) => {
       column.calculateValue(composeRegex("size"));
       column.rewriteCounter("size");
       expect(column.columnCounter.textContent).toBe(
-        "size: 9.0 | Issues without size label: 6"
+        "size: 29.0 | Issues without size label: 0"
       );
       column.resetCounter();
       expect(column.columnCounter.textContent).toBe("10");
