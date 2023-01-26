@@ -78,12 +78,6 @@ const Filter = ({
           {text}
         </div>
       )}
-      <FilterIcon
-        iconUrl={isEdit ? confirm : edit}
-        addClass="filter-edit"
-        onClick={handleEdit}
-      />
-      <FilterIcon iconUrl={trash} addClass="filter-trash" onClick={onDelete} />
     </div>
   );
 };

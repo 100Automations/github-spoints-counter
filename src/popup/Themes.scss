@@ -35,9 +35,7 @@
     )};
   --background-color: #{light-dark($white, $dark-blue)};
   --title-text: #{light-dark($dark-blue, $white)};
-  --no-filter-text: #{light-dark($dark-grey, $soft-white)};
-  --no-filter-info-box: #{light-dark($dark-blue, $soft-white)};
-  --no-filter-info-box-text: #{light-dark($white, $dark-blue)};
+  --popup-info-text: #{light-dark($dark-grey, $soft-white)};
   --create-filter-button: #{light-dark($dark-blue, $light-white)};
   --create-filter-input: #{light-dark($dark-blue, $soft-white)};
   --filter-text: #{light-dark($dark-blue, $dark-blue)};

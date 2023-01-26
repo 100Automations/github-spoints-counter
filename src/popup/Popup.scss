@@ -39,7 +39,7 @@ body {
 }
 
 .popup-filters {
-  height: 240px;
+  height: 176px;
   overflow-y: scroll;
   scrollbar-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
 }
@@ -49,7 +49,11 @@ body {
 }
 
 .no-filter-display {
-  color: var(--no-filter-text);
+  color: var(--popup-info-text);
+}
+
+.filter-display {
+  color: var(--popup-info-text);
 }
 
 .popup-infobox-icon {

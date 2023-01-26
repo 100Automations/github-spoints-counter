@@ -4,7 +4,7 @@
   background-color: $white;
   border-radius: 12px;
   color: var(--filter-text);
-  height: 64px;
+  height: 48px;
 
   & > *:first-child {
     border-radius: 12px 0 0 12px;
@@ -30,7 +30,7 @@
   color: var(--filter-text);
   font-size: 18px;
   font-weight: 400;
-  height: 64px;
+  height: 48px;
 }
 
 .filter-icon {

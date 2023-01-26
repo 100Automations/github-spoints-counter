@@ -32,6 +32,13 @@ const Popup = () => {
       .then((data: data) => {
         setRows(data.rows);
         setCurrentSelected(data.currentSelected);
+        // TODO remove this once you are done
+        setRows([
+          { text: "size" },
+          { text: "points" },
+          { text: "points" },
+          { text: "points" },
+        ]);
       })
       .catch((error: Error) => console.log(error));
   }, []);
@@ -79,7 +86,7 @@ const Popup = () => {
         <div className="flex-column align-center mt-3 no-filter-display">
           <h3 className="spoints-title-2 mb-2 mt-4">No labels yet</h3>
           <p className="spoints-p-3 mb-7">
-            For more information about filters, visit our{" "}
+            For more information about labels, visit our{" "}
             <a className="spoints-links" href="https://www.google.com">
               instructions guide
             </a>
@@ -89,22 +96,28 @@ const Popup = () => {
       ) : (
         <Fragment>
           <div className="flex-column align-center mt-3">
-            <InfoBox addClass="flex-align-center">
-              {rows.length > 0 && currentSelected !== null ? (
-                <Fragment>
-                  {rows[currentSelected].text}&nbsp;
-                  <IconButton
-                    addClass="popup-infobox-icon"
-                    iconUrl={deselect}
-                    onClick={() => setCurrentSelected(null)}
-                  />
-                </Fragment>
-              ) : (
-                "No Filters Selected"
-              )}
-            </InfoBox>
-            <div className="row fill mt-3">
-              <span>SELECT A FILTER</span>
+            <div className="fill filter-display">
+              <div className="spoints-p-1">
+                <span>Select an existing label.</span>
+              </div>
+              <div className="spoints-p-2 mt-2">
+                <div>
+                  “Total” is the sum of that label's values within the kanban
+                  column.
+                </div>
+                <div>
+                  “Missing” is the number of issues that are missing that label.
+                </div>
+              </div>
+              <div className="spoints-p-3 mt-2">
+                <p>
+                  For more information about labels, visit our{" "}
+                  <a className="spoints-links" href="https://www.google.com">
+                    instructions guide
+                  </a>
+                  .
+                </p>
+              </div>
             </div>
             <div className="popup-filters chrome fill my-2">
               {rows.map((datum: datum, index: number) => {
@@ -113,7 +126,7 @@ const Popup = () => {
                     key={index}
                     text={datum.text}
                     active={index == currentSelected}
-                    addClass="mb-2"
+                    addClass={index != rows.length - 1 ? "mb-2" : ""}
                     arrayApi={(task: task, value?: string) => {
                       arrayApi(task, { index: index, datum: { text: value } });
                     }}
@@ -135,29 +148,6 @@ const Popup = () => {
                 );
               })}
             </div>
-          </div>
-          <div
-            className={combineClasses(
-              "flex-container align-center fill",
-              isInputFocusing && "justify-center"
-            )}
-          >
-            {!isInputFocusing && (
-              <img src={plus} className="col-1" width={16} height={16} />
-            )}
-            <TextInput
-              addClass="col-10 px-1 mx-2"
-              isFocused={isInputFocusing}
-              onBlur={() => setIsInputFocusing(false)}
-              onFocus={() => setIsInputFocusing(true)}
-              onEnter={(e: KeyboardEvent) => {
-                const value = (e.target as HTMLInputElement).value;
-                const index = arrayApi("post", { datum: { text: value } });
-                setCurrentSelected(index);
-              }}
-              placeholder="Add a filter"
-              label="Enter label with assigned numerical value"
-            />
           </div>
         </Fragment>
       )}
