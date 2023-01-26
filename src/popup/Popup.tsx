@@ -72,22 +72,19 @@ const Popup = () => {
           onClick={() => console.log("gear clicked")}
         />
       </div>
-      <h1 class="popup-title spoints-title-1 mt-3">
+      <h1 class="popup-title spoints-title-2 mt-3">
         GitHub Story Points Calculator
       </h1>
       {rows.length <= 0 && !isInputFocusing ? (
         <div className="flex-column align-center mt-3 no-filter-display">
-          <h3 className="spoints-title-3 mb-2 mt-4">No filters yet</h3>
-          <p className="spoints-p-1 mb-7">
+          <h3 className="spoints-title-2 mb-2 mt-4">No labels yet</h3>
+          <p className="spoints-p-3 mb-7">
             For more information about filters, visit our{" "}
             <a className="spoints-links" href="https://www.google.com">
               instructions guide
             </a>
             .
           </p>
-          <Button onClick={() => setIsInputFocusing(true)}>
-            Create filter
-          </Button>
         </div>
       ) : (
         <Fragment>

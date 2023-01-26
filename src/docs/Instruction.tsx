@@ -26,8 +26,8 @@ const Instruction = () => {
     <Fragment>
       <header className="instruction-header flex-align-center">
         <div className="ml-7">
-          <h2 className="spoints-title-4">Getting started with</h2>
-          <h1 className="spoints-title-2">GitHub Story Points Calculator</h1>
+          <h2 className="spoints-title-3">Getting started with</h2>
+          <h1 className="spoints-title-1">GitHub Story Points Calculator</h1>
         </div>
       </header>
       <main className="flex-justify-center">
@@ -122,7 +122,7 @@ const Instruction = () => {
         </div>
       </main>
       <footer className="instruction-footer flex-container align-center justify-center">
-        <h2 className="spoints-title-2">
+        <h2 className="spoints-title-1">
           Questions, comments, concerns?{" "}
           <span className="underline">Contact us here.</span>
         </h2>
@@ -141,7 +141,7 @@ interface SectionProps {
 const Section = ({ addClass, children, subtitle, title }: SectionProps) => {
   return (
     <div className={combineClasses("my-5", addClass)}>
-      <h3 className="spoints-title-3">{title}</h3>
+      <h3 className="spoints-title-2">{title}</h3>
       <hr></hr>
       <p className="spoints-p-1">{subtitle}</p>
       {children}
@@ -154,7 +154,7 @@ interface SubSectionProps extends SectionProps {}
 const SubSection = ({ addClass, children, title }: SubSectionProps) => {
   return (
     <div className={addClass}>
-      <h4 className="spoints-title-4">{title}</h4>
+      <h4 className="spoints-title-3">{title}</h4>
       {children}
     </div>
   );
