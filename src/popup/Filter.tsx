@@ -6,16 +6,12 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import { combineClasses } from "../utils";
 import radioInactive from "../assets/svgs/icon-radio.svg";
 import radioActive from "../assets/svgs/icon-radio-active.svg";
-import edit from "../assets/svgs/icon-edit.svg";
-import confirm from "../assets/svgs/icon-confirm.svg";
-import trash from "../assets/svgs/icon-trash.svg";
 
 interface FilterProps {
   active: boolean;
   addClass?: string;
   arrayApi: Function;
   onClick: (e?: MouseEvent) => any;
-  onDelete: () => any;
   onRadioClick: () => any;
   text?: string;
 }
@@ -23,27 +19,11 @@ interface FilterProps {
 const Filter = ({
   active,
   addClass,
-  arrayApi,
   onClick,
-  onDelete,
   onRadioClick,
   text,
 }: FilterProps) => {
-  const [isEdit, setIsEdit] = useState(false);
   const inputRef = useRef(null);
-
-  function handleEdit(e: MouseEvent) {
-    if (isEdit) {
-      arrayApi("patch", inputRef.current.value);
-    }
-    setIsEdit(!isEdit);
-  }
-
-  useEffect(() => {
-    if (isEdit) {
-      inputRef.current.focus();
-    }
-  }, [isEdit]);
 
   return (
     <div
@@ -58,26 +38,16 @@ const Filter = ({
         active={active}
         addClass="ml-4 mr-10"
         onChange={() => {
-          if (!isEdit) onRadioClick();
+          onRadioClick();
         }}
       />
-      {isEdit ? (
-        <input
-          type="text"
-          className="filter-input filter-text p-0"
-          style={{ flexGrow: 2 }}
-          value={text}
-          ref={inputRef}
-        />
-      ) : (
-        <div
-          className="flex-align-center filter-text"
-          style={{ flexGrow: 2 }}
-          onClick={onClick}
-        >
-          {text}
-        </div>
-      )}
+      <div
+        className="flex-align-center filter-text"
+        style={{ flexGrow: 2 }}
+        onClick={onClick}
+      >
+        {text}
+      </div>
     </div>
   );
 };
@@ -94,24 +64,6 @@ const FilterRadio = ({ active, addClass, onChange }: FilterRadioProps) => {
     <div className={combineClasses("filter-radio", "row", addClass)}>
       <img src={active ? radioActive : radioInactive} onClick={onChange} />
     </div>
-  );
-};
-
-interface FilterIconProps {
-  addClass?: string;
-  color?: string;
-  iconUrl: string;
-  onClick?: (e: MouseEvent) => any;
-}
-
-const FilterIcon = ({ addClass, iconUrl, onClick }: FilterIconProps) => {
-  return (
-    <button
-      className={combineClasses("filter-icon", addClass)}
-      onClick={onClick}
-    >
-      <img src={iconUrl} />
-    </button>
   );
 };
 

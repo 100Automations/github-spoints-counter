@@ -5,27 +5,19 @@ import { Fragment, render } from "preact";
 import { StateUpdater, useEffect, useState } from "preact/hooks";
 
 // internal imports
-import {
-  Button,
-  IconButton,
-  InfoBox,
-  TextInput,
-} from "../components/Components";
+import { IconButton } from "../components/Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
 import { combineClasses } from "../utils";
 import "./Popup.scss";
 
 // assets
-import deselect from "../assets/svgs/icon-deselect.svg";
 import logo from "../assets/svgs/logo-dark.svg";
-import plus from "../assets/svgs/icon-plus.svg";
 import settings from "../assets/svgs/icon-settings.svg";
 
 const Popup = () => {
   const [rows, setRows] = useState<datum[]>([]);
   const [currentSelected, setCurrentSelected] = useState(null);
-  const [isInputFocusing, setIsInputFocusing] = useState(false);
 
   useEffect(() => {
     getData({ rows: [], currentSelected: null })
@@ -33,6 +25,7 @@ const Popup = () => {
         setRows(data.rows);
         setCurrentSelected(data.currentSelected);
         // TODO remove this once you are done
+
         setRows([
           { text: "size" },
           { text: "points" },
@@ -82,7 +75,7 @@ const Popup = () => {
       <h1 class="popup-title spoints-title-2 mt-3">
         GitHub Story Points Calculator
       </h1>
-      {rows.length <= 0 && !isInputFocusing ? (
+      {rows.length <= 0 ? (
         <div className="flex-column align-center mt-3 no-filter-display">
           <h3 className="spoints-title-2 mb-2 mt-4">No labels yet</h3>
           <p className="spoints-p-3 mb-7">
@@ -135,14 +128,6 @@ const Popup = () => {
                       index == currentSelected
                         ? setCurrentSelected(null)
                         : setCurrentSelected(index);
-                    }}
-                    onDelete={() => {
-                      const deleted = arrayApi("delete", { index: index });
-                      if (deleted == currentSelected) {
-                        setCurrentSelected(null);
-                      } else if (deleted < currentSelected) {
-                        setCurrentSelected(currentSelected - 1);
-                      }
                     }}
                   />
                 );

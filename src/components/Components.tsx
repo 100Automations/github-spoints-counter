@@ -49,21 +49,6 @@ const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
   );
 };
 
-interface InfoBoxProps {
-  addClass?: string;
-  children?: preact.ComponentChildren;
-}
-
-const InfoBox = ({ addClass, children }: InfoBoxProps) => {
-  return (
-    <div
-      className={combineClasses("spoints-info-box", "text-center", addClass)}
-    >
-      {children}
-    </div>
-  );
-};
-
 interface InlineImgProps {
   src: string;
 }
@@ -125,4 +110,4 @@ const TextInput = ({
   );
 };
 
-export { Button, IconButton, InfoBox, InlineImg, TextInput };
+export { Button, IconButton, InlineImg, TextInput };

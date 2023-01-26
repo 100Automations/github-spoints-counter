@@ -32,27 +32,3 @@
   font-weight: 400;
   height: 48px;
 }
-
-.filter-icon {
-  border: none;
-  box-sizing: border-box;
-  height: 64px;
-  padding: 0px;
-  margin: 0px;
-  width: 64px;
-
-  &:hover {
-    outline: 5px auto #5e9ed6;
-    z-index: 1;
-  }
-}
-
-.filter-edit {
-  background-color: var(--filter-edit);
-  cursor: pointer;
-}
-
-.filter-trash {
-  background-color: var(--filter-trash);
-  cursor: pointer;
-}
