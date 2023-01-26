@@ -1,6 +1,4 @@
 "use strict";
-// external imports
-import { useEffect, useRef, useState } from "preact/hooks";
 
 // internal imports
 import { combineClasses } from "../utils";
@@ -23,8 +21,6 @@ const Filter = ({
   onRadioClick,
   text,
 }: FilterProps) => {
-  const inputRef = useRef(null);
-
   return (
     <div
       className={combineClasses(

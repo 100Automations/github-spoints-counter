@@ -8,7 +8,6 @@ import { StateUpdater, useEffect, useState } from "preact/hooks";
 import { IconButton } from "../components/Components";
 import { Filter } from "./Filter";
 import { getData, setData, datum, data } from "../dataHandler";
-import { combineClasses } from "../utils";
 import "./Popup.scss";
 
 // assets

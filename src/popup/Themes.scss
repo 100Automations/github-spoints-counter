@@ -36,11 +36,8 @@
   --background-color: #{light-dark($white, $dark-blue)};
   --title-text: #{light-dark($dark-blue, $white)};
   --popup-info-text: #{light-dark($dark-grey, $soft-white)};
-  --create-filter-button: #{light-dark($dark-blue, $light-white)};
-  --create-filter-input: #{light-dark($dark-blue, $soft-white)};
   --filter-text: #{light-dark($dark-blue, $dark-blue)};
   --text: #{light-dark($dark-blue, $white)};
-  --filter-edit: #{light-dark($dark-blue, $light-purple)};
-  --filter-trash: #{light-dark($dark-red, $light-red)};
+  --button: #{light-dark($dark-blue, $light-white)};
   --links: #{light-dark($dark-grey, $soft-white)};
 }

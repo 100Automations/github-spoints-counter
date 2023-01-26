@@ -1,10 +1,7 @@
 "use strict";
 
-// external imports
-import { useEffect, useRef } from "preact/hooks";
-
 // internal imports
-import { combineClasses, onKey } from "../utils";
+import { combineClasses } from "../utils";
 
 interface ButtonProps {
   addClass?: string;
@@ -57,57 +54,4 @@ const InlineImg = ({ src }: InlineImgProps) => {
   return <img src={src} className="vertical-sub" />;
 };
 
-interface TextInputProps {
-  addClass?: string;
-  disabled?: boolean;
-  isFocused: boolean;
-  label?: string;
-  onBlur: (e?: FocusEvent) => any;
-  onEnter: (e?: KeyboardEvent) => any;
-  onFocus: (e?: FocusEvent) => any;
-  placeholder?: string | number;
-  value?: string | number;
-}
-
-const TextInput = ({
-  addClass,
-  disabled = false,
-  isFocused,
-  label,
-  onBlur,
-  onEnter,
-  onFocus,
-  placeholder,
-  value,
-}: TextInputProps) => {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (isFocused) {
-      inputRef.current.focus();
-    }
-  }, [isFocused]);
-
-  return (
-    <div className={addClass}>
-      <input
-        class="spoints-form-input"
-        type="text"
-        value={value}
-        onBlur={(e) => onBlur(e)}
-        onFocus={(e) => onFocus(e)}
-        onKeyDown={onKey((e) => {
-          onEnter(e);
-          inputRef.current.blur();
-          inputRef.current.value = "";
-        }, "Enter")}
-        disabled={disabled}
-        placeholder={placeholder.toString()}
-        ref={inputRef}
-      />
-      <span className="spoints-form-label pl-1">{label}</span>
-    </div>
-  );
-};
-
-export { Button, IconButton, InlineImg, TextInput };
+export { Button, IconButton, InlineImg };

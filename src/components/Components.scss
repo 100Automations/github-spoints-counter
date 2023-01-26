@@ -1,6 +1,6 @@
 // Buttons
 .spoints-btn {
-  background-color: var(--create-filter-button);
+  background-color: var(--button);
   border: none;
   border-radius: 28px;
   color: #003750;
@@ -18,23 +18,4 @@
 // Links
 .spoints-links {
   color: inherit;
-}
-
-// Forms
-.spoints-form-input {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid var(--create-filter-input);
-  color: var(--create-filter-input);
-  font-size: 20px;
-  font-weight: 600;
-  width: 100%;
-
-  &:focus {
-    outline: 0;
-  }
-}
-
-.spoints-form-label {
-  color: var(--create-filter-input);
 }
