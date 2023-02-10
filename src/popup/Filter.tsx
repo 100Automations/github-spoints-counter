@@ -8,7 +8,6 @@ import radioActive from "../assets/svgs/icon-radio-active.svg";
 interface FilterProps {
   active: boolean;
   addClass?: string;
-  arrayApi: Function;
   onClick: (e?: MouseEvent) => any;
   onRadioClick: () => any;
   text?: string;

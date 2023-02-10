@@ -4,7 +4,6 @@ import {
   ClassicProjectBoard,
   NewProjectBoard,
 } from "./projectBoard/projectBoard";
-import { getData, data } from "./dataHandler";
 import { debounce } from "./utils";
 
 let observer: MutationObserver;
@@ -45,20 +44,20 @@ browser.runtime.onMessage.addListener(
       observer.disconnect();
     }
 
-    if (message.task == "mutate") {
+    if (message.task == "updateSelected") {
       mutationListener(message.filter, () => {});
       main(message.filter, 500);
     } else if (message.task == "reset") {
       resetColumns();
+    } else if (message.task == "getLocalData") {
+      browser.runtime.sendMessage({
+        data: JSON.stringify([
+          { text: "size" },
+          { text: "points" },
+          { text: "points" },
+          { text: "points" },
+        ]),
+      });
     }
   }
 );
-
-getData({ rows: [], currentSelected: null })
-  .then((data: data) => {
-    main(data.rows[data.currentSelected].text, 1000);
-    mutationListener(data.rows[data.currentSelected].text, () => {});
-  })
-  .catch((error) => {
-    console.log(error);
-  });

@@ -2,12 +2,18 @@
 
 // external imports
 import { Fragment, render } from "preact";
-import { StateUpdater, useEffect, useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 // internal imports
 import { IconButton } from "../components/Components";
 import { Filter } from "./Filter";
-import { getData, setData, datum, data } from "../dataHandler";
+import {
+  getLocalData,
+  setLocalData,
+  getPageData,
+  datum,
+  data,
+} from "../dataHandler";
 import "./Popup.scss";
 
 // assets
@@ -19,33 +25,27 @@ const Popup = () => {
   const [currentSelected, setCurrentSelected] = useState(null);
 
   useEffect(() => {
-    getData({ rows: [], currentSelected: null })
+    getPageData((data: datum[]) => {
+      setRows(data);
+    });
+    getLocalData({ currentSelected: null })
       .then((data: data) => {
-        setRows(data.rows);
         setCurrentSelected(data.currentSelected);
-        // TODO remove this once you are done
-
-        setRows([
-          { text: "size" },
-          { text: "points" },
-          { text: "points" },
-          { text: "points" },
-        ]);
       })
       .catch((error: Error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    setData({ rows: rows, currentSelected: currentSelected })
+    setLocalData({ currentSelected: currentSelected })
       .then(() => console.log("Saved."))
       .catch((error: Error) => console.log(error));
-  }, [rows, currentSelected]);
+  }, [currentSelected]);
 
   useEffect(() => {
     let querying = browser.tabs.query({ currentWindow: true, active: true });
     const createMessage = () => {
-      if (typeof currentSelected == "number" && rows[currentSelected].text) {
-        return { task: "mutate", filter: rows[currentSelected].text };
+      if (typeof currentSelected == "string") {
+        return { task: "updateSelected", filter: currentSelected };
       } else {
         return { task: "reset" };
       }
@@ -57,10 +57,6 @@ const Popup = () => {
       })
       .catch((error: Error) => console.log(error));
   }, [rows, currentSelected]);
-
-  function arrayApi(task: task, options: options) {
-    return api(rows, setRows, task, options);
-  }
 
   return (
     <div id="popup" className="p-3">
@@ -117,16 +113,13 @@ const Popup = () => {
                   <Filter
                     key={index}
                     text={datum.text}
-                    active={index == currentSelected}
+                    active={datum.text == currentSelected}
                     addClass={index != rows.length - 1 ? "mb-2" : ""}
-                    arrayApi={(task: task, value?: string) => {
-                      arrayApi(task, { index: index, datum: { text: value } });
-                    }}
-                    onClick={() => setCurrentSelected(index)}
+                    onClick={() => setCurrentSelected(datum.text)}
                     onRadioClick={() => {
-                      index == currentSelected
+                      datum.text == currentSelected
                         ? setCurrentSelected(null)
-                        : setCurrentSelected(index);
+                        : setCurrentSelected(datum.text);
                     }}
                   />
                 );
@@ -138,45 +131,5 @@ const Popup = () => {
     </div>
   );
 };
-
-// Helpers
-
-interface options {
-  index?: number;
-  datum?: datum;
-}
-
-type task = "post" | "get" | "patch" | "delete";
-
-function api(
-  data: datum[],
-  setData: StateUpdater<datum[]>,
-  task: task,
-  options?: options
-) {
-  try {
-    const newDataArray = [...data];
-    switch (task) {
-      case "post":
-        newDataArray.push(options.datum);
-        setData(newDataArray);
-        return newDataArray.length - 1;
-      case "get":
-        return newDataArray[options.index];
-      case "patch":
-        newDataArray[options.index] = options.datum;
-        setData(newDataArray);
-        break;
-      case "delete":
-        newDataArray.splice(options.index, 1);
-        setData(newDataArray);
-        return options.index;
-      default:
-        console.log(`No operation called ${task}`);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 render(<Popup />, document.getElementById("app"));
