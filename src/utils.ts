@@ -51,7 +51,7 @@ function extractValueFromStrings(strings: string[], itemRegex: RegExp) {
  * @returns A RegExp that searches for the
  */
 function composeRegex(str: string) {
-  const regex = new RegExp(`.*${str}:?.*?(\\d+\\.?[\\d]*).*`);
+  const regex = new RegExp(`${str}:?.*?(\\d+\\.?[\\d]*).*`);
   return regex;
 }
 

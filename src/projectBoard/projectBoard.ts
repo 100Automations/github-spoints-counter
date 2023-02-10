@@ -23,11 +23,38 @@ abstract class ProjectBoard {
   protected abstract collectColumns(): ColumnElement[];
 
   abstract calculateColumns(filter: string): void;
+
+  abstract get labelSelector(): string;
+
+  get labelGroups() {
+    const all_labels = document.querySelectorAll(this.labelSelector);
+    const verifiedLabels = [];
+    const verifiedLabelGroups = new Set();
+    const verifiedRegex = composeRegex("([A-Za-z]+)");
+    for (const label of all_labels) {
+      const text = label.textContent.trim();
+      const match = text.match(verifiedRegex);
+      console.log(text, verifiedRegex, match);
+      if (match) {
+        const labelGroup = match[1];
+        console.log(labelGroup);
+        if (!verifiedLabelGroups.has(labelGroup)) {
+          verifiedLabels.push({ text: labelGroup });
+          verifiedLabelGroups.add(labelGroup);
+        }
+      }
+    }
+    return verifiedLabels;
+  }
 }
 
 class ClassicProjectBoard extends ProjectBoard {
   get targetNode() {
     return document.getElementsByClassName("project-columns")[0];
+  }
+
+  get labelSelector() {
+    return ".IssueLabel";
   }
 
   protected collectColumns(): ColumnElement[] {
@@ -55,6 +82,10 @@ class NewProjectBoard extends ProjectBoard {
 
   get targetNode(): Element {
     return document.querySelector("[data-test-id~='app-root']");
+  }
+
+  get labelSelector() {
+    return "[data-test-id~='issue-label']";
   }
 
   private async apidata() {

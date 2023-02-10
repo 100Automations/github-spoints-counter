@@ -51,12 +51,7 @@ browser.runtime.onMessage.addListener(
       resetColumns();
     } else if (message.task == "getLocalData") {
       browser.runtime.sendMessage({
-        data: JSON.stringify([
-          { text: "size" },
-          { text: "points" },
-          { text: "points" },
-          { text: "points" },
-        ]),
+        data: JSON.stringify(projectBoard.labelGroups),
       });
     }
   }
