@@ -18,7 +18,7 @@ function getPageData(callback: CallableFunction) {
   let querying = browser.tabs.query({ currentWindow: true, active: true });
   querying.then((tabs: any) => {
     browser.tabs.sendMessage(tabs[0].id, {
-      task: "getLocalData",
+      task: "getPageData",
     });
   });
   browser.runtime.onMessage.addListener((message) => {

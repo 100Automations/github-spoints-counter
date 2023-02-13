@@ -34,10 +34,8 @@ abstract class ProjectBoard {
     for (const label of all_labels) {
       const text = label.textContent.trim();
       const match = text.match(verifiedRegex);
-      console.log(text, verifiedRegex, match);
       if (match) {
-        const labelGroup = match[1];
-        console.log(labelGroup);
+        const labelGroup = match[1].toLocaleLowerCase();
         if (!verifiedLabelGroups.has(labelGroup)) {
           verifiedLabels.push({ text: labelGroup });
           verifiedLabelGroups.add(labelGroup);
@@ -147,8 +145,8 @@ class NewProjectBoard extends ProjectBoard {
   }
 
   protected collectColumns(): NewProjectColumnElement[] {
-    const elements = document.getElementsByClassName(
-      "column-frame__StyledFrame-sc-0-0"
+    const elements = document.querySelectorAll(
+      "[data-test-id~='board-view-column']"
     );
     let columns = [];
     for (const element of elements) {

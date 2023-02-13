@@ -27,9 +27,9 @@ abstract class ColumnElement {
   }
 
   rewriteCounter(text: string) {
-    this.columnCounter.textContent = `${text}: ${this.value.toFixed(
+    this.columnCounter.textContent = `Total: ${this.value.toFixed(
       1
-    )} | Issues without ${text} label: ${this.missingValue}`;
+    )} | Missing: ${this.missingValue}`;
   }
 
   resetCounter() {

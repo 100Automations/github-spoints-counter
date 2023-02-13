@@ -44,7 +44,10 @@ const Popup = () => {
   useEffect(() => {
     let querying = browser.tabs.query({ currentWindow: true, active: true });
     const createMessage = () => {
-      if (typeof currentSelected == "string") {
+      if (
+        typeof currentSelected == "string" &&
+        rows.filter((e) => e.text === currentSelected).length > 0
+      ) {
         return { task: "updateSelected", filter: currentSelected };
       } else {
         return { task: "reset" };
