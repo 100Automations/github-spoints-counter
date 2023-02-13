@@ -4,13 +4,13 @@
   "version": "1.16",
 
   "action": {
-    "default_icon": "icons/beverage-24.png",
+    "default_icon": "icons/spoints-24.png",
     "default_title": "github-spoints-counter",
     "default_popup": "popup.html"
   },
   "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-spoints-counter#README.md",
   "icons": {
-    "48": "icons/beverage-24.png"
+    "48": "icons/spoints-32.png"
   },
 
   "content_scripts": [
