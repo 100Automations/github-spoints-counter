@@ -3,8 +3,9 @@
 @use "../components/Basics.scss";
 @use "./Filter.scss";
 @use "../components/Components.scss";
+@use "./PopupMain.scss";
+@use "./PopupSettings.scss";
 
-// Resets
 h1 {
   margin: 0;
   padding: 0;
@@ -36,22 +37,4 @@ body {
 
 .popup-title {
   color: var(--title-text);
-}
-
-.popup-filters {
-  height: 176px;
-  overflow-y: scroll;
-  scrollbar-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
-}
-
-.popup-filters.chrome::-webkit-scrollbar {
-  background-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
-}
-
-.no-filter-display {
-  color: var(--popup-info-text);
-}
-
-.filter-display {
-  color: var(--popup-info-text);
 }

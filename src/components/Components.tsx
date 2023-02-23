@@ -18,7 +18,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      class={combineClasses(`spoints-btn`, addClass)}
+      class={combineClasses("spoints-btn", addClass)}
       type="button"
       onClick={(e) => {
         onClick();
@@ -31,14 +31,14 @@ const Button = ({
 
 interface IconButtonProps {
   addClass?: string;
-  onClick: () => any;
+  onClick: (e: Event) => any;
   iconUrl: string;
 }
 
 const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
   return (
     <div
-      className={combineClasses("spoints-icon-button", addClass)}
+      className={combineClasses("spoints-icon-btn", addClass)}
       onClick={onClick}
     >
       <img src={iconUrl}></img>
@@ -54,4 +54,40 @@ const InlineImg = ({ src }: InlineImgProps) => {
   return <img src={src} className="vertical-sub" />;
 };
 
-export { Button, IconButton, InlineImg };
+interface SettingsButtonProps {
+  addClass?: string;
+  children?: preact.ComponentChildren;
+  iconUrl: string;
+  onClick: () => any;
+}
+
+const SettingsButton = ({
+  addClass,
+  iconUrl,
+  onClick,
+  ...props
+}: SettingsButtonProps) => {
+  return (
+    <button
+      class={combineClasses(
+        "spoints-settings-btn",
+        "flex-column",
+        "align-center",
+        "justify-center",
+        "p-1",
+        addClass
+      )}
+      type="button"
+      onClick={(e) => {
+        onClick();
+      }}
+    >
+      <div className="fill">
+        <img className="mb-8" src={iconUrl}></img>
+      </div>
+      {props.children}
+    </button>
+  );
+};
+
+export { Button, IconButton, InlineImg, SettingsButton };

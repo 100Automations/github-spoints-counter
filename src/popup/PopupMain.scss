@@ -1,0 +1,17 @@
+.popup-filters {
+  height: 176px;
+  overflow-y: scroll;
+  scrollbar-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
+}
+
+.popup-filters.chrome::-webkit-scrollbar {
+  background-color: var(--no-filter-info-box) rgba(0, 0, 0, 0);
+}
+
+.no-filter-display {
+  color: var(--popup-info-text);
+}
+
+.filter-display {
+  color: var(--popup-info-text);
+}

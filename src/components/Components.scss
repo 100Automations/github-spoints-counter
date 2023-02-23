@@ -11,8 +11,20 @@
   padding: 12px 30px;
 }
 
-.spoints-icon-button {
+.spoints-icon-btn {
   cursor: pointer;
+}
+
+.spoints-settings-btn {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  color: #003750;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  height: 112px;
+  width: 112px;
 }
 
 // Links
