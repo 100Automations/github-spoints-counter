@@ -57,36 +57,41 @@ const InlineImg = ({ src }: InlineImgProps) => {
 interface SettingsButtonProps {
   addClass?: string;
   children?: preact.ComponentChildren;
+  href?: string;
   iconUrl: string;
-  onClick: () => any;
+  onClick?: () => any;
+  text: string;
 }
 
 const SettingsButton = ({
   addClass,
   iconUrl,
-  onClick,
+  text,
   ...props
 }: SettingsButtonProps) => {
+  const Tag = "href" in props ? "a" : "button";
+
   return (
-    <button
+    <Tag
       class={combineClasses(
         "spoints-settings-btn",
         "flex-column",
         "align-center",
         "justify-center",
         "p-1",
+        "text-center",
         addClass
       )}
       type="button"
-      onClick={(e) => {
-        onClick();
-      }}
+      href={props.href}
+      target={props.href ? "_blank" : null}
+      onClick={props.onClick}
     >
       <div className="fill">
         <img className="mb-8" src={iconUrl}></img>
       </div>
-      {props.children}
-    </button>
+      <span>{text}</span>
+    </Tag>
   );
 };
 
