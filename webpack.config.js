@@ -1,5 +1,6 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = (env) => {
   return {
@@ -55,7 +56,13 @@ module.exports = (env) => {
           {
             from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
           },
+          { from: "src/assets/icons", to: "icons" },
         ],
+      }),
+      new HtmlWebpackPlugin({
+        template: "src/assets/popup.html",
+        filename: "popup.html",
+        excludeChunks: ["index"],
       }),
     ],
   };
