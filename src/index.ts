@@ -4,7 +4,7 @@ import {
   ClassicProjectBoard,
   NewProjectBoard,
 } from "./projectBoard/projectBoard";
-import { getLocalData, data } from "./dataHandler";
+import { getLocalData, localData } from "./dataHandler";
 import { debounce } from "./utils";
 
 let observer: MutationObserver;
@@ -59,7 +59,7 @@ browser.runtime.onMessage.addListener(
 );
 
 getLocalData({ currentSelected: null })
-  .then((data: data) => {
+  .then((data: localData) => {
     if (data.currentSelected) {
       mutationListener(data.currentSelected || undefined, () => {});
       main(data.currentSelected || undefined, 500);

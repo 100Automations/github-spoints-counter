@@ -10,21 +10,21 @@ import {
   getLocalData,
   setLocalData,
   getPageData,
-  datum,
-  data,
+  label,
+  localData,
 } from "../dataHandler";
 import "./Popup.scss";
 
 const PopupMain = () => {
-  const [rows, setRows] = useState<datum[]>([]);
+  const [rows, setRows] = useState<label[]>([]);
   const [currentSelected, setCurrentSelected] = useState(null);
 
   useEffect(() => {
-    getPageData((data: datum[]) => {
+    getPageData((data: label[]) => {
       setRows(data);
     });
     getLocalData({ currentSelected: null })
-      .then((data: data) => {
+      .then((data: localData) => {
         setCurrentSelected(data.currentSelected);
       })
       .catch((error: Error) => console.log(error));
@@ -96,18 +96,18 @@ const PopupMain = () => {
               </div>
             </div>
             <div className="popup-filters chrome fill my-2">
-              {rows.map((datum: datum, index: number) => {
+              {rows.map((label: label, index: number) => {
                 return (
                   <Filter
                     key={index}
-                    text={datum.text}
-                    active={datum.text == currentSelected}
+                    text={label.text}
+                    active={label.text == currentSelected}
                     addClass={index != rows.length - 1 ? "mb-2" : ""}
-                    onClick={() => setCurrentSelected(datum.text)}
+                    onClick={() => setCurrentSelected(label.text)}
                     onRadioClick={() => {
-                      datum.text == currentSelected
+                      label.text == currentSelected
                         ? setCurrentSelected(null)
-                        : setCurrentSelected(datum.text);
+                        : setCurrentSelected(label.text);
                     }}
                   />
                 );

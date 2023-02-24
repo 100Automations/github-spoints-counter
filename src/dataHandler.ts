@@ -1,16 +1,17 @@
-interface data {
-  currentSelected: string;
+interface localData {
+  currentSelected?: string;
+  theme?: string;
 }
 
-interface datum {
+interface label {
   text: string;
 }
 
-function getLocalData(keys: data) {
+function getLocalData(keys: localData) {
   return browser.storage.local.get(keys);
 }
 
-function setLocalData(data: data) {
+function setLocalData(data: localData) {
   return browser.storage.local.set(data);
 }
 
@@ -26,4 +27,4 @@ function getPageData(callback: CallableFunction) {
   });
 }
 
-export { getLocalData, setLocalData, getPageData, data, datum };
+export { getLocalData, setLocalData, getPageData, localData, label };

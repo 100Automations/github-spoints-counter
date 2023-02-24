@@ -2,20 +2,21 @@
 
 // external imports
 import { Fragment } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useContext } from "preact/hooks";
 
 // internal imports
+import { ThemeContext, themeFlow } from "./Themes";
 import { SettingsButton } from "../components/Components";
-import darktheme from "../assets/svgs/icon-theme-dark.svg";
-import lighttheme from "../assets/svgs/icon-theme-light.svg";
+import { combineClasses } from "../utils";
+import "./Popup.scss";
+
+// assets
 import aboutSP from "../assets/svgs/icon-about-sp.svg";
 import feedback from "../assets/svgs/icon-feedback.svg";
 import bugs from "../assets/svgs/icon-bugs.svg";
 import help from "../assets/svgs/icon-help.svg";
 import policy from "../assets/svgs/icon-policy.svg";
 import hundredAuto from "../assets/svgs/icon-100-auto.svg";
-import "./Popup.scss";
-import { combineClasses } from "../utils";
 
 function chunk(arr: any[], chunkSize: number) {
   if (chunkSize <= 0) throw "Invalid chunk size";
@@ -25,13 +26,15 @@ function chunk(arr: any[], chunkSize: number) {
   return R;
 }
 
-const PopupSettings = () => {
+const PopupSettings = ({ setTheme }) => {
+  const theme = useContext(ThemeContext);
+
   const settingsFields = [
     {
-      iconUrl: darktheme,
-      text: "Dark Theme",
+      iconUrl: themeFlow[theme].iconUrl,
+      text: themeFlow[theme].currText,
       onClick: () => {
-        console.log("theme");
+        setTheme(themeFlow[theme].next);
       },
     },
     {
