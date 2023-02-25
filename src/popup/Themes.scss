@@ -30,8 +30,8 @@
 :root {
   // light-dark theme definitions
   --background: #{light-dark(
-      url("../assets/svgs/background-light.svg"),
-      url("../assets/svgs/background-dark.svg")
+      url("../assets/themed/light/background.svg"),
+      url("../assets/themed/dark/background.svg")
     )};
   --background-color: #{light-dark($white, $dark-blue)};
   --title-text: #{light-dark($dark-blue, $white)};
