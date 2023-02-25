@@ -50,7 +50,7 @@ const PopupSettings = ({ setTheme }) => {
     {
       iconUrl: feedback,
       text: "Submit Feedback",
-      href: "https://www.google.com/",
+      href: "https://forms.gle/r2RzyML7i55xLGC78",
     },
     {
       iconUrl: bugs,

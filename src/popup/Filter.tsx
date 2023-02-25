@@ -26,6 +26,7 @@ const Filter = ({
         "filter",
         "flex-align-center",
         "fill",
+        active && "selected",
         addClass
       )}
     >

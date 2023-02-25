@@ -2,9 +2,14 @@
 
 .filter {
   background-color: $white;
+  border: 1px solid $light-grey;
   border-radius: 12px;
   color: var(--filter-text);
   height: 48px;
+
+  &.selected {
+    border-color: $dark-blue;
+  }
 
   & > *:first-child {
     border-radius: 12px 0 0 12px;

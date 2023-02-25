@@ -5,16 +5,12 @@ import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 // internal imports
-import { ThemeContext } from "./Themes";
+import { ThemeContext, themeFlow } from "./Themes";
 import { IconButton } from "../components/Components";
 import { PopupMain } from "./PopupMain";
+import { PopupSettings } from "./PopupSettings";
 import { getLocalData, localData, setLocalData } from "../dataHandler";
 import "./Popup.scss";
-
-// assets
-import logo from "../assets/svgs/logo-dark.svg";
-import settings from "../assets/svgs/icon-settings.svg";
-import { PopupSettings } from "./PopupSettings";
 
 const Popup = () => {
   const [popScreen, setPopScreen] = useState("main");
@@ -51,9 +47,9 @@ const Popup = () => {
     <ThemeContext.Provider value={theme}>
       <div id="popup" className="p-3">
         <div className="popup-header flex-container">
-          <img src={logo} alt="100 Automations Logo" />
+          <img src={themeFlow[theme].logo} alt="100 Automations Logo" />
           <IconButton
-            iconUrl={settings}
+            iconUrl={themeFlow[theme].settings}
             onClick={(e) => {
               e.preventDefault();
               if (popScreen == "settings") {

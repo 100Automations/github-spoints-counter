@@ -1,19 +1,31 @@
 import { createContext } from "preact";
-import darktheme from "../assets/svgs/icon-theme-dark.svg";
-import lighttheme from "../assets/svgs/icon-theme-light.svg";
+
+// dark assets
+import darkThemeIcon from "../assets/themed/dark/icon-theme.svg";
+import darkSettings from "../assets/themed/dark/icon-settings.svg";
+import darkLogo from "../assets/themed/dark/logo.svg";
+
+// light assets
+import lightThemeIcon from "../assets/themed/light/icon-theme.svg";
+import lightSettings from "../assets/themed/light/icon-settings.svg";
+import lightLogo from "../assets/themed/light/logo.svg";
 
 const ThemeContext = createContext("dark");
 
 const themeFlow = {
   dark: {
-    iconUrl: darktheme,
     currText: "Dark Theme",
+    iconUrl: darkThemeIcon,
+    logo: darkLogo,
     next: "light",
+    settings: darkSettings,
   },
   light: {
-    iconUrl: lighttheme,
     currText: "Light Theme",
+    iconUrl: lightThemeIcon,
+    logo: lightLogo,
     next: "dark",
+    settings: lightSettings,
   },
 };
 
