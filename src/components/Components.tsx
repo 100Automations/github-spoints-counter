@@ -6,7 +6,7 @@ import { combineClasses } from "../utils";
 interface ButtonProps {
   addClass?: string;
   children?: preact.ComponentChildren;
-  color?: string;
+  color?: "primary" | "secondary";
   onClick: () => any;
 }
 
@@ -18,7 +18,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      class={combineClasses("spoints-btn", addClass)}
+      class={combineClasses("spoints-btn", color, addClass)}
       type="button"
       onClick={(e) => {
         onClick();
@@ -47,11 +47,26 @@ const IconButton = ({ addClass, onClick, iconUrl }: IconButtonProps) => {
 };
 
 interface InlineImgProps {
+  addClass?: string;
+  height?: string | number;
   src: string;
+  width?: string | number;
 }
 
-const InlineImg = ({ src }: InlineImgProps) => {
-  return <img src={src} className="vertical-sub" />;
+const InlineImg = ({
+  addClass,
+  height = "100%",
+  src,
+  width = "100%",
+}: InlineImgProps) => {
+  return (
+    <img
+      src={src}
+      className={combineClasses("vertical-sub", addClass)}
+      width={width}
+      height={height}
+    />
+  );
 };
 
 interface SettingsButtonProps {

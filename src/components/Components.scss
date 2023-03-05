@@ -2,15 +2,26 @@
 
 // Buttons
 .spoints-btn {
-  background-color: var(--button);
   border: none;
   border-radius: 28px;
+  box-sizing: border-box;
   color: $dark-blue;
   cursor: pointer;
   font-size: 20px;
   font-weight: 600;
   height: 58px;
-  padding: 12px 30px;
+  padding: 0 30px;
+
+  &.primary {
+    background-color: $dark-blue;
+    color: $white;
+  }
+
+  &.secondary {
+    background-color: $off-white;
+    border: 2px solid $dark-blue;
+    color: $dark-blue;
+  }
 }
 
 .spoints-icon-btn {
