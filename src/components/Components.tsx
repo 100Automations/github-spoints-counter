@@ -1,7 +1,48 @@
 "use strict";
 
+import { useEffect, useRef, useState } from "preact/hooks";
+import { Fragment } from "preact/jsx-runtime";
 // internal imports
 import { combineClasses } from "../utils";
+
+interface AccordionProps {
+  addClass?: string;
+  children?: preact.ComponentChildren;
+  title: string;
+}
+
+const Accordion = ({ addClass, title, ...props }: AccordionProps) => {
+  const [isActive, setIsActive] = useState(false);
+  const panelRef = useRef(null);
+
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (isActive) {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  }, [isActive]);
+
+  function handleClick() {
+    setIsActive(!isActive);
+  }
+
+  return (
+    <Fragment>
+      <button
+        class={combineClasses("spoints-accordion", addClass)}
+        onClick={handleClick}
+      >
+        {title}
+      </button>
+      <div
+        class={combineClasses("spoints-accordion-panel", !isActive && "hidden")}
+        ref={panelRef}
+      >
+        {props.children}
+      </div>
+    </Fragment>
+  );
+};
 
 interface ButtonProps {
   addClass?: string;
@@ -110,4 +151,4 @@ const SettingsButton = ({
   );
 };
 
-export { Button, IconButton, InlineImg, SettingsButton };
+export { Accordion, Button, IconButton, InlineImg, SettingsButton };

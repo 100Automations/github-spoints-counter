@@ -34,3 +34,11 @@ h4 {
   color: $white;
   height: 200px;
 }
+
+.instruction-links {
+  color: $white;
+
+  &:visited {
+    color: $white;
+  }
+}

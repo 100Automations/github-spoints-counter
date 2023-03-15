@@ -5,13 +5,18 @@ import { Fragment, render } from "preact";
 
 // internal imports
 import "./Instruction.scss";
-import { Button, InlineImg } from "../components/Components";
+import { Accordion, Button, InlineImg } from "../components/Components";
 import { Section, SubSection } from "./Section";
 import { Step } from "./Step";
 
 // assets
 import chooseFilter from "../assets/jpgs/chooseFilter.jpg";
 import interpretResults from "../assets/jpgs/interpretResults.jpg";
+
+import troubleshootChrome1 from "../assets/jpgs/troubleshootChrome1.jpg";
+import troubleshootChrome2 from "../assets/jpgs/troubleshootChrome2.jpg";
+import troubleshootFireFox1 from "../assets/jpgs/troubleshootFireFox1.jpg";
+import troubleshootFireFox2 from "../assets/jpgs/troubleshootFireFox2.jpg";
 import firefox from "../assets/svgs/firefox.svg";
 import chrome from "../assets/svgs/chrome.svg";
 import spointsIcon from "../assets/icons/spoints-16.png";
@@ -115,29 +120,54 @@ const Instruction = () => {
             title="Troubleshooting"
             subtitle="If you can't find your GitHub Story Points Calculator, it's possible that the extension is not enabled. Here's how to check:"
           >
-            <Step
-              step="1. Navigate to your browser's settings."
-              img={interpretResults}
-              imgSize={[600, 400]}
-            />
-            <Step
-              step={
-                <Fragment>
-                  2. Select Extensions and Themes on the left of the page. You
-                  should see a list of your enabled extensions. Double check
-                  that the GitHub Story Points Calculator is enabled.
-                </Fragment>
-              }
-              img={interpretResults}
-              imgSize={[600, 400]}
-            />
+            <Accordion title="Google Chrome">
+              <Step
+                step={
+                  <Fragment>1. Navigate to your browser's extensions.</Fragment>
+                }
+                img={troubleshootChrome1}
+              />
+              <Step
+                step={
+                  <Fragment>
+                    2. Select Manage Extensions at the bottom of the popup. You
+                    should see a list of your enabled extensions. Double check
+                    that the GitHub Story Points Calculator is enabled.
+                  </Fragment>
+                }
+                img={troubleshootChrome2}
+              />
+            </Accordion>
+            <Accordion title="Mozilla FireFox">
+              <Step
+                step={
+                  <Fragment>1. Navigate to your browser's extensions.</Fragment>
+                }
+                img={troubleshootFireFox1}
+              />
+              <Step
+                step={
+                  <Fragment>
+                    2. Select Manage Extensions at the bottom of the popup. You
+                    should see a list of your enabled extensions. Double check
+                    that the GitHub Story Points Calculator is enabled.
+                  </Fragment>
+                }
+                img={troubleshootFireFox1}
+              />
+            </Accordion>
           </Section>
         </div>
       </main>
       <footer className="instruction-footer flex-container align-center justify-center">
         <h2 className="spoints-title-1">
           Questions, comments, concerns?{" "}
-          <span className="underline">Contact us here.</span>
+          <a
+            href="https://forms.gle/r2RzyML7i55xLGC78"
+            className="instruction-links underline"
+          >
+            Contact us here.
+          </a>
         </h2>
       </footer>
     </Fragment>
