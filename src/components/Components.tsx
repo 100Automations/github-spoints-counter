@@ -1,9 +1,10 @@
 "use strict";
 
-import { useEffect, useRef, useState } from "preact/hooks";
-import { Fragment } from "preact/jsx-runtime";
+import { useRef, useState } from "preact/hooks";
+
 // internal imports
 import { combineClasses } from "../utils";
+import iconArrow from "../assets/svgs/icon-arrow.svg";
 
 interface AccordionProps {
   addClass?: string;
@@ -15,32 +16,42 @@ const Accordion = ({ addClass, title, ...props }: AccordionProps) => {
   const [isActive, setIsActive] = useState(false);
   const panelRef = useRef(null);
 
-  useEffect(() => {
-    const panel = panelRef.current;
-    if (isActive) {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  }, [isActive]);
-
   function handleClick() {
     setIsActive(!isActive);
   }
 
   return (
-    <Fragment>
-      <button
-        class={combineClasses("spoints-accordion", addClass)}
+    <div className={addClass}>
+      <div
+        className={combineClasses(
+          "flex-align-center",
+          "justify-between",
+          "spoints-accordion",
+          "spoints-title-4",
+          "py-2",
+          "px-4",
+          "text-left",
+          isActive && "open"
+        )}
         onClick={handleClick}
       >
         {title}
-      </button>
+        <img src={iconArrow} className={isActive && "rotate-180"} />
+      </div>
       <div
-        class={combineClasses("spoints-accordion-panel", !isActive && "hidden")}
+        className={combineClasses(
+          "spoints-accordion-panel",
+          "fill",
+          "px-4",
+          "py-4",
+          !isActive && "hidden",
+          isActive && "open"
+        )}
         ref={panelRef}
       >
         {props.children}
       </div>
-    </Fragment>
+    </div>
   );
 };
 

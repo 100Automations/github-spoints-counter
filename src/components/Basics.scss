@@ -2,6 +2,10 @@
 @use "sass:list";
 @use "sass:map";
 
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
 .hidden {
   display: none !important;
 }
@@ -131,6 +135,10 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
   justify-content: center;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .justify-left {
   justify-content: start;
 }
@@ -169,6 +177,11 @@ $columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
 .spoints-title-3 {
   font-size: 24px;
   font-weight: 400;
+}
+
+.spoints-title-4 {
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .spoints-p-1 {

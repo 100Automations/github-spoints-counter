@@ -120,7 +120,7 @@ const Instruction = () => {
             title="Troubleshooting"
             subtitle="If you can't find your GitHub Story Points Calculator, it's possible that the extension is not enabled. Here's how to check:"
           >
-            <Accordion title="Google Chrome">
+            <Accordion title="Google Chrome" addClass="py-5">
               <Step
                 step={
                   <Fragment>1. Navigate to your browser's extensions.</Fragment>
@@ -138,7 +138,7 @@ const Instruction = () => {
                 img={troubleshootChrome2}
               />
             </Accordion>
-            <Accordion title="Mozilla FireFox">
+            <Accordion title="Mozilla FireFox" addClass="pb-5">
               <Step
                 step={
                   <Fragment>1. Navigate to your browser's extensions.</Fragment>
@@ -153,7 +153,7 @@ const Instruction = () => {
                     that the GitHub Story Points Calculator is enabled.
                   </Fragment>
                 }
-                img={troubleshootFireFox1}
+                img={troubleshootFireFox2}
               />
             </Accordion>
           </Section>

@@ -8,16 +8,23 @@ interface StepProps {
 }
 
 const Step = ({ children, img, imgSize = [null, null], step }: StepProps) => {
-  const width = imgSize[0] || "auto";
-  const height = imgSize[1] || "auto";
-
-  return (
+  return imgSize[0] && imgSize[1] ? (
     <div className="my-4">
       <p className="pl-2 spoints-p-2">{step}</p>
       {children}
       {img && (
         <div className="flex-justify-center fill">
-          <img src={img} width={width} height={height} />
+          <img src={img} width={imgSize[0]} height={imgSize[1]} />
+        </div>
+      )}
+    </div>
+  ) : (
+    <div className="my-4">
+      <p className="pl-2 spoints-p-2">{step}</p>
+      {children}
+      {img && (
+        <div className="flex-justify-center fill">
+          <img src={img} />
         </div>
       )}
     </div>
