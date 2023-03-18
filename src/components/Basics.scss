@@ -1,0 +1,204 @@
+// External Imports
+@use "sass:list";
+@use "sass:map";
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.hidden {
+  display: none !important;
+}
+
+// Layout
+.flex-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-align-center {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-justify-center {
+  justify-content: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.row {
+  box-sizing: border-box;
+  display: flex;
+}
+
+.fill {
+  width: 100%;
+}
+
+// Spacings
+$margin-abbrs: (
+  "m": margin,
+  "mt": margin-top,
+  "mr": margin-right,
+  "mb": margin-bottom,
+  "ml": margin-left,
+  "mx": margin-right margin-left,
+  "my": margin-top margin-bottom,
+);
+$padding-abbrs: (
+  "p": padding,
+  "pt": padding-top,
+  "pr": padding-right,
+  "pb": padding-bottom,
+  "pl": padding-left,
+  "px": padding-right padding-left,
+  "py": padding-top padding-bottom,
+);
+$spacing-abbrs: map.merge($margin-abbrs, $padding-abbrs);
+$spacing-sizes: 0, 1, 2, 3, 4, 5, 7, 10;
+
+@mixin spacing-size($name, $size) {
+  @if list.index("mx" "my" "px" "py", $name) {
+    @each $attr in map.get($spacing-abbrs, $name) {
+      #{$attr}: $size * 8px;
+    }
+  } @else {
+    #{map.get($spacing-abbrs, $name)}: $size * 8px;
+  }
+}
+
+@each $name in map.keys($spacing-abbrs) {
+  @each $size in $spacing-sizes {
+    .#{$name}-#{$size} {
+      @include spacing-size($name, $size);
+    }
+  }
+}
+
+// Columns
+$columns: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
+
+@mixin col-size($col) {
+  box-sizing: border-box;
+  flex: 0 1 calc(8.33% * #{$col});
+
+  @each $name in map.keys($margin-abbrs) {
+    @each $size in $spacing-sizes {
+      &.#{$name}-#{$size} {
+        // recalculates column size to accomodate margins
+        @if list.index("mx" "my" "px" "py", $name) {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 16px);
+        } @else {
+          flex: 0 1 calc(8.33% * #{$col} - #{$size} * 8px);
+        }
+      }
+    }
+  }
+}
+
+@each $col in $columns {
+  .col-#{$col} {
+    @include col-size($col);
+  }
+}
+
+// Alignment
+.text-center {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-left {
+  justify-content: start;
+}
+
+.justify-right {
+  justify-content: end;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-top {
+  align-items: flex-start;
+}
+
+.align-bottom {
+  align-items: flex-end;
+}
+
+.vertical-sub {
+  vertical-align: sub;
+}
+
+// Headings and Paragraphs
+.spoints-title-1 {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.spoints-title-2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.spoints-title-3 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.spoints-title-4 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.spoints-p-1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.spoints-p-2 {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.spoints-p-3 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.underline {
+  text-decoration: underline;
+}

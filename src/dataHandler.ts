@@ -1,20 +1,30 @@
-interface data {
-  rows: datum[];
-  currentOn: number;
+interface localData {
+  currentSelected?: string;
+  theme?: string;
 }
 
-interface datum {
+interface label {
   text: string;
 }
 
-function getData(keys: data) {
-  //@ts-ignore
+function getLocalData(keys: localData) {
   return browser.storage.local.get(keys);
 }
 
-function setData(data: data) {
-  //@ts-ignore
+function setLocalData(data: localData) {
   return browser.storage.local.set(data);
 }
 
-export { getData, setData, data, datum };
+function getPageData(callback: CallableFunction) {
+  let querying = browser.tabs.query({ currentWindow: true, active: true });
+  querying.then((tabs: any) => {
+    browser.tabs.sendMessage(tabs[0].id, {
+      task: "getPageData",
+    });
+  });
+  browser.runtime.onMessage.addListener((message) => {
+    callback(JSON.parse(message.data));
+  });
+}
+
+export { getLocalData, setLocalData, getPageData, localData, label };

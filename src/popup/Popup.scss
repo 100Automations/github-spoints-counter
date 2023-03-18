@@ -1,17 +1,48 @@
+@use "../components/Colors.scss";
+@use "./Themes.scss";
+@use "../components/Basics.scss";
 @use "./Filter.scss";
-@use "./Components.scss";
+@use "../components/Components.scss";
+@use "./PopupMain.scss";
+@use "./PopupSettings.scss";
+
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 #popup {
-  width: 400px;
-  height: 300px;
-  padding: 8px;
-  overflow: auto;
+  background-color: var(--background-color);
+  background-image: var(--background);
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  color: var(--text);
+  height: 496px;
+  width: 530px;
 }
 
-#popup > * {
-  margin-bottom: 8px;
+.popup-header {
+  justify-content: space-between;
 }
 
-#popup-title {
-  margin-bottom: 16px;
+.popup-title {
+  color: var(--title-text);
 }

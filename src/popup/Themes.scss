@@ -1,0 +1,43 @@
+@use "../components/Colors.scss" as *;
+
+@function light-dark($light, $dark) {
+  @return var(--light, #{$light}) var(--dark, #{$dark});
+}
+
+:root {
+  --ON: initial;
+  --OFF: ;
+}
+
+.theme-default,
+.theme-light {
+  --light: var(--ON);
+  --dark: var(--OFF);
+}
+
+.theme-dark {
+  --light: var(--OFF);
+  --dark: var(--ON);
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-default {
+    --light: var(--OFF);
+    --dark: var(--ON);
+  }
+}
+
+:root {
+  // light-dark theme definitions
+  --background: #{light-dark(
+      url("../assets/themed/light/background.svg"),
+      url("../assets/themed/dark/background.svg")
+    )};
+  --background-color: #{light-dark($white, $dark-blue)};
+  --title-text: #{light-dark($dark-blue, $white)};
+  --popup-info-text: #{light-dark($dark-blue, $soft-white)};
+  --filter-text: #{light-dark($dark-blue, $dark-blue)};
+  --text: #{light-dark($dark-blue, $white)};
+  --button: #{light-dark($dark-blue, $light-white)};
+  --links: #{light-dark($dark-grey, $soft-white)};
+}

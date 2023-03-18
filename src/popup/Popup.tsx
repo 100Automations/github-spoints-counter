@@ -1,132 +1,71 @@
 "use strict";
 
+// external imports
 import { render } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
-import { Alert, Button } from "./Components";
-import { Filter } from "./Filter";
-import { getData, setData, datum, data } from "../dataHandler";
+// internal imports
+import { ThemeContext, themeFlow } from "./Themes";
+import { IconButton } from "../components/Components";
+import { PopupMain } from "./PopupMain";
+import { PopupSettings } from "./PopupSettings";
+import { getLocalData, localData, setLocalData } from "../dataHandler";
 import "./Popup.scss";
 
-const newDatum: datum = {
-  text: "",
-};
-
 const Popup = () => {
-  const [rows, setRows] = useState([]);
-  const [currentOn, setCurrentOn] = useState(null);
-  const [alert, setAlert] = useState({
-    text: "",
-    hidden: true,
-    color: "primary",
-  });
+  const [popScreen, setPopScreen] = useState("main");
+  const [theme, setTheme] = useState("dark");
 
   useEffect(() => {
-    getData({ rows: [], currentOn: null })
-      .then((data: data) => {
-        setRows(data.rows);
-        setCurrentOn(data.currentOn);
+    getLocalData({ theme: "dark" })
+      .then((data: localData) => {
+        setTheme(data.theme);
       })
-      .catch((error) => {
-        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
-      });
+      .catch((error: Error) => console.log(error));
   }, []);
 
   useEffect(() => {
-    setData({ rows: rows, currentOn: currentOn })
-      .then(() => {
-        console.log("Saved.");
-      })
-      .catch((error) => {
-        setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
-      });
-  }, [rows, currentOn]);
+    document.documentElement.setAttribute("class", "");
+    document.documentElement.classList.add(`theme-${theme}`);
+    setLocalData({ theme: theme })
+      .then(() => console.log("Saved."))
+      .catch((error: Error) => console.log(error));
+  }, [theme]);
 
-  useEffect(() => {
-    //@ts-ignore
-    let querying = browser.tabs.query({ currentWindow: true, active: true });
-    const createMessage = () => {
-      if (typeof currentOn == "number" && rows[currentOn].text) {
-        return { task: "mutate", filter: rows[currentOn].text };
-      } else {
-        return { task: "reset" };
-      }
-    };
-
-    querying
-      .then((tabs) => {
-        //@ts-ignore
-        browser.tabs.sendMessage(tabs[0].id, createMessage());
-      })
-      .catch((error) => {
-        setAlert({
-          text: `Error: ${error.message}`,
-          hidden: false,
-          color: "danger",
-        });
-      });
-  }, [rows, currentOn]);
-
-  interface options {
-    id?: number;
-    datum?: datum;
-  }
-
-  function datumOperation(
-    task: "post" | "get" | "patch" | "delete",
-    options: options
-  ) {
-    try {
-      const newRows = [...rows];
-      if (task == "post") {
-        if (rows.length < 10) {
-          const newRows = [...rows];
-          newRows.push(options.datum);
-          setRows(newRows);
-        }
-      } else if (task == "get") {
-        return newRows[options.id];
-      } else if (task == "patch") {
-        newRows[options.id] = options.datum;
-        setRows(newRows);
-      } else if (task == "delete") {
-        newRows.splice(options.id, 1);
-        setRows(newRows);
-      }
-    } catch (error) {
-      setAlert({ text: `Error: ${error}`, hidden: false, color: "danger" });
+  const Screen = () => {
+    switch (popScreen) {
+      case "main":
+        return <PopupMain />;
+      case "settings":
+        return <PopupSettings setTheme={setTheme} />;
+      default:
+        return <PopupMain />;
     }
-  }
-
-  function alertReset() {
-    setAlert({ text: "", hidden: true, color: "primary" });
-  }
+  };
 
   return (
-    <div id="popup">
-      <Alert color={alert.color} hidden={alert.hidden} onReset={alertReset}>
-        {alert.text}
-      </Alert>
-      <h1 id="popup-title" class="photon-display-20">
-        Github-Spoints-Counter
-      </h1>
-      {rows.map((datum, index) => {
-        return (
-          <Filter
-            id={index}
-            isOn={index == currentOn}
-            setCurrentOn={setCurrentOn}
-            datum={datum}
-            datumOperation={datumOperation}
+    <ThemeContext.Provider value={theme}>
+      <div id="popup" className="p-3">
+        <div className="popup-header flex-container">
+          <img src={themeFlow[theme].logo} alt="100 Automations Logo" />
+          <IconButton
+            iconUrl={themeFlow[theme].settings}
+            onClick={(e) => {
+              e.preventDefault();
+              if (popScreen == "settings") {
+                setPopScreen("main");
+              } else {
+                setPopScreen("settings");
+              }
+            }}
           />
-        );
-      })}
-      <div>
-        <Button onClick={() => datumOperation("post", { datum: newDatum })}>
-          Add Filter
-        </Button>
+        </div>
+        <h1 class="popup-title spoints-title-2 mt-3">
+          GitHub Story Points Calculator
+        </h1>
+        <Screen />
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 };
 

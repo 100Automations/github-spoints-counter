@@ -2,7 +2,7 @@
 
 ## Overview
 
-There is a lot of project management that can be simplified through storypoints. This project aims to add storypoints to the GitHub board via browser extension for Firefox (and Chrome in the future).
+There is a lot of project management that can be simplified through story points. This project aims to add story points to the GitHub board via browser extension for Firefox (and Chrome in the future).
 
 ## Quickstart
 
@@ -20,7 +20,7 @@ Steps to download the addon:
 
 1. Prereqs:
    - [FireFox 48 or higher](https://www.mozilla.org/en-US/firefox/new/)
-2. Visit [this page](https://100automations.github.io/github-spoints-counter/#download).
+2. Visit [this page](https://100automations.github.io/github-story-points-calculator/#download).
 3. Click the link to download.
 4. Click Continue to installation.
 5. Click Add.

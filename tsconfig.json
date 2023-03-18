@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
+    "outDir": "./dist",
+    "module": "CommonJS",
     "target": "ES6",
-    "module": "commonjs",
-    "rootDir": "./src",
-    "outDir": "./dist-ts",
     "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "rootDir": "./src",
     "jsxImportSource": "preact",
-    "types": ["preact"]
+    "types": ["preact", "chrome", "firefox-webext-browser"],
+    "lib": ["dom", "ES7", "dom.iterable"]
   }
 }

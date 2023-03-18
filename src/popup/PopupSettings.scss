@@ -1,0 +1,12 @@
+.popup-settings-row {
+  display: flex;
+  justify-content: space-between;
+
+  &.last {
+    justify-content: start;
+
+    & > * {
+      margin-right: 12px;
+    }
+  }
+}

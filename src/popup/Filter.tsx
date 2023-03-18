@@ -1,84 +1,65 @@
 "use strict";
-import { useEffect, useState } from "preact/hooks";
 
-import { Button, TextInput, ToggleSwitch } from "./Components";
+// internal imports
+import { combineClasses } from "../utils";
+import radioInactive from "../assets/svgs/icon-radio.svg";
+import radioActive from "../assets/svgs/icon-radio-active.svg";
 
-const Filter = ({ id, isOn, setCurrentOn, datum, datumOperation }) => {
-  const [isEdit, setIsEdit] = useState(false);
-  const [text, setText] = useState("");
-  const [isTogglable, setIsTogglable] = useState(false);
+interface FilterProps {
+  active: boolean;
+  addClass?: string;
+  onClick: (e?: MouseEvent) => any;
+  onRadioClick: () => any;
+  text?: string;
+}
 
-  useEffect(() => {
-    setText(datum.text);
-  }, [datum.text]);
-
-  useEffect(() => {
-    setIsTogglable(text ? true : false);
-  }, [text]);
-
-  function buttonClick() {
-    if (isEdit) {
-      setCurrentOn(text ? id : null);
-      setIsEdit(false);
-      datumOperation("patch", { id: id, datum: { text: text } });
-    } else {
-      setIsEdit(true);
-    }
-  }
-
-  function textInputEnter(e) {
-    setText(e.target.value);
-  }
-
-  function closeButtonClick() {
-    datumOperation("delete", { id: id });
-    if (isOn) {
-      setCurrentOn(null);
-    }
-  }
-
-  function toggleChange(e) {
-    if (e.target.checked) {
-      setCurrentOn(id);
-    } else {
-      e.target.checked = false;
-      setCurrentOn(null);
-    }
-  }
-
+const Filter = ({
+  active,
+  addClass,
+  onClick,
+  onRadioClick,
+  text,
+}: FilterProps) => {
   return (
-    <form class="filter-container">
-      <div class="col-3 mr-2">
-        <Button onClick={buttonClick}>{isEdit ? "Save" : "Edit"}</Button>
+    <div
+      className={combineClasses(
+        "filter",
+        "flex-align-center",
+        "fill",
+        active && "selected",
+        addClass
+      )}
+    >
+      <FilterRadio
+        active={active}
+        addClass="ml-4 mr-10"
+        onChange={() => {
+          onRadioClick();
+        }}
+      />
+      <div
+        className="flex-align-center filter-text"
+        style={{ flexGrow: 2 }}
+        onClick={onClick}
+      >
+        {text}
       </div>
-      <div class="col-6 mr-2">
-        <TextInput
-          value={text}
-          onInput={textInputEnter}
-          disabled={isEdit ? false : true}
-        />
-      </div>
-      <div class="col-2 flex-end">
-        {isEdit ? (
-          ""
-        ) : (
-          <Button color="danger" onClick={closeButtonClick}>
-            X
-          </Button>
-        )}
-      </div>
-      <div class="col-1 flex-end">
-        {isEdit ? (
-          ""
-        ) : (
-          <ToggleSwitch
-            onChange={toggleChange}
-            isOn={text && isOn}
-            disabled={!isTogglable}
-          />
-        )}
-      </div>
-    </form>
+    </div>
+  );
+};
+
+interface FilterRadioProps {
+  active?: boolean;
+  addClass?: string;
+  color?: string;
+  onChange?: (e: MouseEvent) => any;
+}
+
+const FilterRadio = ({ active, addClass, onChange }: FilterRadioProps) => {
+  return (
+    <div className={combineClasses("filter-radio", "row", addClass)}>
+      <img src={active ? radioActive : radioInactive} onClick={onChange} />
+    </div>
   );
 };
 
