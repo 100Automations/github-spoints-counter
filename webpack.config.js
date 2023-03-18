@@ -7,6 +7,10 @@ module.exports = (env) => {
     entry: {
       index: { import: "./src/index.ts", filename: "[name].bundle.js" },
       popup: { import: "./src/popup/Popup.tsx", filename: "[name].bundle.js" },
+      background: {
+        import: "./src/background.ts",
+        filename: "[name].bundle.js",
+      },
     },
     devtool: "inline-source-map",
     module: {
@@ -62,7 +66,7 @@ module.exports = (env) => {
       new HtmlWebpackPlugin({
         template: "src/assets/popup.html",
         filename: "popup.html",
-        excludeChunks: ["index"],
+        excludeChunks: ["index", "background"],
       }),
     ],
   };

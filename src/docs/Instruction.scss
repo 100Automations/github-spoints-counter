@@ -27,6 +27,10 @@ h4 {
 .instruction-get-button {
   background-color: $dark-blue;
   color: $white;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .instruction-footer {

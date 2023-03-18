@@ -63,7 +63,10 @@ const PopupMain = () => {
           <h3 className="spoints-title-2 mb-2 mt-4">No labels yet</h3>
           <p className="spoints-p-3 mb-7">
             For more information about labels, visit our{" "}
-            <a className="spoints-links" href="https://www.google.com">
+            <a
+              className="spoints-links"
+              href="https://100automations.github.io/github-story-points-calculator/"
+            >
               instructions guide
             </a>
             .
@@ -88,7 +91,10 @@ const PopupMain = () => {
               <div className="spoints-p-3 mt-2">
                 <p>
                   For more information about labels, visit our{" "}
-                  <a className="spoints-links" href="https://www.google.com">
+                  <a
+                    className="spoints-links"
+                    href="https://100automations.github.io/github-story-points-calculator/"
+                  >
                     instructions guide
                   </a>
                   .

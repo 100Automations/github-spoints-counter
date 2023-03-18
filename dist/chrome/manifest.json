@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "github-spoints-counter",
+  "name": "github-story-points-calculator",
   "version": "1.18",
 
   "action": {
     "default_icon": "icons/spoints-24.png",
-    "default_title": "github-spoints-counter",
+    "default_title": "github-story-points-calculator",
     "default_popup": "popup.html"
   },
-  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-spoints-counter#README.md",
+  "background": {
+    "scripts": ["background.bundle.js"]
+  },
+  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-story-points-calculator#README.md",
   "icons": {
     "16": "icons/spoints-16.png",
     "48": "icons/spoints-48.png",
@@ -24,6 +27,6 @@
       "js": ["browser-polyfill.min.js", "index.bundle.js"]
     }
   ],
-  "homepage_url": "https://github.com/100Automations/github-spoints-counter",
+  "homepage_url": "https://github.com/100Automations/github-story-points-calculator",
   "permissions": ["activeTab", "storage"]
 }

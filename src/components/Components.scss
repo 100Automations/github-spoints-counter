@@ -23,6 +23,7 @@
 .spoints-btn {
   border: none;
   border-radius: 28px;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
   box-sizing: border-box;
   color: $dark-blue;
   cursor: pointer;
@@ -63,4 +64,5 @@
 // Links
 .spoints-links {
   color: inherit;
+  text-decoration: underline;
 }
