@@ -59,25 +59,28 @@ interface ButtonProps {
   addClass?: string;
   children?: preact.ComponentChildren;
   color?: "primary" | "secondary";
-  onClick: () => any;
+  href?: string;
+  onClick?: () => any;
 }
 
 const Button = ({
   color = "primary",
+  href,
   onClick,
   addClass,
   ...props
 }: ButtonProps) => {
+  const Tag = href ? "a" : "button";
+
   return (
-    <button
+    <Tag
       class={combineClasses("spoints-btn", color, addClass)}
       type="button"
-      onClick={(e) => {
-        onClick();
-      }}
+      onClick={onClick}
+      href={href}
     >
       {props.children}
-    </button>
+    </Tag>
   );
 };
 

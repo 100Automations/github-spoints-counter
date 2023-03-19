@@ -59,7 +59,7 @@ const Instruction = () => {
                 Get the Chrome extension
               </Button>
               <Button
-                onClick={() => {}}
+                href="https://addons.mozilla.org/firefox/downloads/file/4085292/github_spoints_counter-2.0.1.xpi"
                 addClass="instruction-get-button flex-container align-center mt-5"
                 color="secondary"
               >

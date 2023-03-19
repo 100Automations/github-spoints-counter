@@ -5,3 +5,4 @@ dist-ts/
 testCode.js
 .vscode
 .DS_store
+dist/

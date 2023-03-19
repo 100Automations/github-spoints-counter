@@ -46,13 +46,7 @@ module.exports = (env) => {
     },
     output: {
       path: path.resolve(__dirname, `dist/${env.browser}`),
-      clean: {
-        keep(asset) {
-          return ["popup.html", "manifest.json", "icons/"].some((path) => {
-            return asset.includes(path);
-          });
-        },
-      },
+      clean: true,
     },
     plugins: [
       new CopyWebpackPlugin({
@@ -61,6 +55,10 @@ module.exports = (env) => {
             from: "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
           },
           { from: "src/assets/icons", to: "icons" },
+          {
+            from: `src/assets/manifests/manifest-${env.browser}.json`,
+            to: "manifest.json",
+          },
         ],
       }),
       new HtmlWebpackPlugin({
