@@ -6,5 +6,5 @@
     "stylelint-config-standard-scss",
     "stylelint-config-prettier-scss"
   ],
-  "ignoreFiles": ["dist/*"]
+  "ignoreFiles": ["dist/*", "docs/*"]
 }

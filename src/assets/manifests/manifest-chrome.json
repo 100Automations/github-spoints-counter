@@ -11,7 +11,7 @@
   "background": {
     "scripts": ["background.bundle.js"]
   },
-  "description": "Adds storypoint support to GitHub's project board through issue labels. See https://github.com/100Automations/github-story-points-calculator#README.md",
+  "description": "Adds storypoint support to GitHub's project board through issue labels.",
   "icons": {
     "16": "icons/spoints-16.png",
     "48": "icons/spoints-48.png",
