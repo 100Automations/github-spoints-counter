@@ -9,7 +9,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.bundle.js"]
+    "service_worker": "background.bundle.js"
   },
   "description": "Adds storypoint support to GitHub's project board through issue labels.",
   "icons": {

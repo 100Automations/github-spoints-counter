@@ -8,7 +8,7 @@ module.exports = (env) => {
       index: { import: "./src/index.ts", filename: "[name].bundle.js" },
       popup: { import: "./src/popup/Popup.tsx", filename: "[name].bundle.js" },
       background: {
-        import: "./src/background.ts",
+        import: `./src/assets/backgrounds/${env.browser}Background.ts`,
         filename: "[name].bundle.js",
       },
     },

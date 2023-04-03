@@ -16,14 +16,14 @@ function setLocalData(data: localData) {
 }
 
 function getPageData(callback: CallableFunction) {
+  browser.runtime.onMessage.addListener((message) => {
+    callback(JSON.parse(message.data));
+  });
   let querying = browser.tabs.query({ currentWindow: true, active: true });
   querying.then((tabs: any) => {
     browser.tabs.sendMessage(tabs[0].id, {
       task: "getPageData",
     });
-  });
-  browser.runtime.onMessage.addListener((message) => {
-    callback(JSON.parse(message.data));
   });
 }
 
